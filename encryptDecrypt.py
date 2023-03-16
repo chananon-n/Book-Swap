@@ -11,6 +11,9 @@ class encryptDecrypt:
         with open('filekey.key', 'wb') as filekey:
             filekey.write(self.key)
 
+    def setKey(self, key):
+        self.key = key
+
     def getKey(self):
         return self.key
 

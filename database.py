@@ -19,12 +19,24 @@ class uploadToDB:
         self.ref = db.reference("/")
         with open(self.file, "r") as f:
             file_contents = json.load(f)
-        self.ref.set(file_contents)
+        self.ref.update(file_contents)
 
     def downloadFile(self, ID):
-        self.ref = db.reference("/" + ID)
-        with open(self.file, "w") as f:
+        self.ref = db.reference("/" + str(ID))
+        with open('upload.json', "w") as f:
             json.dump(self.ref.get(), f)
+
+    def checkID(self, ID):
+        self.ref = db.reference("/" + str(ID))
+        if self.ref.get() is None:
+            return False
+        else:
+            return True
+
+    # get the key of the user
+    def getKey(self, ID):
+        self.ref = db.reference("/" + str(ID))
+        return self.ref.get()["Key"]
 
 
 # if __name__ == "__main__":

@@ -1,1 +1,33 @@
-gAAAAABkE3saaX5zIdul98RU-gl6ADQpZNwwU7iTLLCr4PlVfMhzdWmmd03u_YkEAqxsspA3v3B1Shu3oHztEbtrM70oBQZd28ctSVjU7bfZqVqd1ZZBRV5WCcmaUhlDiAFj5UooLgoVQK8-E4mkiW8c9MJL-ZFAH_cwt7fjNgjeSqIkK1J1E-xsQfoOfQ7esQ2MSPuPIHP_ZFa-PLGcZfXQEfpBp66TIZfXHHuaCwH8FolP9WAWSpeG9Iju_zH3JnEMtfxpGL1bXcKoqKNU4brAB4Jo3xhvnc9KsxcmhAxoe0KfkDXzGhENCW2n1zD3CrTW5YDnHN-PqJN2aQLSBHBajaowfwFWxHNSbmXht5TFlFs_zF6mv5Bb45Q7WAKGdhVTFMnPbVpo4IwaF-vV1FGNpTp8Ovmd6rESr_gxsxfSPgjGv1hPa4OzFS5SVpCnzAUolqgtHqFuFA4-CqWRVNaNXyWLd9e3E-ZsxQHNJTNa7F_sTTO4eurVvgmGjeRWJ8AcRCithqdixwImMsKo-5Sv81QXuPBFd-4l8W05pPy5_oo7uzZwXLdnNAfPCe-VWSvqP_dTyX3uin-BQY7SuNWr-BW2txL8nnb25uHEOrON0rve4wasYXGYrKi9Ii_n7e1AbiGu1e6L9mGccIhYl4wDhGKYQ854GjZHoCjdJ5_YaHcVlvybMdJyJFGGAIJInREQgfFQ1HiJjW9b2ZGG0K9HYnOBO2LY6xQyeg7i2P-nO1loc4V47kcQZOOu0mf-3be1HaoipKm65qeiUbiSe9Nu5jiJrzSsS2DrZyxfzBJXMh9E2zO1-zDiC8B-xI2_D6bDfGwyG8xp1ZnOYKcZCbd9rFoDeNpTpdnyow8Bo-kKxQQNffH8KdGTJkbUAYgH9_LvUF_eu83bV_K_4eDTD5nbyU8xVjEjPwOxUKFetqHBJ6MJrsZ3wYOZ7LKSw3oNTfDHqCl50hxwvdHpyJUNkE7hSWsCHakIs5ERkjQBv_8FpubspqbEWc61c2wEE9g3c24JA_fuzN-ysb7LnzfCTPR0mGAdSYll6xhbss3RUakO5o1dK9kA4kjaYWg8o4VKchjb7U0ym0ulDEhQm--Pb6FHEYYEBbh3baRZxu5lQYfctIslLd2XJ6gniI5aasOsmOOi8-DlBbZT
+{
+    "ID": {
+        "Book store name": "Book store 1",
+        "Book": {
+            "Book1": {
+                "Title": "Author1",
+                "Author": "Publisher1"
+            },
+            "Book2": {
+                "Title": "Author2",
+                "Author": "Publisher2"
+            },
+            "Book3": {
+                "Title": "Author3",
+                "Author": "Publisher3"
+            }
+        },
+        "eBook": {
+            "eBook1": {
+                "Title": "Author1",
+                "Author": "Publisher1"
+            },
+            "eBook2": {
+                "Title": "Author2",
+                "Author": "Publisher2"
+            },
+            "eBook3": {
+                "Title": "Author3",
+                "Author": "Publisher3"
+            }
+        }
+    }
+}

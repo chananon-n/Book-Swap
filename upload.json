@@ -1,15 +1,1 @@
-{
-    "ID": {
-        "Key": "b'XfKNZrYIU51QJ4t7PL1cBQMgw2q5H_zrbJrvyBmdYpY='",
-        "Book": {
-            "Book1": 0,
-            "Book2": 1,
-            "Book3": 1
-        },
-        "E-Book": {
-            "eBook1": 0,
-            "eBook2": 1,
-            "eBook3": 1
-        }
-    }
-}
+{"Book": {"Book1": 0, "Book2": 1, "Book3": 1}, "E-Book": {"eBook1": 0, "eBook2": 1, "eBook3": 1}, "Key": "b'IP1YxAA8Av5pSeOkwTMqArQwS0aMLqWpxSjgY_gFanc='"}

@@ -1,0 +1,14 @@
+{
+    "ID": {
+        "Book": {
+            "Book1": 0,
+            "Book2": 1,
+            "Book3": 1
+        },
+        "E-Book": {
+            "eBook1": 0,
+            "eBook2": 1,
+            "eBook3": 1
+        }
+    }
+}

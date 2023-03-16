@@ -5,11 +5,14 @@ import sys
 
 class encryptDecrypt:
     def __init__(self):
-        self.key = ""
+        self.key = Fernet.generate_key()
+
+    def writeKey(self):
+        with open('filekey.key', 'wb') as filekey:
+            filekey.write(self.key)
 
     def getKey(self):
-        pass
-        # TODO get the key from database
+        return self.key
 
     def encryptID(self):
         pass
@@ -19,7 +22,7 @@ class encryptDecrypt:
         pass
         # TODO
 
-    def encryptFile(self):
+    def encryptFile(self, file):
         # opening the key
         with open('filekey.key', 'rb') as filekey:
             key = filekey.read()
@@ -36,18 +39,18 @@ class encryptDecrypt:
         fernet = Fernet(key)
 
         # opening the original file to encrypt
-        with open('test.json', 'rb') as file:
-            original = file.read()
+        with open(file, 'rb') as files:
+            original = files.read()
 
         # encrypting the file
         encrypted = fernet.encrypt(original)
 
         # opening the file in write mode and
         # writing the encrypted data
-        with open('test.json', 'wb') as encrypted_file:
+        with open(file, 'wb') as encrypted_file:
             encrypted_file.write(encrypted)
 
-    def decryptFile(self):
+    def decryptFile(self, file):
         # opening the key
         with open('filekey.key', 'rb') as filekey:
             key = filekey.read()
@@ -55,7 +58,7 @@ class encryptDecrypt:
         fernet = Fernet(key)
 
         # opening the encrypted file
-        with open('test.json', 'rb') as enc_file:
+        with open(file, 'rb') as enc_file:
             encrypted = enc_file.read()
 
         # decrypting the file
@@ -63,7 +66,7 @@ class encryptDecrypt:
 
         # opening the file in write mode and
         # writing the decrypted data
-        with open('test.json', 'wb') as dec_file:
+        with open(file, 'wb') as dec_file:
             dec_file.write(decrypted)
 
 

@@ -16,16 +16,19 @@ class uploadToDB:
         self.file = filename
 
     def uploadFile(self):
+        self.ref = db.reference("/")
         with open(self.file, "r") as f:
             file_contents = json.load(f)
         self.ref.set(file_contents)
 
-    def downloadFile(self):
-        pass
-        # TODO use function get
+    def downloadFile(self, ID):
+        self.ref = db.reference("/" + ID)
+        with open(self.file, "w") as f:
+            json.dump(self.ref.get(), f)
 
 
-if __name__ == "__main__":
-    obj = uploadToDB()
-    obj.setFile('test.json')
-    obj.uploadFile()
+# if __name__ == "__main__":
+#     obj = uploadToDB()
+#     obj.setFile('test.json')
+#     obj.uploadFile()
+    # obj.downloadFile("ID")

@@ -1,6 +1,5 @@
 import json
-import os
-import sys
+from encryptDecrypt import encryptDecrypt
 
 
 class toJson:
@@ -10,15 +9,16 @@ class toJson:
     def setData(self, data):
         self.data = data
 
-    def addData(self):
-        with open('test.json', 'w', encoding='utf-8') as f:
+    def addData(self, destination):
+        with open(destination, 'w', encoding='utf-8') as f:
             json.dump(self.data, f, ensure_ascii=False, indent=4)
 
 
-if __name__ == "__main__":
-    datas = {'ID': {'Book': {'Book1': 0, 'Book2': 1, 'Book3': 1}, 'E-Book': {'eBook1': 0, 'eBook2': 1, 'eBook3': 1}
-                    }}
-
-    update = toJson()
-    update.setData(datas)
-    update.addData()
+# if __name__ == "__main__":
+#     obj = encryptDecrypt()
+#     datas = {'ID': {'Key': obj.getKey(), 'Book': {'Book1': 0, 'Book2': 1, 'Book3': 1}, 'E-Book': {'eBook1': 0, 'eBook2': 1, 'eBook3': 1}
+#                     }}
+#
+#     update = toJson()
+#     update.setData(datas)
+#     update.addData()

@@ -11,7 +11,15 @@ class encryptDecrypt:
         pass
         # TODO get the key from database
 
-    def encrypt(self):
+    def encryptID(self):
+        pass
+        # TODO
+
+    def decryptID(self):
+        pass
+        # TODO
+
+    def encryptFile(self):
         # opening the key
         with open('filekey.key', 'rb') as filekey:
             key = filekey.read()
@@ -39,7 +47,7 @@ class encryptDecrypt:
         with open('test.json', 'wb') as encrypted_file:
             encrypted_file.write(encrypted)
 
-    def decrypt(self):
+    def decryptFile(self):
         # opening the key
         with open('filekey.key', 'rb') as filekey:
             key = filekey.read()
@@ -61,5 +69,5 @@ class encryptDecrypt:
 
 if __name__ == "__main__":
     obj = encryptDecrypt()
-    obj.encrypt()
-    obj.decrypt()
+    # obj.encryptFile()
+    # obj.decryptFile()

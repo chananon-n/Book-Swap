@@ -1,3 +1,4 @@
+import json
 import random
 from Book import Book
 from database import uploadToDB
@@ -61,3 +62,49 @@ if __name__ == "__main__":
 
     # check if the data in local is the same as the data in database
     # if not the same, update the data in local
+    # mapping data from json file to object
+    with open('data.json') as file:
+        data = json.load(file)
+
+    booksFromLocal = []
+    for key, value in data.items():
+        # print item in Book
+        for key1, value1 in value['Book'].items():
+            # get status of book
+            status = value1['Status']
+            # create dictionary of book contain book name and status
+            book = {key1: status}
+            # store all book in a list
+            booksFromLocal.append(book)
+
+    # print(booksFromLocal)
+
+    with open('upload.json') as file:
+        data2 = json.load(file)
+
+    booksFromDatabase = []
+    for key, value in data2['Book'].items():
+        # print item in Book
+        # get status of book
+        status = value
+        # create dictionary of book contain book name and status
+        book = {key: status}
+        # store all book in a list
+        booksFromDatabase.append(book)
+
+    # print(booksFromDatabase)
+
+    # check if the data in local is the same as the data in database
+    # if not the same, update the data in local
+    if booksFromLocal != booksFromDatabase:
+        pass
+        # TODO check the status of book name that are in database
+        # TODO if the status in local is different from the status in database, update the status in local
+
+
+
+
+
+
+
+

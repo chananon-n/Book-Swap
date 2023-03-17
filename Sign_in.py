@@ -1,9 +1,5 @@
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-                           QFont, QFontDatabase, QGradient, QIcon,
-                           QImage, QKeySequence, QLinearGradient, QPainter,
-                           QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton,
-                               QSizePolicy, QSpacerItem, QVBoxLayout, QWidget, QLineEdit)
+from PySide6.QtGui import (QFont, QPixmap)
+from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit)
 from PySide6.QtCore import Qt, QEvent
 
 
@@ -37,7 +33,6 @@ class Sign_in(QWidget):
         color: rgb(148, 132, 99);
         }
         ''')
-
 
         label2 = QLabel("* 8 digits")
         label2.setFont(QFont("Vesper Libre", 15))

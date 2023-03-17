@@ -1,13 +1,3 @@
-# -*- coding: utf-8 -*-
-
-################################################################################
-## Form generated from reading UI file 'Home.ui'
-##
-## Created by: Qt User Interface Compiler version 6.4.2
-##
-## WARNING! All changes made in this file will be lost when recompiling UI file!
-################################################################################
-
 
 from PySide6.QtGui import (QFont, QPixmap)
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget)
@@ -51,7 +41,6 @@ class Home(QWidget):
                 background-color: rgb(182, 170, 145);
                 }
                 ''')
-
 
         h_layout4 = QHBoxLayout()
         h_layout4.addSpacing(200)

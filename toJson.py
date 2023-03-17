@@ -1,18 +1,10 @@
 import json
-from encryptDecrypt import encryptDecrypt
 
 
-class toJson:
-    def __init__(self):
-        self.data = {}
-
-    def setData(self, data):
-        self.data = data
-
-    def addData(self, destination):
-        with open(destination, 'w', encoding='utf-8') as f:
-            json.dump(self.data, f, ensure_ascii=False, indent=4)
-
+# write data to json file
+def addData(data, destination):
+    with open(destination, 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)
 
 # if __name__ == "__main__":
 #     obj = encryptDecrypt()

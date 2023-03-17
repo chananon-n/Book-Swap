@@ -9,22 +9,28 @@ class encryptDecrypt:
     def __init__(self):
         self.key = Fernet.generate_key()
 
+    # write the key to a file
     def writeKey(self):
         with open('filekey.key', 'wb') as filekey:
             filekey.write(self.key)
 
+    # set the key from the key file
     def setKey(self, key):
         self.key = key
 
+    # get the key
     def getKey(self):
         return self.key
 
+    # encrypt the ID
     def encryptID(self, key, id):
         pass
 
+    # decrypt the ID
     def decryptID(self, key, encoded_ID):
         pass
 
+    # encrypt the file
     def encryptFile(self, file):
         # opening the key
         with open('filekey.key', 'rb') as filekey:
@@ -53,6 +59,7 @@ class encryptDecrypt:
         with open(file, 'wb') as encrypted_file:
             encrypted_file.write(encrypted)
 
+    # decrypt the file
     def decryptFile(self, file):
         # opening the key
         with open('filekey.key', 'rb') as filekey:

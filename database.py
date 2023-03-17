@@ -12,20 +12,24 @@ class uploadToDB:
         self.ref = db.reference("/")
         self.file = ""
 
+    # set the file to upload
     def setFile(self, filename):
         self.file = filename
 
+    # upload the file to database
     def uploadFile(self):
         self.ref = db.reference("/")
         with open(self.file, "r") as f:
             file_contents = json.load(f)
         self.ref.update(file_contents)
 
+    # download the file from database
     def downloadFile(self, ID):
         self.ref = db.reference("/" + str(ID))
         with open('upload.json', "w") as f:
             json.dump(self.ref.get(), f)
 
+    # check if the ID is in database
     def checkID(self, ID):
         self.ref = db.reference("/" + str(ID))
         if self.ref.get() is None:
@@ -33,11 +37,12 @@ class uploadToDB:
         else:
             return True
 
-    # get the key of the user
+    # get the key of the ID
     def getKey(self, ID):
         self.ref = db.reference("/" + str(ID))
         return self.ref.get()["Key"]
 
+    # get the universal key that is used to encrypt the ID
     def getUniKey(self):
         self.ref = db.reference("/Universal Key")
         return self.ref.get()

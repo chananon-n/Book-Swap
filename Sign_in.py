@@ -81,6 +81,31 @@ class Sign_in(QWidget):
         self.setWindowTitle("Sign in")
         self.show()
 
+        self.enter1.setFocusPolicy(Qt.NoFocus)
+        self.enter1.installEventFilter(self)
+
+    def eventFilter(self, source, event):
+        if event.type() == QEvent.MouseButtonPress:
+            if source is self.enter1:
+                self.enter1.setFocus()
+                text = self.enter1.text()
+                if text == "Enter the ID":
+                    self.enter1.setText("")
+            else:
+                self.enter1.clearFocus()
+                text = self.enter1.text()
+                if text == "":
+                    self.enter1.setText("Enter the ID")
+        return super().eventFilter(source, event)
+
+    def mousePressEvent(self, event):
+        if not self.enter1.underMouse():
+            self.enter1.clearFocus()
+            text = self.enter1.text()
+            if text == "":
+                self.enter1.setText("Enter the ID")
+        super().mousePressEvent(event)
+
 
 if __name__ == "__main__":
     app = QApplication()

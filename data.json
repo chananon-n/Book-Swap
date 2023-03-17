@@ -14,20 +14,6 @@
                 "Title": "Author3",
                 "Author": "Publisher3"
             }
-        },
-        "eBook": {
-            "eBook1": {
-                "Title": "Author1",
-                "Author": "Publisher1"
-            },
-            "eBook2": {
-                "Title": "Author2",
-                "Author": "Publisher2"
-            },
-            "eBook3": {
-                "Title": "Author3",
-                "Author": "Publisher3"
-            }
         }
     }
 }

@@ -38,9 +38,13 @@ class uploadToDB:
         self.ref = db.reference("/" + str(ID))
         return self.ref.get()["Key"]
 
+    def getUniKey(self):
+        self.ref = db.reference("/Universal Key")
+        return self.ref.get()
+
 
 # if __name__ == "__main__":
 #     obj = uploadToDB()
 #     obj.setFile('test.json')
 #     obj.uploadFile()
-    # obj.downloadFile("ID")
+#     obj.downloadFile("ID")

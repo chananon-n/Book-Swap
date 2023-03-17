@@ -2,6 +2,8 @@ from cryptography.fernet import Fernet
 import os
 import sys
 
+from database import uploadToDB
+
 
 class encryptDecrypt:
     def __init__(self):
@@ -17,13 +19,11 @@ class encryptDecrypt:
     def getKey(self):
         return self.key
 
-    def encryptID(self):
+    def encryptID(self, key, id):
         pass
-        # TODO
 
-    def decryptID(self):
+    def decryptID(self, key, encoded_ID):
         pass
-        # TODO
 
     def encryptFile(self, file):
         # opening the key
@@ -75,5 +75,6 @@ class encryptDecrypt:
 
 if __name__ == "__main__":
     obj = encryptDecrypt()
+    obj2 = uploadToDB()
     # obj.encryptFile()
     # obj.decryptFile()

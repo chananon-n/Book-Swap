@@ -9,12 +9,9 @@
 ################################################################################
 
 
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton,
-    QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
+from PySide6.QtGui import (QFont, QPixmap)
+from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget)
+
 
 class Home(QWidget):
     def __init__(self):
@@ -40,12 +37,10 @@ class Home(QWidget):
         button1.setText("Signin")
         button1.setFont(QFont("Vesper Libre", 25))
 
-
         h_layout3 = QHBoxLayout()
         h_layout3.addSpacing(200)
         h_layout3.addWidget(button1)
         h_layout3.addSpacing(200)
-
 
         button2 = QPushButton("Sign up")
         button2.setFont(QFont("Vesper Libre", 25))
@@ -70,7 +65,6 @@ class Home(QWidget):
         v_layout.addLayout(h_layout4)
         v_layout.addSpacing(50)
 
-        myColor = '#920310'
         self.setLayout(v_layout)
         self.setStyleSheet("background-color: #F9F6EC;")
         self.setWindowTitle("Home")

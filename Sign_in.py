@@ -75,7 +75,6 @@ class Sign_in(QWidget):
         v_layout.addLayout(h_layout3)
         v_layout.addSpacing(50)
 
-        myColor = '#920310'
         self.setLayout(v_layout)
         self.setStyleSheet("background-color: #F9F6EC;")
         self.setWindowTitle("Sign in")

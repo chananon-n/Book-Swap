@@ -46,20 +46,20 @@ if __name__ == "__main__":
     toDatabase.setFile('upload.json')
     toDatabase.uploadFile()
 
-    keyCredential.decryptFile("data.json")
 
     # if log in
-    # user = 61573693
-    # toDatabase = uploadToDB()
-    # keyCredential = encryptDecrypt()
-    # if toDatabase.checkID(user):
-    #     keyCredential.setKey(toDatabase.getKey(user))
-    #
-    # # download file from database
-    # toDatabase.downloadFile(user)
-    #
-    # # TODO: check if the data in local is the same as the data in database
-    #
-    # # decrypt file using key
-    # keyCredential.decryptFile("data.json")
+    user = 72286786
+    toDatabase = uploadToDB()
+    keyCredential = encryptDecrypt()
+    if toDatabase.checkID(user):
+        keyCredential.setKey(toDatabase.getKey(user))
+
+    # download file from database
+    toDatabase.downloadFile(user)
+
+    # decrypt file using key
+    keyCredential.decryptFile("data.json")
+
+    # check if the data in local is the same as the data in database
+    # if not the same, update the data in local
 

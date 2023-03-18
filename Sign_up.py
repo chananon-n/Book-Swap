@@ -67,7 +67,7 @@ class Sign_up(QWidget):
 
         self.setLayout(v_layout)
         self.setStyleSheet("background-color: #F9F6EC;")
-        self.setWindowTitle("Sign in")
+        self.setWindowTitle("Sign Up")
         self.show()
 
         self.enter1.setFocusPolicy(Qt.NoFocus)

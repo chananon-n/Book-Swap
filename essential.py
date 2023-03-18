@@ -1,6 +1,7 @@
 import json
 import random
 
+import toJson
 from database import uploadToDB
 from encryptDecrypt import encryptDecrypt
 
@@ -22,8 +23,7 @@ class essential:
     def finishing(self, data):
         self.key.encryptFile("data.json")
         # write the encrypted file to upload.json
-        with open('upload.json', 'w') as file:
-            json.dump(data, file)
+        toJson.addData(data, 'upload.json')
         self.db.setFile('upload.json')
         self.db.uploadFile()
 

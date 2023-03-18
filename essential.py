@@ -18,7 +18,9 @@ class essential:
             randomId = random.randint(10000000, 99999999)
             encryptedID = self.key.encryptID(self.db, str(randomId))
 
-        # TODO set user ID to the encrypted ID
+        toJson.addData(encryptedID, 'upload.json')
+
+        # TODO set user ID
 
     def finishing(self, data):
         self.key.encryptFile("data.json")

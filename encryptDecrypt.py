@@ -1,5 +1,4 @@
 from cryptography.fernet import Fernet
-
 from database import uploadToDB
 
 
@@ -22,11 +21,13 @@ class encryptDecrypt:
 
     # encrypt the ID
     def encryptID(self, key, id):
-        pass
+        fernet = Fernet(bytes(key.getUniKey(), 'utf-8'))
+        return fernet.encrypt(bytes(id, 'utf-8'))
 
     # decrypt the ID
-    def decryptID(self, key, encoded_ID):
-        pass
+    def decryptID(self, key, id):
+        fernet = Fernet(bytes(key.getUniKey(), 'utf-8'))
+        return fernet.decrypt(id).decode('utf-8')
 
     # encrypt the file
     def encryptFile(self, file):
@@ -81,5 +82,7 @@ class encryptDecrypt:
 if __name__ == "__main__":
     obj = encryptDecrypt()
     obj2 = uploadToDB()
+
+
     # obj.encryptFile()
     # obj.decryptFile()

@@ -1,6 +1,7 @@
 import json
 import random
 
+import toJson
 from database import uploadToDB
 from encryptDecrypt import encryptDecrypt
 
@@ -12,19 +13,25 @@ class essential:
 
     def createNewID(self):
         randomId = random.randint(10000000, 99999999)
-        while self.db.checkID(randomId):
+        encryptedID = self.key.encryptID(self.db, str(randomId))
+        while self.db.checkID(encryptedID):
             randomId = random.randint(10000000, 99999999)
+            encryptedID = self.key.encryptID(self.db, str(randomId))
 
-        self.key.writeKey()
+        toJson.addData(encryptedID, 'upload.json')
 
-    def finishing(self):
+        # TODO set user ID
+
+    def finishing(self, data):
         self.key.encryptFile("data.json")
+        # write the encrypted file to upload.json
+        toJson.addData(data, 'upload.json')
         self.db.setFile('upload.json')
         self.db.uploadFile()
 
     def loggingIn(self, ID):
-        # TODO check the encrypted ID with encrypted ID in database
-        if self.db.checkID(ID):
+        encryptedID = self.key.encryptID(self.db, ID)
+        if self.db.checkID(encryptedID):
             self.key.setKey(self.db.getKey(ID))
             self.db.downloadFile(ID)
             self.key.decryptFile("data.json")
@@ -68,3 +75,9 @@ class essential:
     def updateLocalData(self):
         pass
         # TODO update local data with data from database
+
+
+if __name__ == "__main__":
+    obj = essential()
+
+    obj.createNewID()

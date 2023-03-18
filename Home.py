@@ -1,7 +1,8 @@
 
 from PySide6.QtGui import (QFont, QPixmap)
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget)
-
+from Sign_in import Sign_in
+from Sign_up import Sign_up
 
 class Home(QWidget):
     def __init__(self):
@@ -16,35 +17,36 @@ class Home(QWidget):
         h_layout2.addWidget(label)
         h_layout2.addWidget(blank)
 
-        button1 = QPushButton()
-        button1.setStyleSheet('''
+        Signin_button = QPushButton("Signin")
+        Signin_button.setStyleSheet('''
         QPushButton {
         border: 3px solid rgb(132, 113, 77);
         color: rgb(249, 246, 236);
         background-color: rgb(182, 170, 145);
         }
         ''')
-        button1.setText("Signin")
-        button1.setFont(QFont("Vesper Libre", 25))
+        Signin_button.setFont(QFont("Vesper Libre", 25))
+        Signin_button.clicked.connect(self.getSign_inPanel)
 
         h_layout3 = QHBoxLayout()
         h_layout3.addSpacing(200)
-        h_layout3.addWidget(button1)
+        h_layout3.addWidget(Signin_button)
         h_layout3.addSpacing(200)
 
-        button2 = QPushButton("Sign up")
-        button2.setFont(QFont("Vesper Libre", 25))
-        button2.setStyleSheet('''
+        Signup_button = QPushButton("Sign up")
+        Signup_button.setFont(QFont("Vesper Libre", 25))
+        Signup_button.setStyleSheet('''
                 QPushButton {
                 border: 3px solid rgb(132, 113, 77);
                 color: rgb(249, 246, 236);
                 background-color: rgb(182, 170, 145);
                 }
                 ''')
+        Signup_button.clicked.connect(self.getSign_upPanel)
 
         h_layout4 = QHBoxLayout()
         h_layout4.addSpacing(200)
-        h_layout4.addWidget(button2)
+        h_layout4.addWidget(Signup_button)
         h_layout4.addSpacing(200)
 
         v_layout = QVBoxLayout()
@@ -57,7 +59,16 @@ class Home(QWidget):
         self.setLayout(v_layout)
         self.setStyleSheet("background-color: #F9F6EC;")
         self.setWindowTitle("Home")
+        self.setGeometry(400, 200, 500, 400)
         self.show()
+
+    def getSign_inPanel(self):
+        self.sign_in = Sign_in()
+        self.close()
+
+    def getSign_upPanel(self):
+        self.sign_up = Sign_up()
+        self.close()
 
 
 if __name__ == "__main__":

@@ -4,6 +4,9 @@ from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, Q
 from Sign_in import Sign_in
 from Sign_up import Sign_up
 
+
+# from Sign_up import Sign_up
+
 class Home(QWidget):
     def __init__(self):
         super().__init__()

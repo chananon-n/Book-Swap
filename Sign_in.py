@@ -2,7 +2,6 @@ from PySide6.QtGui import (QFont, QPixmap)
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit)
 from PySide6.QtCore import Qt, QEvent
 
-
 class Sign_in(QWidget):
 
     def __init__(self):

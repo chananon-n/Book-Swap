@@ -1,6 +1,8 @@
 from PySide6.QtGui import (QFont, QPixmap)
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit)
+from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit, QDialog)
 from PySide6.QtCore import Qt, QEvent
+
+import Home
 
 
 class Sign_in(QWidget):
@@ -78,6 +80,86 @@ class Sign_in(QWidget):
 
         self.enter1.setFocusPolicy(Qt.NoFocus)
         self.enter1.installEventFilter(self)
+
+        button1.clicked.connect(self.sign_in)
+
+    def sign_in(self):
+        text = self.enter1.text()
+        dialog = QDialog()
+        if text == "Enter the ID" or text == "":
+            dialog.setWindowTitle("Error")
+            dialog.setWindowModality(Qt.ApplicationModal)
+            dialog.resize(300, 100)
+            label = QLabel("Please enter your ID")
+            label.setFont(QFont("Vesper Libre", 15))
+            label.setStyleSheet('''
+            QLabel {
+            color: rgb(132, 113, 77);
+            }
+            ''')
+            button = QPushButton("OK")
+            button.setFont(QFont("Vesper Libre", 15))
+            button.setStyleSheet('''
+            QPushButton {
+            border: 3px solid rgb(132, 113, 77);
+            color: rgb(249, 246, 236);
+            background-color: rgb(182, 170, 145);
+            }
+            ''')
+            button.clicked.connect(dialog.close)
+        if len(text) != 8 or not text.isdigit():
+            dialog.setWindowTitle("Error")
+            dialog.setWindowModality(Qt.ApplicationModal)
+            dialog.resize(300, 100)
+            label = QLabel("Please enter number 8 digits")
+            label.setFont(QFont("Vesper Libre", 15))
+            label.setStyleSheet('''
+            QLabel {
+            color: rgb(132, 113, 77);
+            }
+            ''')
+            button = QPushButton("OK")
+            button.setFont(QFont("Vesper Libre", 15))
+            button.setStyleSheet('''
+            QPushButton {
+            border: 3px solid rgb(132, 113, 77);
+            color: rgb(249, 246, 236);
+            background-color: rgb(182, 170, 145);
+            }
+            ''')
+            button.clicked.connect(dialog.close)
+        else:
+            dialog.setWindowTitle("Success")
+            dialog.setWindowModality(Qt.ApplicationModal)
+            dialog.resize(300, 100)
+            label = QLabel("Login successfully")
+            label.setFont(QFont("Vesper Libre", 15))
+            label.setStyleSheet('''QLabel {
+            color: rgb(132, 113, 77);
+            }
+            ''')
+            button = QPushButton("OK")
+            button.setFont(QFont("Vesper Libre", 15))
+            button.setStyleSheet('''
+            QPushButton {
+            border: 3px solid rgb(132, 113, 77);
+            color: rgb(249, 246, 236);
+            background-color: rgb(182, 170, 145);
+            }
+            ''')
+            button.clicked.connect(dialog.close)
+            button.clicked.connect(self.back_main_menu)
+        v_layout = QVBoxLayout()
+        v_layout.addWidget(label)
+        v_layout.addWidget(button)
+        dialog.setLayout(v_layout)
+        dialog.exec()
+
+    def back_main_menu(self):
+        self.home = Home.Home()
+        self.close()
+
+
 
     def eventFilter(self, source, event):
         if event.type() == QEvent.MouseButtonPress:

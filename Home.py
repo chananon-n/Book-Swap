@@ -1,8 +1,11 @@
 
 from PySide6.QtGui import (QFont, QPixmap)
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget)
-from Sign_in import Sign_in
-from Sign_up import Sign_up
+import Sign_in
+import Sign_up
+
+
+# from Sign_up import Sign_up
 
 class Home(QWidget):
     def __init__(self):
@@ -63,11 +66,11 @@ class Home(QWidget):
         self.show()
 
     def getSign_inPanel(self):
-        self.sign_in = Sign_in()
+        self.sign_in = Sign_in.Sign_in()
         self.close()
 
     def getSign_upPanel(self):
-        self.sign_up = Sign_up()
+        self.sign_up = Sign_up.Sign_up()
         self.close()
 
 

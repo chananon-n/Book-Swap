@@ -7,6 +7,10 @@ class Book(abstractBook.Book):
         super(Book, self).__init__(picture, title, author, description, category, tags)
         self.price = 0.0
         self.day = 0
+        self.status = True
+
+    def setStatus(self, status):
+        self.status = status
 
     def get_day(self):
         return self.day

@@ -30,7 +30,8 @@ class Add_book(QWidget):
         }
         ''')
 
-        self.title_name = QLineEdit("Enter the title")
+        self.title_name = QLineEdit(self)
+        self.title_name.setPlaceholderText("Enter title")
         self.title_name.setFont(QFont("Vesper Libre", 20))
         self.title_name.setStyleSheet('''
         QLineEdit {
@@ -47,16 +48,17 @@ class Add_book(QWidget):
         h_layout2.addSpacing(30)
 
         author = QLabel("Author")
-        author.setFont(QFont("Vesper Libre", 25))
+        author.setFont(QFont("Vesper Libre", 20))
         author.setStyleSheet('''
         QLabel {
         color: rgb(132, 113, 77);
         }
         ''')
 
-        author_name = QLineEdit("Enter the author")
-        author_name.setFont(QFont("Vesper Libre", 20))
-        author_name.setStyleSheet('''
+        self.author_name = QLineEdit(self)
+        self.author_name.setPlaceholderText("Enter the author")
+        self.author_name.setFont(QFont("Vesper Libre", 25))
+        self.author_name.setStyleSheet('''
         QLineEdit {
         border: 3px solid rgb(132, 113, 77);
         color: rgb(148, 132, 99);
@@ -67,11 +69,11 @@ class Add_book(QWidget):
         h_layout3.addSpacing(30)
         h_layout3.addWidget(author)
         h_layout3.addSpacing(15)
-        h_layout3.addWidget(author_name)
+        h_layout3.addWidget(self.author_name)
         h_layout3.addSpacing(30)
 
         description = QLabel("Description")
-        description.setFont(QFont("Vesper Libre", 25))
+        description.setFont(QFont("Vesper Libre", 20))
         description.setStyleSheet('''
         QLabel {
         color: rgb(132, 113, 77);
@@ -83,13 +85,14 @@ class Add_book(QWidget):
         h_layout4.addWidget(description)
 
         self.description_name = QTextEdit("Enter the description")
-        self.description_name.setFont(QFont("Vesper Libre", 20))
+        self.description_name.setFont(QFont("Vesper Libre", 25))
         self.description_name.setStyleSheet('''
         QTextEdit   {
         border: 3px solid rgb(132, 113, 77);
         color: rgb(148, 132, 99);
         }
         ''')
+
 
         h_layout5 = QHBoxLayout()
         h_layout5.addSpacing(50)
@@ -286,14 +289,14 @@ class Add_book(QWidget):
         v_layout.addLayout(h_layout11)
         v_layout.addLayout(h_layout12)
 
-        self.title_name.setFocusPolicy(Qt.NoFocus)
-        self.title_name.installEventFilter(self)
-        author_name.setFocusPolicy(Qt.NoFocus)
-        author_name.installEventFilter(self)
-        self.description_name.setFocusPolicy(Qt.NoFocus)
-        self.description_name.installEventFilter(self)
-        price_cost.setFocusPolicy(Qt.NoFocus)
-        price_cost.installEventFilter(self)
+        # self.title_name.setFocusPolicy(Qt.NoFocus)
+        # self.title_name.installEventFilter(self)
+        # self.author_name.setFocusPolicy(Qt.NoFocus)
+        # self.author_name.installEventFilter(self)
+        # self.description_name.setFocusPolicy(Qt.NoFocus)
+        # self.description_name.installEventFilter(self)
+        # price_cost.setFocusPolicy(Qt.NoFocus)
+        # price_cost.installEventFilter(self)
 
         self.setLayout(v_layout)
 
@@ -352,23 +355,44 @@ class Add_book(QWidget):
         self.sign_in = Sign_in()
         self.close()
 
-    def eventFilter(self, source, event):
-        if event.type() == QEvent.MouseButtonPress:
-            if source is self.title_name:
-                self.title_name.setFocus()
-                text = self.title_name.text()
-                if text == "Enter the title":
-                    self.title_name.setText("")
-        return super().eventFilter(source, event)
+    # def eventFilter(self, source, event):
+    #     if event.type() == QEvent.MouseButtonPress:
+    #         if source is self.title_name:
+    #             self.title_name.setFocus()
+    #             text_title = self.title_name.text()
+    #             if text_title == "Enter the title":
+    #                 self.title_name.setText("")
+    #     if event.type() == QEvent.MouseButtonPress:
+    #         if source is self.author_name:
+    #             self.author_name.setFocus()
+    #             text_author = self.author_name.text()
+    #             if text_author == "Enter the author":
+    #                 self.author_name.setText("")
+        # if event.type() == QEvent.MouseButtonPress:
+        #     if source is self.description_name:
+        #         self.description_name.doSetTextCursor()
+        #         text_description = self.description_name.toPlainText()
+        #         if text_description == "Enter the description":
+        #             self.description_name.setText("")
+        # return super().eventFilter(source, event)
 
-    def mousePressEvent(self, event):
-        if not self.title_name.underMouse():
-            self.title_name.clearFocus()
-            text = self.title_name.text()
-            if text == "":
-                self.title_name.setText("Enter the title")
-        super().mousePressEvent(event)
-
+    # def mousePressEvent(self, event):
+    #     if not self.title_name.underMouse():
+    #         self.title_name.clearFocus()
+    #         text = self.title_name.text()
+    #         if text == "":
+    #             self.title_name.setText("Enter the title")
+    #     if not self.author_name.underMouse():
+    #         self.author_name.clearFocus()
+    #         text = self.author_name.text()
+    #         if text == "":
+    #             self.author_name.setText("Enter the author")
+    #      if not self.description_name.setPlainText("Enter the description"):
+    #         self.description_name.textCursor()
+    #          text = self.description_name.toPlainText()
+    #          if text == "":
+    #              self.description_name.setText("Enter the description")
+    #     super().mousePressEvent(event)
 
 if __name__ == "__main__":
     app = QApplication()

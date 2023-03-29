@@ -1,7 +1,5 @@
 import firebase_admin
 from firebase_admin import db
-import json
-
 import toJson
 
 
@@ -12,11 +10,7 @@ class uploadToDB:
             'databaseURL': 'https://bookswap-9f0be-default-rtdb.asia-southeast1.firebasedatabase.app/'
         })
         self.ref = db.reference("/")
-        self.file = ""
-
-    # set the file to upload
-    def setFile(self, filename):
-        self.file = filename
+        self.file = "upload.json"
 
     # upload the file to database
     def uploadFile(self):
@@ -27,7 +21,7 @@ class uploadToDB:
     # download the file from database
     def downloadFile(self, ID):
         self.ref = db.reference("/" + str(ID))
-        toJson.addData(self.ref.get(), "upload.json", 'w')
+        toJson.addData(self.ref.get(), self.file)
 
     # check if the ID is in database
     def checkID(self, ID):
@@ -48,8 +42,12 @@ class uploadToDB:
         return self.ref.get()
 
 
-# if __name__ == "__main__":
-#     obj = uploadToDB()
-#     obj.setFile('test.json')
-#     obj.uploadFile()
-#     obj.downloadFile("ID")
+if __name__ == "__main__":
+    obj = uploadToDB()
+    # data = {'ID': {'Key': '123', 'Book': {'Book1': 0, 'Book2': 1, 'Book3': 1}, 'E-Book': {'eBook1': 0, 'eBook2': 1, 'eBook3': 1}}}
+    # toJson.addData(data, 'upload.json', 'w')
+    # obj.uploadFile()
+    # obj.downloadFile('ID')
+    # print(obj.checkID('ID'))
+    # print(obj.getKey('ID'))
+    # print(obj.getUniKey())

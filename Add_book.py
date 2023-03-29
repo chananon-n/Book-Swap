@@ -1,8 +1,8 @@
 from PySide6.QtGui import (QFont, QPixmap)
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit,
-                               QTextEdit, QCheckBox)
+                               QTextEdit, QCheckBox, QScrollArea)
 from PySide6.QtCore import Qt, QEvent
-from Sign_in import Sign_in  # change to main menu by your self na non , left only import sign in and from and import 
+from Sign_in import Sign_in  # change to main menu by your self na non , left only import sign in and from and import
 
 
 # use in main menu instead
@@ -30,9 +30,9 @@ class Add_book(QWidget):
         }
         ''')
 
-        title_name = QLineEdit("Enter the title")
-        title_name.setFont(QFont("Vesper Libre", 20))
-        title_name.setStyleSheet('''
+        self.title_name = QLineEdit("Enter the title")
+        self.title_name.setFont(QFont("Vesper Libre", 20))
+        self.title_name.setStyleSheet('''
         QLineEdit {
         border: 3px solid rgb(132, 113, 77);
         color: rgb(148, 132, 99);
@@ -40,9 +40,11 @@ class Add_book(QWidget):
         ''')
 
         h_layout2 = QHBoxLayout()
+        h_layout2.addSpacing(30)
         h_layout2.addWidget(title)
         h_layout2.addSpacing(40)
-        h_layout2.addWidget(title_name)
+        h_layout2.addWidget(self.title_name)
+        h_layout2.addSpacing(30)
 
         author = QLabel("Author")
         author.setFont(QFont("Vesper Libre", 25))
@@ -62,9 +64,11 @@ class Add_book(QWidget):
         ''')
 
         h_layout3 = QHBoxLayout()
+        h_layout3.addSpacing(30)
         h_layout3.addWidget(author)
         h_layout3.addSpacing(15)
         h_layout3.addWidget(author_name)
+        h_layout3.addSpacing(30)
 
         description = QLabel("Description")
         description.setFont(QFont("Vesper Libre", 25))
@@ -75,6 +79,7 @@ class Add_book(QWidget):
         ''')
 
         h_layout4 = QHBoxLayout()
+        h_layout4.addSpacing(30)
         h_layout4.addWidget(description)
 
         self.description_name = QTextEdit("Enter the description")
@@ -87,8 +92,9 @@ class Add_book(QWidget):
         ''')
 
         h_layout5 = QHBoxLayout()
-        h_layout5.addSpacing(10)
+        h_layout5.addSpacing(50)
         h_layout5.addWidget(self.description_name)
+        h_layout5.addSpacing(30)
 
         category = QLabel("Category")
         category.setFont(QFont("Vesper Libre", 25))
@@ -99,6 +105,7 @@ class Add_book(QWidget):
         ''')
 
         h_layout6 = QHBoxLayout()
+        h_layout6.addSpacing(30)
         h_layout6.addWidget(category)
 
         Romance_button = QCheckBox("Romance")
@@ -124,8 +131,9 @@ class Add_book(QWidget):
         Mystery_button.toggled.connect(self.OnCLickedMystery)
 
         h_layout7 = QHBoxLayout()
+        h_layout7.addSpacing(50)
         h_layout7.addWidget(Romance_button)
-        h_layout7.addSpacing(75)
+        h_layout7.addSpacing(45)
         h_layout7.addWidget(Mystery_button)
 
         Fantasy_and_science_fiction_button = QCheckBox("Fantasy and science fiction")
@@ -151,8 +159,9 @@ class Add_book(QWidget):
         Thrillers_horror_button.toggled.connect(self.OnCLickedThrillers_horror)
 
         h_layout8 = QHBoxLayout()
+        h_layout8.addSpacing(50)
         h_layout8.addWidget(Fantasy_and_science_fiction_button)
-        h_layout8.addSpacing(75)
+        h_layout8.addSpacing(45)
         h_layout8.addWidget(Thrillers_horror_button)
 
         Young_adult_button = QCheckBox("Young adult")
@@ -178,8 +187,9 @@ class Add_book(QWidget):
         Children_fiction_button.toggled.connect(self.OnCLickedChildren_fiction)
 
         h_layout9 = QHBoxLayout()
+        h_layout9.addSpacing(50)
         h_layout9.addWidget(Young_adult_button)
-        h_layout9.addSpacing(75)
+        h_layout9.addSpacing(45)
         h_layout9.addWidget(Children_fiction_button)
 
         Inspirational_and_religious_button = QCheckBox("Inspirational and religious")
@@ -205,8 +215,9 @@ class Add_book(QWidget):
         Biography_and_autobiography_button.toggled.connect(self.OnCLickedInspirational_and_religious)
 
         h_layout10 = QHBoxLayout()
+        h_layout10.addSpacing(50)
         h_layout10.addWidget(Inspirational_and_religious_button)
-        h_layout10.addSpacing(102)
+        h_layout10.addSpacing(45)
         h_layout10.addWidget(Biography_and_autobiography_button)
 
         price = QLabel("Price")
@@ -255,10 +266,11 @@ class Add_book(QWidget):
         cancel_button.clicked.connect(self.getSign_inPanel)
 
         h_layout12 = QHBoxLayout()
-        h_layout12.addSpacing(10)
+        h_layout12.addSpacing(20)
         h_layout12.addWidget(add_button)
         h_layout12.addSpacing(300)
         h_layout12.addWidget(cancel_button)
+        h_layout12.addSpacing(20)
 
         v_layout = QVBoxLayout()
         v_layout.addLayout(h_layout1)
@@ -274,14 +286,32 @@ class Add_book(QWidget):
         v_layout.addLayout(h_layout11)
         v_layout.addLayout(h_layout12)
 
-        self.setLayout(v_layout)
-        self.setWindowTitle("Add Book")
-        self.setStyleSheet("background-color: #F9F6EC;")
-        self.setGeometry(400, 200, 500, 400)
-        self.show()
+        self.title_name.setFocusPolicy(Qt.NoFocus)
+        self.title_name.installEventFilter(self)
+        author_name.setFocusPolicy(Qt.NoFocus)
+        author_name.installEventFilter(self)
+        self.description_name.setFocusPolicy(Qt.NoFocus)
+        self.description_name.installEventFilter(self)
+        price_cost.setFocusPolicy(Qt.NoFocus)
+        price_cost.installEventFilter(self)
 
-        Romance_button.setFocusPolicy(Qt.NoFocus)
-        Romance_button.installEventFilter(self)
+        self.setLayout(v_layout)
+
+        scroll_area = QScrollArea()
+        scroll_area.setWidgetResizable(True)
+
+        scroll_widget = QWidget()
+        scroll_widget.setLayout(v_layout)
+
+        scroll_area.setWidget(scroll_widget)
+
+        # set the scroll area as the central widget
+        self.setLayout(QVBoxLayout(self))
+        self.layout().addWidget(scroll_area)
+        self.setWindowTitle("Add Book")
+        self.setFixedSize(700, 600)
+        self.setStyleSheet("background-color: #F9F6EC;")
+        self.show()
 
     def OnCLickedRomance(self):
         Romance_button = self.sender()
@@ -321,6 +351,23 @@ class Add_book(QWidget):
     def getSign_inPanel(self):  # wait for main menu done then just import main menu page na
         self.sign_in = Sign_in()
         self.close()
+
+    def eventFilter(self, source, event):
+        if event.type() == QEvent.MouseButtonPress:
+            if source is self.title_name:
+                self.title_name.setFocus()
+                text = self.title_name.text()
+                if text == "Enter the title":
+                    self.title_name.setText("")
+        return super().eventFilter(source, event)
+
+    def mousePressEvent(self, event):
+        if not self.title_name.underMouse():
+            self.title_name.clearFocus()
+            text = self.title_name.text()
+            if text == "":
+                self.title_name.setText("Enter the title")
+        super().mousePressEvent(event)
 
 
 if __name__ == "__main__":

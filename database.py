@@ -2,6 +2,8 @@ import firebase_admin
 from firebase_admin import db
 import json
 
+import toJson
+
 
 class uploadToDB:
     def __init__(self):
@@ -19,15 +21,13 @@ class uploadToDB:
     # upload the file to database
     def uploadFile(self):
         self.ref = db.reference("/")
-        with open(self.file, "r") as f:
-            file_contents = json.load(f)
+        file_contents = toJson.loadData(self.file)
         self.ref.update(file_contents)
 
     # download the file from database
     def downloadFile(self, ID):
         self.ref = db.reference("/" + str(ID))
-        with open('upload.json', "w") as f:
-            json.dump(self.ref.get(), f)
+        toJson.addData(self.ref.get(), "upload.json", 'w')
 
     # check if the ID is in database
     def checkID(self, ID):

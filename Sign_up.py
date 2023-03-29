@@ -30,7 +30,8 @@ class Sign_up(QWidget):
         h_layout2.addSpacing(60)
         h_layout2.addWidget(label1)
 
-        self.enter1 = QLineEdit("Enter the store name")
+        self.enter1 = QLineEdit(self)
+        self.enter1.setPlaceholderText("Enter the store name")
         self.enter1.setFont(QFont("Vesper Libre", 20))
         self.enter1.setStyleSheet('''
         QLineEdit {
@@ -72,8 +73,6 @@ class Sign_up(QWidget):
         self.setWindowTitle("Sign Up")
         self.show()
 
-        self.enter1.setFocusPolicy(Qt.NoFocus)
-        self.enter1.installEventFilter(self)
         button1.clicked.connect(self.sign_up)
 
     def sign_up(self):
@@ -130,30 +129,6 @@ class Sign_up(QWidget):
     def back_main_menu(self):
         self.home = Home.Home()
         self.close()
-
-
-
-    def eventFilter(self, source, event):
-        if event.type() == QEvent.MouseButtonPress:
-            if source is self.enter1:
-                self.enter1.setFocus()
-                text = self.enter1.text()
-                if text == "Enter the store name":
-                    self.enter1.setText("")
-            else:
-                self.enter1.clearFocus()
-                text = self.enter1.text()
-                if text == "":
-                    self.enter1.setText("Enter the store name")
-        return super().eventFilter(source, event)
-
-    def mousePressEvent(self, event):
-        if not self.enter1.underMouse():
-            self.enter1.clearFocus()
-            text = self.enter1.text()
-            if text == "":
-                self.enter1.setText("Enter the store name")
-        super().mousePressEvent(event)
 
 
 if __name__ == "__main__":

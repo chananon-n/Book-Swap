@@ -30,7 +30,8 @@ class Add_book(QWidget):
         }
         ''')
 
-        self.title_name = QLineEdit("Enter the title")
+        self.title_name = QLineEdit(self)
+        self.title_name.setPlaceholderText("Enter the title")
         self.title_name.setFont(QFont("Vesper Libre", 20))
         self.title_name.setStyleSheet('''
         QLineEdit {
@@ -54,7 +55,8 @@ class Add_book(QWidget):
         }
         ''')
 
-        author_name = QLineEdit("Enter the author")
+        author_name = QLineEdit(self)
+        author_name.setPlaceholderText("Enter the author")
         author_name.setFont(QFont("Vesper Libre", 20))
         author_name.setStyleSheet('''
         QLineEdit {
@@ -82,7 +84,8 @@ class Add_book(QWidget):
         h_layout4.addSpacing(30)
         h_layout4.addWidget(description)
 
-        self.description_name = QTextEdit("Enter the description")
+        self.description_name = QTextEdit(self)
+        self.description_name.setPlaceholderText("Enter the description")
         self.description_name.setFont(QFont("Vesper Libre", 20))
         self.description_name.setStyleSheet('''
         QTextEdit   {
@@ -133,7 +136,7 @@ class Add_book(QWidget):
         h_layout7 = QHBoxLayout()
         h_layout7.addSpacing(50)
         h_layout7.addWidget(Romance_button)
-        h_layout7.addSpacing(45)
+        h_layout7.addSpacing(25)
         h_layout7.addWidget(Mystery_button)
 
         Fantasy_and_science_fiction_button = QCheckBox("Fantasy and science fiction")
@@ -161,7 +164,7 @@ class Add_book(QWidget):
         h_layout8 = QHBoxLayout()
         h_layout8.addSpacing(50)
         h_layout8.addWidget(Fantasy_and_science_fiction_button)
-        h_layout8.addSpacing(45)
+        h_layout8.addSpacing(25)
         h_layout8.addWidget(Thrillers_horror_button)
 
         Young_adult_button = QCheckBox("Young adult")
@@ -189,7 +192,7 @@ class Add_book(QWidget):
         h_layout9 = QHBoxLayout()
         h_layout9.addSpacing(50)
         h_layout9.addWidget(Young_adult_button)
-        h_layout9.addSpacing(45)
+        h_layout9.addSpacing(25)
         h_layout9.addWidget(Children_fiction_button)
 
         Inspirational_and_religious_button = QCheckBox("Inspirational and religious")
@@ -217,7 +220,7 @@ class Add_book(QWidget):
         h_layout10 = QHBoxLayout()
         h_layout10.addSpacing(50)
         h_layout10.addWidget(Inspirational_and_religious_button)
-        h_layout10.addSpacing(45)
+        h_layout10.addSpacing(25)
         h_layout10.addWidget(Biography_and_autobiography_button)
 
         price = QLabel("Price")
@@ -228,7 +231,8 @@ class Add_book(QWidget):
                }
                ''')
 
-        price_cost = QLineEdit("Enter the price")
+        price_cost = QLineEdit(self)
+        price_cost.setPlaceholderText("Enter the price")
         price_cost.setFont(QFont("Vesper Libre", 20))
         price_cost.setStyleSheet('''
         QLineEdit {
@@ -285,16 +289,6 @@ class Add_book(QWidget):
         v_layout.addLayout(h_layout10)
         v_layout.addLayout(h_layout11)
         v_layout.addLayout(h_layout12)
-
-        self.title_name.setFocusPolicy(Qt.NoFocus)
-        self.title_name.installEventFilter(self)
-        author_name.setFocusPolicy(Qt.NoFocus)
-        author_name.installEventFilter(self)
-        self.description_name.setFocusPolicy(Qt.NoFocus)
-        self.description_name.installEventFilter(self)
-        price_cost.setFocusPolicy(Qt.NoFocus)
-        price_cost.installEventFilter(self)
-
         self.setLayout(v_layout)
 
         scroll_area = QScrollArea()
@@ -351,23 +345,6 @@ class Add_book(QWidget):
     def getSign_inPanel(self):  # wait for main menu done then just import main menu page na
         self.sign_in = Sign_in()
         self.close()
-
-    def eventFilter(self, source, event):
-        if event.type() == QEvent.MouseButtonPress:
-            if source is self.title_name:
-                self.title_name.setFocus()
-                text = self.title_name.text()
-                if text == "Enter the title":
-                    self.title_name.setText("")
-        return super().eventFilter(source, event)
-
-    def mousePressEvent(self, event):
-        if not self.title_name.underMouse():
-            self.title_name.clearFocus()
-            text = self.title_name.text()
-            if text == "":
-                self.title_name.setText("Enter the title")
-        super().mousePressEvent(event)
 
 
 if __name__ == "__main__":

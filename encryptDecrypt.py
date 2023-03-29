@@ -10,7 +10,7 @@ class encryptDecrypt:
 
     # write the key to a file
     def writeKey(self):
-        toJson.addData(self.key, 'filekey.key', 'wb')
+        toJson.addDataBinary(self.key, 'filekey.key')
 
     # set the key from the key file
     def setKey(self, key):
@@ -33,48 +33,52 @@ class encryptDecrypt:
     # encrypt the file
     def encryptFile(self, file):
         # opening the key
-        key = toJson.readData('filekey.key', 'rb')
+        key = toJson.readDataBinary('filekey.key')
         # string the key in a file
-        toJson.addData(key, 'filekey.key', 'wb')
+        toJson.addDataBinary(key, 'filekey.key')
 
         # opening the key
-        key = toJson.readData('filekey.key', 'rb')
+        key = toJson.readDataBinary('filekey.key')
 
         # using the generated key
         fernet = Fernet(key)
 
         # opening the original file to encrypt
-        original = toJson.readData(file, 'rb')
+        original = toJson.readDataBinary(file)
 
         # encrypting the file
         encrypted = fernet.encrypt(original)
 
         # opening the file in write mode and
         # writing the encrypted data
-        toJson.addData(encrypted, file, 'wb')
+        toJson.addDataBinary(encrypted, file)
 
     # decrypt the file
     def decryptFile(self, file):
         # opening the key
-        key = toJson.readData('filekey.key', 'rb')
+        key = toJson.readDataBinary('filekey.key')
         # using the key
         fernet = Fernet(key)
 
         # opening the encrypted file
-        encrypted = toJson.readData(file, 'rb')
+        encrypted = toJson.readDataBinary(file)
 
         # decrypting the file
         decrypted = fernet.decrypt(encrypted)
 
         # opening the file in write mode and
         # writing the decrypted data
-        toJson.addData(decrypted, file, 'wb')
+        toJson.addDataBinary(decrypted, file)
 
 
 if __name__ == "__main__":
     obj = encryptDecrypt()
     obj2 = uploadToDB()
 
-
-    # obj.encryptFile()
-    # obj.decryptFile()
+    # obj.writeKey()
+    # en = obj.encryptID(obj2, '12345678')
+    # print(en)
+    # de = obj.decryptID(obj2, en)
+    # print(de)
+    # obj.encryptFile('data.json')
+    # obj.decryptFile('data.json')

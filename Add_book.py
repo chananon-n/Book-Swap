@@ -1,8 +1,14 @@
+import abstractBook
+
 from PySide6.QtGui import (QFont, QPixmap)
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit,
                                QTextEdit, QCheckBox, QScrollArea, QMainWindow)
 from PySide6.QtCore import Qt, QEvent
+
+import Book
+import essential
 from Sign_in import Sign_in  # change to main menu by your self na non , left only import sign in and from and import
+
 
 
 # use in main menu instead
@@ -11,7 +17,9 @@ from Sign_in import Sign_in  # change to main menu by your self na non , left on
 class Add_book(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.Romance = None
         self.sign_in = None
+        self.category = []
         book_image = QLabel()
         pixmap = QPixmap(u"png")
         book_image.setPixmap(pixmap)
@@ -55,10 +63,10 @@ class Add_book(QMainWindow):
         }
         ''')
 
-        author_name = QLineEdit(self)
-        author_name.setPlaceholderText("Enter the author")
-        author_name.setFont(QFont("Vesper Libre", 20))
-        author_name.setStyleSheet('''
+        self.author_name = QLineEdit(self)
+        self.author_name.setPlaceholderText("Enter the author")
+        self.author_name.setFont(QFont("Vesper Libre", 20))
+        self.author_name.setStyleSheet('''
         QLineEdit {
         border: 3px solid rgb(132, 113, 77);
         color: rgb(148, 132, 99);
@@ -69,7 +77,7 @@ class Add_book(QMainWindow):
         h_layout3.addSpacing(30)
         h_layout3.addWidget(author)
         h_layout3.addSpacing(15)
-        h_layout3.addWidget(author_name)
+        h_layout3.addWidget(self.author_name)
         h_layout3.addSpacing(30)
 
         description = QLabel("Description")
@@ -111,133 +119,130 @@ class Add_book(QMainWindow):
         h_layout6.addSpacing(30)
         h_layout6.addWidget(category)
 
-        Romance_button = QCheckBox("Romance")
-        Romance_button.setChecked(False)
-        Romance_button.book = "Romance"
-        Romance_button.setFont(QFont("Vesper Libre", 20))
-        Romance_button.setStyleSheet('''
+        self.Romance_button = QCheckBox("Romance")
+        self.Romance_button.setChecked(False)
+        self.Romance_button.book = "Romance"
+        self.Romance_button.setFont(QFont("Vesper Libre", 20))
+        self.Romance_button.setStyleSheet('''
         QCheckBox {
         color: rgb(132, 113, 77);
         }
         ''')
-        Romance_button.toggled.connect(self.OnCLickedRomance)
 
-        Mystery_button = QCheckBox("Mystery")
-        Mystery_button.setChecked(False)
-        Mystery_button.book = "Mystery"
-        Mystery_button.setFont(QFont("Vesper Libre", 20))
-        Mystery_button.setStyleSheet('''
+        self.Mystery_button = QCheckBox("Mystery")
+        self.Mystery_button.setChecked(False)
+        self.Mystery_button.book = "Mystery"
+        self.Mystery_button.setFont(QFont("Vesper Libre", 20))
+        self.Mystery_button.setStyleSheet('''
         QCheckBox {
         color: rgb(132, 113, 77);
         }
         ''')
-        Mystery_button.toggled.connect(self.OnCLickedMystery)
 
         h_layout7 = QHBoxLayout()
         h_layout7.addSpacing(50)
-        h_layout7.addWidget(Romance_button)
+        h_layout7.addWidget(self.Romance_button)
         h_layout7.addSpacing(25)
-        h_layout7.addWidget(Mystery_button)
+        h_layout7.addWidget(self.Mystery_button)
 
-        Fantasy_and_science_fiction_button = QCheckBox("Fantasy and science fiction")
-        Fantasy_and_science_fiction_button.setChecked(False)
-        Fantasy_and_science_fiction_button.book = "Fantasy and science fiction"
-        Fantasy_and_science_fiction_button.setFont(QFont("Vesper Libre", 20))
-        Fantasy_and_science_fiction_button.setStyleSheet('''
+        self.Fantasy_and_science_fiction_button = QCheckBox("Fantasy and science fiction")
+        self.Fantasy_and_science_fiction_button.setChecked(False)
+        self.Fantasy_and_science_fiction_button.book = "Fantasy and science fiction"
+        self.Fantasy_and_science_fiction_button.setFont(QFont("Vesper Libre", 20))
+        self.Fantasy_and_science_fiction_button.setStyleSheet('''
         QCheckBox {
         color: rgb(132, 113, 77);
         }
         ''')
-        Fantasy_and_science_fiction_button.toggled.connect(self.OnCLickedFantasy_and_science_fiction)
 
-        Thrillers_horror_button = QCheckBox("Thrillers and horror")
-        Thrillers_horror_button.setChecked(False)
-        Thrillers_horror_button.book = "Thrillers and horror"
-        Thrillers_horror_button.setFont(QFont("Vesper Libre", 20))
-        Thrillers_horror_button.setStyleSheet('''
+
+        self.Thrillers_horror_button = QCheckBox("Thrillers and horror")
+        self.Thrillers_horror_button.setChecked(False)
+        self.Thrillers_horror_button.book = "Thrillers and horror"
+        self.Thrillers_horror_button.setFont(QFont("Vesper Libre", 20))
+        self.Thrillers_horror_button.setStyleSheet('''
                 QCheckBox {
                 color: rgb(132, 113, 77);
                 }
                 ''')
-        Thrillers_horror_button.toggled.connect(self.OnCLickedThrillers_horror)
+
 
         h_layout8 = QHBoxLayout()
         h_layout8.addSpacing(50)
-        h_layout8.addWidget(Fantasy_and_science_fiction_button)
+        h_layout8.addWidget(self.Fantasy_and_science_fiction_button)
         h_layout8.addSpacing(25)
-        h_layout8.addWidget(Thrillers_horror_button)
+        h_layout8.addWidget(self.Thrillers_horror_button)
 
-        Young_adult_button = QCheckBox("Young adult")
-        Young_adult_button.setChecked(False)
-        Young_adult_button.book = "Young adult"
-        Young_adult_button.setFont(QFont("Vesper Libre", 20))
-        Young_adult_button.setStyleSheet('''
+        self.Young_adult_button = QCheckBox("Young adult")
+        self.Young_adult_button.setChecked(False)
+        self.Young_adult_button.book = "Young adult"
+        self.Young_adult_button.setFont(QFont("Vesper Libre", 20))
+        self.Young_adult_button.setStyleSheet('''
                 QCheckBox {
                 color: rgb(132, 113, 77);
                 }
                 ''')
-        Young_adult_button.toggled.connect(self.OnCLickedYoung_adult)
 
-        Children_fiction_button = QCheckBox("Children’s fiction")
-        Children_fiction_button.setChecked(False)
-        Children_fiction_button.book = "Children’s fiction"
-        Children_fiction_button.setFont(QFont("Vesper Libre", 20))
-        Children_fiction_button.setStyleSheet('''
+
+        self.Children_fiction_button = QCheckBox("Children’s fiction")
+        self.Children_fiction_button.setChecked(False)
+        self.Children_fiction_button.book = "Children’s fiction"
+        self.Children_fiction_button.setFont(QFont("Vesper Libre", 20))
+        self.Children_fiction_button.setStyleSheet('''
                         QCheckBox {
                         color: rgb(132, 113, 77);
                         }
                         ''')
-        Children_fiction_button.toggled.connect(self.OnCLickedChildren_fiction)
+
 
         h_layout9 = QHBoxLayout()
         h_layout9.addSpacing(50)
-        h_layout9.addWidget(Young_adult_button)
+        h_layout9.addWidget(self.Young_adult_button)
         h_layout9.addSpacing(25)
-        h_layout9.addWidget(Children_fiction_button)
+        h_layout9.addWidget(self.Children_fiction_button)
 
-        Inspirational_and_religious_button = QCheckBox("Inspirational and religious")
-        Inspirational_and_religious_button.setChecked(False)
-        Inspirational_and_religious_button.book = "Children’s fiction"
-        Inspirational_and_religious_button.setFont(QFont("Vesper Libre", 20))
-        Inspirational_and_religious_button.setStyleSheet('''
+        self.Inspirational_and_religious_button = QCheckBox("Inspirational and religious")
+        self.Inspirational_and_religious_button.setChecked(False)
+        self.Inspirational_and_religious_button.book = "Children’s fiction"
+        self.Inspirational_and_religious_button.setFont(QFont("Vesper Libre", 20))
+        self.Inspirational_and_religious_button.setStyleSheet('''
                                 QCheckBox {
                                 color: rgb(132, 113, 77);
                                 }
                                 ''')
-        Inspirational_and_religious_button.toggled.connect(self.OnCLickedInspirational_and_religious)
 
-        Biography_and_autobiography_button = QCheckBox("Biography and autobiography")
-        Biography_and_autobiography_button.setChecked(False)
-        Biography_and_autobiography_button.book = "Biography and autobiography"
-        Biography_and_autobiography_button.setFont(QFont("Vesper Libre", 20))
-        Biography_and_autobiography_button.setStyleSheet('''                                           
+
+        self.Biography_and_autobiography_button = QCheckBox("Biography and autobiography")
+        self.Biography_and_autobiography_button.setChecked(False)
+        self.Biography_and_autobiography_button.book = "Biography and autobiography"
+        self.Biography_and_autobiography_button.setFont(QFont("Vesper Libre", 20))
+        self.Biography_and_autobiography_button.setStyleSheet('''                                           
                                         QCheckBox {                                                            
                                         color: rgb(132, 113, 77);                                              
                                         }                                                                      
                                         ''')
-        Biography_and_autobiography_button.toggled.connect(self.OnCLickedInspirational_and_religious)
 
         h_layout10 = QHBoxLayout()
         h_layout10.addSpacing(50)
-        h_layout10.addWidget(Inspirational_and_religious_button)
+        h_layout10.addWidget(self.Inspirational_and_religious_button)
         h_layout10.addSpacing(25)
-        h_layout10.addWidget(Biography_and_autobiography_button)
+        h_layout10.addWidget(self.Biography_and_autobiography_button)
 
-        Action_and_Adventure_button = QCheckBox("Action and Adventure")
-        Action_and_Adventure_button.setChecked(False)
-        Action_and_Adventure_button.book = "Action and Adventure"
-        Action_and_Adventure_button.setFont(QFont("Vesper Libre", 20))
-        Action_and_Adventure_button.setStyleSheet('''
+        self.Action_and_Adventure_button = QCheckBox("Action and Adventure")
+        self.Action_and_Adventure_button.setChecked(False)
+        self.Action_and_Adventure_button.book = "Action and Adventure"
+        self.Action_and_Adventure_button.setFont(QFont("Vesper Libre", 20))
+        self.Action_and_Adventure_button.setStyleSheet('''
                                         QCheckBox {
                                         color: rgb(132, 113, 77);
                                         }
                                         ''')
 
-        Classics_button = QCheckBox("Classics")
-        Classics_button.setChecked(False)
-        Classics_button.book = "Classics"
-        Classics_button.setFont(QFont("Vesper Libre", 20))
-        Classics_button.setStyleSheet('''                                           
+        self.Classics_button = QCheckBox("Classics")
+        self.Classics_button.setChecked(False)
+        self.Classics_button.book = "Classics"
+        self.Classics_button.setFont(QFont("Vesper Libre", 20))
+        self.Classics_button.setStyleSheet('''                                           
                                                 QCheckBox {                                                            
                                                 color: rgb(132, 113, 77);                                              
                                                 }                                                                      
@@ -245,25 +250,25 @@ class Add_book(QMainWindow):
 
         h_layout11 = QHBoxLayout()
         h_layout11.addSpacing(50)
-        h_layout11.addWidget(Action_and_Adventure_button)
+        h_layout11.addWidget(self.Action_and_Adventure_button)
         h_layout11.addSpacing(25)
-        h_layout11.addWidget(Classics_button)
+        h_layout11.addWidget(self.Classics_button)
 
-        comic_button = QCheckBox("Comic book")
-        comic_button.setChecked(False)
-        comic_button.book = "Comic book"
-        comic_button.setFont(QFont("Vesper Libre", 20))
-        comic_button.setStyleSheet('''
+        self.comic_button = QCheckBox("Comic book")
+        self.comic_button.setChecked(False)
+        self.comic_button.book = "Comic book"
+        self.comic_button.setFont(QFont("Vesper Libre", 20))
+        self.comic_button.setStyleSheet('''
                                                 QCheckBox {
                                                 color: rgb(132, 113, 77);
                                                 }
                                                 ''')
 
-        historical_button = QCheckBox("Historical fiction")
-        historical_button.setChecked(False)
-        historical_button.book = "Historical fiction"
-        historical_button.setFont(QFont("Vesper Libre", 20))
-        historical_button.setStyleSheet('''                                           
+        self.historical_button = QCheckBox("Historical fiction")
+        self.historical_button.setChecked(False)
+        self.historical_button.book = "Historical fiction"
+        self.historical_button.setFont(QFont("Vesper Libre", 20))
+        self.historical_button.setStyleSheet('''                                           
                                                         QCheckBox {                                                            
                                                         color: rgb(132, 113, 77);                                              
                                                         }                                                                      
@@ -271,25 +276,25 @@ class Add_book(QMainWindow):
 
         h_layout12 = QHBoxLayout()
         h_layout12.addSpacing(50)
-        h_layout12.addWidget(comic_button)
+        h_layout12.addWidget(self.comic_button)
         h_layout12.addSpacing(25)
-        h_layout12.addWidget(historical_button)
+        h_layout12.addWidget(self.historical_button)
 
-        literary_fiction_button = QCheckBox("Literary fiction")
-        literary_fiction_button.setChecked(False)
-        literary_fiction_button.book = "Literary fiction"
-        literary_fiction_button.setFont(QFont("Vesper Libre", 20))
-        literary_fiction_button.setStyleSheet('''
+        self.literary_fiction_button = QCheckBox("Literary fiction")
+        self.literary_fiction_button.setChecked(False)
+        self.literary_fiction_button.book = "Literary fiction"
+        self.literary_fiction_button.setFont(QFont("Vesper Libre", 20))
+        self.literary_fiction_button.setStyleSheet('''
                                                         QCheckBox {
                                                         color: rgb(132, 113, 77);
                                                         }
                                                         ''')
 
-        science_fiction_button = QCheckBox("Science fiction")
-        science_fiction_button.setChecked(False)
-        science_fiction_button.book = "Science fiction"
-        science_fiction_button.setFont(QFont("Vesper Libre", 20))
-        science_fiction_button.setStyleSheet('''                                           
+        self.science_fiction_button = QCheckBox("Science fiction")
+        self.science_fiction_button.setChecked(False)
+        self.science_fiction_button.book = "Science fiction"
+        self.science_fiction_button.setFont(QFont("Vesper Libre", 20))
+        self.science_fiction_button.setStyleSheet('''                                           
                                                                 QCheckBox {                                                            
                                                                 color: rgb(132, 113, 77);                                              
                                                                 }                                                                      
@@ -297,25 +302,25 @@ class Add_book(QMainWindow):
 
         h_layout13 = QHBoxLayout()
         h_layout13.addSpacing(50)
-        h_layout13.addWidget(literary_fiction_button)
+        h_layout13.addWidget(self.literary_fiction_button)
         h_layout13.addSpacing(25)
-        h_layout13.addWidget(science_fiction_button)
+        h_layout13.addWidget(self.science_fiction_button)
 
-        short_stories_button = QCheckBox("Short Stories")
-        short_stories_button.setChecked(False)
-        short_stories_button.book = "Short Stories"
-        short_stories_button.setFont(QFont("Vesper Libre", 20))
-        short_stories_button.setStyleSheet('''
+        self.short_stories_button = QCheckBox("Short Stories")
+        self.short_stories_button.setChecked(False)
+        self.short_stories_button.book = "Short Stories"
+        self.short_stories_button.setFont(QFont("Vesper Libre", 20))
+        self.short_stories_button.setStyleSheet('''
                                                                 QCheckBox {
                                                                 color: rgb(132, 113, 77);
                                                                 }
                                                                 ''')
 
-        suspense_and_thrillers_button = QCheckBox("Suspense and Thrillers")
-        suspense_and_thrillers_button.setChecked(False)
-        suspense_and_thrillers_button.book = "Suspense and Thrillers"
-        suspense_and_thrillers_button.setFont(QFont("Vesper Libre", 20))
-        suspense_and_thrillers_button.setStyleSheet('''                                           
+        self.suspense_and_thrillers_button = QCheckBox("Suspense and Thrillers")
+        self.suspense_and_thrillers_button.setChecked(False)
+        self.suspense_and_thrillers_button.book = "Suspense and Thrillers"
+        self.suspense_and_thrillers_button.setFont(QFont("Vesper Libre", 20))
+        self.suspense_and_thrillers_button.setStyleSheet('''                                           
                                                                         QCheckBox {                                                            
                                                                         color: rgb(132, 113, 77);                                              
                                                                         }                                                                      
@@ -323,25 +328,25 @@ class Add_book(QMainWindow):
 
         h_layout14 = QHBoxLayout()
         h_layout14.addSpacing(50)
-        h_layout14.addWidget(short_stories_button)
+        h_layout14.addWidget(self.short_stories_button)
         h_layout14.addSpacing(25)
-        h_layout14.addWidget(suspense_and_thrillers_button)
+        h_layout14.addWidget(self.suspense_and_thrillers_button)
 
-        womens_fiction_button = QCheckBox("Women's Fiction")
-        womens_fiction_button.setChecked(False)
-        womens_fiction_button.book = "Women's Fiction"
-        womens_fiction_button.setFont(QFont("Vesper Libre", 20))
-        womens_fiction_button.setStyleSheet('''
+        self.womens_fiction_button = QCheckBox("Women's Fiction")
+        self.womens_fiction_button.setChecked(False)
+        self.womens_fiction_button.book = "Women's Fiction"
+        self.womens_fiction_button.setFont(QFont("Vesper Libre", 20))
+        self.womens_fiction_button.setStyleSheet('''
                                                                         QCheckBox {
                                                                         color: rgb(132, 113, 77);
                                                                         }
                                                                         ''')
 
-        cookbooks_button = QCheckBox("Cookbooks")
-        cookbooks_button.setChecked(False)
-        cookbooks_button.book = "Cookbooks"
-        cookbooks_button.setFont(QFont("Vesper Libre", 20))
-        cookbooks_button.setStyleSheet('''                                           
+        self.cookbooks_button = QCheckBox("Cookbooks")
+        self.cookbooks_button.setChecked(False)
+        self.cookbooks_button.book = "Cookbooks"
+        self.cookbooks_button.setFont(QFont("Vesper Libre", 20))
+        self.cookbooks_button.setStyleSheet('''                                           
                                                                                 QCheckBox {                                                            
                                                                                 color: rgb(132, 113, 77);                                              
                                                                                 }                                                                      
@@ -349,25 +354,25 @@ class Add_book(QMainWindow):
 
         h_layout15 = QHBoxLayout()
         h_layout15.addSpacing(50)
-        h_layout15.addWidget(womens_fiction_button)
+        h_layout15.addWidget(self.womens_fiction_button)
         h_layout15.addSpacing(25)
-        h_layout15.addWidget(cookbooks_button)
+        h_layout15.addWidget(self.cookbooks_button)
 
-        essay_button = QCheckBox("Essays")
-        essay_button.setChecked(False)
-        essay_button.book = "Essays"
-        essay_button.setFont(QFont("Vesper Libre", 20))
-        essay_button.setStyleSheet('''
+        self.essay_button = QCheckBox("Essays")
+        self.essay_button.setChecked(False)
+        self.essay_button.book = "Essays"
+        self.essay_button.setFont(QFont("Vesper Libre", 20))
+        self.essay_button.setStyleSheet('''
                                                                                 QCheckBox {
                                                                                 color: rgb(132, 113, 77);
                                                                                 }
                                                                                 ''')
 
-        memoir_button = QCheckBox("Memoir")
-        memoir_button.setChecked(False)
-        memoir_button.book = "Memoir"
-        memoir_button.setFont(QFont("Vesper Libre", 20))
-        memoir_button.setStyleSheet('''                                           
+        self.memoir_button = QCheckBox("Memoir")
+        self.memoir_button.setChecked(False)
+        self.memoir_button.book = "Memoir"
+        self.memoir_button.setFont(QFont("Vesper Libre", 20))
+        self.memoir_button.setStyleSheet('''                                           
                                     QCheckBox {                                                            
                                     color: rgb(132, 113, 77);                                              
                                     }                                                                      
@@ -375,25 +380,25 @@ class Add_book(QMainWindow):
 
         h_layout16 = QHBoxLayout()
         h_layout16.addSpacing(50)
-        h_layout16.addWidget(essay_button)
+        h_layout16.addWidget(self.essay_button)
         h_layout16.addSpacing(25)
-        h_layout16.addWidget(memoir_button)
+        h_layout16.addWidget(self.memoir_button)
 
-        poetry_button = QCheckBox("Poetry")
-        poetry_button.setChecked(False)
-        poetry_button.book = "Poetry"
-        poetry_button.setFont(QFont("Vesper Libre", 20))
-        poetry_button.setStyleSheet('''
+        self.poetry_button = QCheckBox("Poetry")
+        self.poetry_button.setChecked(False)
+        self.poetry_button.book = "Poetry"
+        self.poetry_button.setFont(QFont("Vesper Libre", 20))
+        self.poetry_button.setStyleSheet('''
                                     QCheckBox {
                                     color: rgb(132, 113, 77);
                                     }
                                     ''')
 
-        true_crime_button = QCheckBox("True Crime")
-        true_crime_button.setChecked(False)
-        true_crime_button.book = "True Crime"
-        true_crime_button.setFont(QFont("Vesper Libre", 20))
-        true_crime_button.setStyleSheet('''                                           
+        self.true_crime_button = QCheckBox("True Crime")
+        self.true_crime_button.setChecked(False)
+        self.true_crime_button.book = "True Crime"
+        self.true_crime_button.setFont(QFont("Vesper Libre", 20))
+        self.true_crime_button.setStyleSheet('''                                           
                                             QCheckBox {                                                            
                                             color: rgb(132, 113, 77);                                              
                                             }                                                                      
@@ -401,9 +406,9 @@ class Add_book(QMainWindow):
 
         h_layout17 = QHBoxLayout()
         h_layout17.addSpacing(50)
-        h_layout17.addWidget(poetry_button)
+        h_layout17.addWidget(self.poetry_button)
         h_layout17.addSpacing(25)
-        h_layout17.addWidget(true_crime_button)
+        h_layout17.addWidget(self.true_crime_button)
 
         price = QLabel("Price/day")
         price.setFont(QFont("Vesper Libre", 25))
@@ -413,10 +418,10 @@ class Add_book(QMainWindow):
                }
                ''')
 
-        price_cost = QLineEdit(self)
-        price_cost.setPlaceholderText("Enter the price")
-        price_cost.setFont(QFont("Vesper Libre", 20))
-        price_cost.setStyleSheet('''
+        self.price_cost = QLineEdit(self)
+        self.price_cost.setPlaceholderText("Enter the price")
+        self.price_cost.setFont(QFont("Vesper Libre", 20))
+        self.price_cost.setStyleSheet('''
         QLineEdit {
         border: 3px solid rgb(132, 113, 77);
         color: rgb(148, 132, 99);
@@ -427,35 +432,35 @@ class Add_book(QMainWindow):
         h_layout18.addSpacing(160)
         h_layout18.addWidget(price)
         h_layout18.addSpacing(25)
-        h_layout18.addWidget(price_cost)
+        h_layout18.addWidget(self.price_cost)
         h_layout18.addSpacing(160)
 
-        add_button = QPushButton("Add")
-        add_button.setFont(QFont("Vesper Libre", 20))
-        add_button.setStyleSheet('''
+        self.add_button = QPushButton("Add")
+        self.add_button.setFont(QFont("Vesper Libre", 20))
+        self.add_button.setStyleSheet('''
         QPushButton {
         border: 3px solid rgb(132, 113, 77);
         color: rgb(148, 132, 99);
         }
         ''')
-        add_button.clicked.connect(self.getSign_inPanel)
+        self.add_button.clicked.connect(self.save_and_go_main)
         # in this one u have to create add book function too na, I cant figure out สมองบวม
 
-        cancel_button = QPushButton("Cancel")
-        cancel_button.setFont(QFont("Vesper Libre", 20))
-        cancel_button.setStyleSheet('''
+        self.cancel_button = QPushButton("Cancel")
+        self.cancel_button.setFont(QFont("Vesper Libre", 20))
+        self.cancel_button.setStyleSheet('''
         QPushButton {
         border: 3px solid rgb(132, 113, 77);
-        color: rgb(148, 132, 99);
+        color: rgb(148, 132, 99);   
         }
         ''')
-        cancel_button.clicked.connect(self.getSign_inPanel)
+        self.cancel_button.clicked.connect(self.getMainPanel)
 
         h_layout19 = QHBoxLayout()
         h_layout19.addSpacing(20)
-        h_layout19.addWidget(cancel_button)
+        h_layout19.addWidget(self.cancel_button)
         h_layout19.addSpacing(300)
-        h_layout19.addWidget(add_button)
+        h_layout19.addWidget(self.add_button)
         h_layout19.addSpacing(20)
 
         v_layout = QVBoxLayout()
@@ -495,46 +500,31 @@ class Add_book(QMainWindow):
         self.setStyleSheet("background-color: #F9F6EC;")
         self.show()
 
-    def OnCLickedRomance(self):
-        Romance_button = self.sender()
-        print("Book " + Romance_button.book + " is " + str(Romance_button.isChecked()))
-
-    def OnCLickedMystery(self):
-        Mystery_button = self.sender()
-        print("Book " + Mystery_button.book + " is " + str(Mystery_button.isChecked()))
-
-    def OnCLickedFantasy_and_science_fiction(self):
-        Fantasy_and_science_fiction_button = self.sender()
-        print("Book " + Fantasy_and_science_fiction_button.book + " is " + str(
-            Fantasy_and_science_fiction_button.isChecked()))
-
-    def OnCLickedThrillers_horror(self):
-        Thrillers_horror_button = self.sender()
-        print("Book " + Thrillers_horror_button.book + " is " + str(Thrillers_horror_button.isChecked()))
-
-    def OnCLickedYoung_adult(self):
-        Young_adult_button = self.sender()
-        print("Book " + Young_adult_button.book + " is " + str(Young_adult_button.isChecked()))
-
-    def OnCLickedChildren_fiction(self):
-        Children_fiction_button = self.sender()
-        print("Book " + Children_fiction_button.book + " is " + str(Children_fiction_button.isChecked()))
-
-    def OnCLickedInspirational_and_religious(self):
-        Inspirational_and_religious_button = self.sender()
-        print("Book " + Inspirational_and_religious_button.book + " is " + str(
-            Inspirational_and_religious_button.isChecked()))
-
-    def OnCLickedBiography_and_autobiography(self):
-        Biography_and_autobiography_button = self.sender()
-        print("Book " + Biography_and_autobiography_button.book + " is " + str(
-            Biography_and_autobiography_button.isChecked()))
-
-    def getSign_inPanel(self):  # wait for main menu done then just import main menu page na
+    def getMainPanel(self):  # wait for main menu done then just import main menu page na
         self.sign_in = Sign_in()
         self.close()
 
-
+    def check_category(self):
+        if self.Romance_button.isChecked():
+            self.category.append("Romance")
+        if self.Mystery_button.isChecked():
+            self.category.append("Mystery")
+        if self.Fantasy_and_science_fiction_button.isChecked():
+            self.category.append("Fantasy_and_science_fiction")
+        if self.Thrillers_horror_button.isChecked():
+            self.category.append("Thrillers_horror")
+        if self.Young_adult_button.isChecked():
+            self.category.append("Young_adult")
+        if self.Children_fiction_button.isChecked():
+            self.category.append("Childern_fiction")
+        if self.Inspirational_and_religious_button.isChecked():
+            self.category.append("Inspiraltional_and_religious")
+        if self.Biography_and_autobiography_button.isChecked():
+            self.category.append("Biography")
+    def save_and_go_main(self):
+        newBook = Book(None,self.title_name,self.author_name,self.description_name,self.category,None)
+        self.sign_in = Sign_in()
+        self.close()
 if __name__ == "__main__":
     app = QApplication()
     ui = Add_book()

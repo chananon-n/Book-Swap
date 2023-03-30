@@ -1,4 +1,6 @@
 from cryptography.fernet import Fernet
+
+import toJson
 from database import uploadToDB
 
 
@@ -8,8 +10,7 @@ class encryptDecrypt:
 
     # write the key to a file
     def writeKey(self):
-        with open('filekey.key', 'wb') as filekey:
-            filekey.write(self.key)
+        toJson.addDataBinary(self.key, 'filekey.key')
 
     # set the key from the key file
     def setKey(self, key):
@@ -32,57 +33,52 @@ class encryptDecrypt:
     # encrypt the file
     def encryptFile(self, file):
         # opening the key
-        with open('filekey.key', 'rb') as filekey:
-            key = filekey.read()
-
+        key = toJson.readDataBinary('filekey.key')
         # string the key in a file
-        with open('filekey.key', 'wb') as filekey:
-            filekey.write(key)
+        toJson.addDataBinary(key, 'filekey.key')
 
         # opening the key
-        with open('filekey.key', 'rb') as filekey:
-            key = filekey.read()
+        key = toJson.readDataBinary('filekey.key')
 
         # using the generated key
         fernet = Fernet(key)
 
         # opening the original file to encrypt
-        with open(file, 'rb') as files:
-            original = files.read()
+        original = toJson.readDataBinary(file)
 
         # encrypting the file
         encrypted = fernet.encrypt(original)
 
         # opening the file in write mode and
         # writing the encrypted data
-        with open(file, 'wb') as encrypted_file:
-            encrypted_file.write(encrypted)
+        toJson.addDataBinary(encrypted, file)
 
     # decrypt the file
     def decryptFile(self, file):
         # opening the key
-        with open('filekey.key', 'rb') as filekey:
-            key = filekey.read()
+        key = toJson.readDataBinary('filekey.key')
         # using the key
         fernet = Fernet(key)
 
         # opening the encrypted file
-        with open(file, 'rb') as enc_file:
-            encrypted = enc_file.read()
+        encrypted = toJson.readDataBinary(file)
 
         # decrypting the file
         decrypted = fernet.decrypt(encrypted)
 
         # opening the file in write mode and
         # writing the decrypted data
-        with open(file, 'wb') as dec_file:
-            dec_file.write(decrypted)
+        toJson.addDataBinary(decrypted, file)
 
 
 if __name__ == "__main__":
     obj = encryptDecrypt()
     obj2 = uploadToDB()
 
-
-    # obj.encryptFile()
-    # obj.decryptFile()
+    # obj.writeKey()
+    # en = obj.encryptID(obj2, '12345678')
+    # print(en)
+    # de = obj.decryptID(obj2, en)
+    # print(de)
+    # obj.encryptFile('data.json')
+    # obj.decryptFile('data.json')

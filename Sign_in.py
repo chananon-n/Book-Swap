@@ -27,7 +27,8 @@ class Sign_in(QWidget):
         }
         ''')
 
-        self.enter1 = QLineEdit("Enter the ID")
+        self.enter1 = QLineEdit(self)
+        self.enter1.setPlaceholderText("Enter the ID")
         self.enter1.setFont(QFont("Vesper Libre", 20))
         self.enter1.setStyleSheet('''
         QLineEdit {
@@ -77,9 +78,6 @@ class Sign_in(QWidget):
         self.setWindowTitle("Sign in")
         self.setGeometry(400, 200, 500, 400)
         self.show()
-
-        self.enter1.setFocusPolicy(Qt.NoFocus)
-        self.enter1.installEventFilter(self)
 
         button1.clicked.connect(self.sign_in)
 
@@ -158,30 +156,6 @@ class Sign_in(QWidget):
     def back_main_menu(self):
         self.home = Home.Home()
         self.close()
-
-
-
-    def eventFilter(self, source, event):
-        if event.type() == QEvent.MouseButtonPress:
-            if source is self.enter1:
-                self.enter1.setFocus()
-                text = self.enter1.text()
-                if text == "Enter the ID":
-                    self.enter1.setText("")
-            else:
-                self.enter1.clearFocus()
-                text = self.enter1.text()
-                if text == "":
-                    self.enter1.setText("Enter the ID")
-        return super().eventFilter(source, event)
-
-    def mousePressEvent(self, event):
-        if not self.enter1.underMouse():
-            self.enter1.clearFocus()
-            text = self.enter1.text()
-            if text == "":
-                self.enter1.setText("Enter the ID")
-        super().mousePressEvent(event)
 
 
 if __name__ == "__main__":

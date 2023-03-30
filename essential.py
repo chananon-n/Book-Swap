@@ -26,7 +26,6 @@ class essential:
         self.key.encryptFile("data.json")
         # write the encrypted file to upload.json
         toJson.addData(data, 'upload.json')
-        self.db.setFile('upload.json')
         self.db.uploadFile()
 
     def loggingIn(self, ID):
@@ -43,8 +42,7 @@ class essential:
         booksFromLocal = []
         booksFromDatabase = []
 
-        with open('data.json') as file:
-            rawdata = json.load(file)
+        rawdata = toJson.loadData('data.json')
 
         for key, value in rawdata.items():
             # print item in Book
@@ -57,8 +55,7 @@ class essential:
                 booksFromLocal.append(book)
                 # print(booksFromLocal)
 
-        with open('upload.json') as file:
-            rawdata2 = json.load(file)
+        rawdata2 = toJson.loadData('upload.json')
 
         for key, value in rawdata2['Book'].items():
             # print item in Book
@@ -77,7 +74,6 @@ class essential:
         # TODO update local data with data from database
 
 
-if __name__ == "__main__":
-    obj = essential()
-
-    obj.createNewID()
+# if __name__ == "__main__":
+    # obj = essential()
+    # obj.createNewID()

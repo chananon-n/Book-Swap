@@ -5,11 +5,9 @@ from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, Q
                                QTextEdit, QCheckBox, QScrollArea, QMainWindow)
 from PySide6.QtCore import Qt, QEvent
 
-import Book
 import essential
 from Sign_in import Sign_in  # change to main menu by your self na non , left only import sign in and from and import
-
-
+import BookCategory
 
 # use in main menu instead
 
@@ -155,7 +153,6 @@ class Add_book(QMainWindow):
         }
         ''')
 
-
         self.Thrillers_horror_button = QCheckBox("Thrillers and horror")
         self.Thrillers_horror_button.setChecked(False)
         self.Thrillers_horror_button.book = "Thrillers and horror"
@@ -165,7 +162,6 @@ class Add_book(QMainWindow):
                 color: rgb(132, 113, 77);
                 }
                 ''')
-
 
         h_layout8 = QHBoxLayout()
         h_layout8.addSpacing(50)
@@ -183,7 +179,6 @@ class Add_book(QMainWindow):
                 }
                 ''')
 
-
         self.Children_fiction_button = QCheckBox("Children’s fiction")
         self.Children_fiction_button.setChecked(False)
         self.Children_fiction_button.book = "Children’s fiction"
@@ -193,7 +188,6 @@ class Add_book(QMainWindow):
                         color: rgb(132, 113, 77);
                         }
                         ''')
-
 
         h_layout9 = QHBoxLayout()
         h_layout9.addSpacing(50)
@@ -210,7 +204,6 @@ class Add_book(QMainWindow):
                                 color: rgb(132, 113, 77);
                                 }
                                 ''')
-
 
         self.Biography_and_autobiography_button = QCheckBox("Biography and autobiography")
         self.Biography_and_autobiography_button.setChecked(False)
@@ -506,25 +499,59 @@ class Add_book(QMainWindow):
 
     def check_category(self):
         if self.Romance_button.isChecked():
-            self.category.append("Romance")
+            self.category.append(BookCategory.BookCategory(1))
         if self.Mystery_button.isChecked():
-            self.category.append("Mystery")
+            self.category.append(BookCategory.BookCategory(2))
         if self.Fantasy_and_science_fiction_button.isChecked():
-            self.category.append("Fantasy_and_science_fiction")
+            self.category.append(BookCategory.BookCategory(3))
         if self.Thrillers_horror_button.isChecked():
-            self.category.append("Thrillers_horror")
+            self.category.append(BookCategory.BookCategory(4))
         if self.Young_adult_button.isChecked():
-            self.category.append("Young_adult")
+            self.category.append(BookCategory.BookCategory(5))
         if self.Children_fiction_button.isChecked():
-            self.category.append("Childern_fiction")
+            self.category.append(BookCategory.BookCategory(6))
         if self.Inspirational_and_religious_button.isChecked():
-            self.category.append("Inspiraltional_and_religious")
+            self.category.append(BookCategory.BookCategory(7))
         if self.Biography_and_autobiography_button.isChecked():
-            self.category.append("Biography")
+            self.category.append(BookCategory.BookCategory(8))
+        if self.Action_and_Adventure_button.isChecked():
+            self.category.append(BookCategory.BookCategory(9))
+        if self.Classics_button.isChecked():
+            self.category.append(BookCategory.BookCategory(10))
+        if self.comic_button.isChecked():
+            self.category.append(BookCategory.BookCategory(11))
+        if self.historical_button.isChecked():
+            self.category.append(BookCategory.BookCategory(12))
+        if self.literary_fiction_button.isChecked():
+            self.category.append(BookCategory.BookCategory(13))
+        if self.science_fiction_button.isChecked():
+            self.category.append(BookCategory.BookCategory(14))
+        if self.short_stories_button.isChecked():
+            self.category.append(BookCategory.BookCategory(15))
+        if self.suspense_and_thrillers_button.isChecked():
+            self.category.append(BookCategory.BookCategory(16))
+        if self.womens_fiction_button.isChecked():
+            self.category.append(BookCategory.BookCategory(17))
+        if self.cookbooks_button.isChecked():
+            self.category.append(BookCategory.BookCategory(18))
+        if self.essay_button.isChecked():
+            self.category.append(BookCategory.BookCategory(19))
+        if self.memoir_button.isChecked():
+            self.category.append(BookCategory.BookCategory(20))
+        if self.poetry_button.isChecked():
+            self.category.append(BookCategory.BookCategory(21))
+        if self.true_crime_button.isChecked():
+            self.category.append(BookCategory.BookCategory(22))
+
+    def get_cateogry(self):
+        return self.category
+
     def save_and_go_main(self):
-        newBook = Book(None,self.title_name,self.author_name,self.description_name,self.category,None)
+        self.check_category()
         self.sign_in = Sign_in()
         self.close()
+
+
 if __name__ == "__main__":
     app = QApplication()
     ui = Add_book()

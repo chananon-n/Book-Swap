@@ -1,10 +1,8 @@
 # create class eBook inherits from class Book
-from abc import ABC
-
-from abstractBook import Book
+import abstractBook
 
 
-class eBook(Book, ABC):
+class eBook(abstractBook):
     def __init__(self, picture, title, author, description, category, tags):
         super(eBook, self).__init__(picture, title, author, description, category, tags)
         self.price = 0.0

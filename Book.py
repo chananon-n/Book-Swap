@@ -1,10 +1,8 @@
 # create class Book inherits from class abstractBook
-from abc import ABC
-
 import abstractBook
 
 
-class Book(abstractBook.ABCMeta, ABC):
+class Book(abstractBook):
     def __init__(self, picture, title, author, description, category, tags):
         super(Book, self).__init__(picture, title, author, description, category, tags)
         self.price = 0.0

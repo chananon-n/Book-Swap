@@ -1,7 +1,7 @@
 import os
 from PySide6.QtGui import (QFont, QPixmap, QDragEnterEvent)
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit,
-                               QTextEdit, QCheckBox, QScrollArea, QMainWindow, QMessageBox)
+                               QTextEdit, QCheckBox, QScrollArea, QMainWindow, QMessageBox, QDialog)
 from PySide6.QtCore import *
 from Sign_in import Sign_in  # change to main menu by your self na non , left only import sign in and from and import
 import BookCategory
@@ -12,6 +12,7 @@ import BookCategory
 class Add_book(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.dialog_book = None
         self.sign_in = None
         self.category = []
         self.book_image = QLabel()
@@ -446,8 +447,7 @@ class Add_book(QMainWindow):
         color: rgb(148, 132, 99);
         }
         ''')
-        self.add_button.clicked.connect(self.save_and_go_main)
-        self.add_button.clicked.connect(self.save_image)
+        self.add_button.clicked.connect(self.save_and_check)
 
         self.cancel_button = QPushButton("Cancel")
         self.cancel_button.setFont(QFont("Vesper Libre", 20))
@@ -580,15 +580,43 @@ class Add_book(QMainWindow):
         if title_name:
             image_path = os.path.join(image_dir, f'{title_name}.png')
             self.pixmap.save(image_path, 'PNG')
-        else:
-            # If the user didn't enter a title, show an error message
-            QMessageBox.setStyleSheet("color: black;")                          # make the text in black color and when click the ok button, it come back to previous page
-            QMessageBox.about(self, "Error", "Please enter a title for the book.")
 
-    def save_and_go_main(self):
+    def save_book(self):
+        title_name = self.title_name.text()
+        author_name = self.author_name.text()
+        description = self.description_name.toPlainText()
+        price = self.price_cost.text()
+        if title_name == "":
+            message_box = QMessageBox()
+            message_box.setText("Please enter the title")
+            message_box.setIcon(QMessageBox.Warning)
+            message_box.exec()
+        elif author_name == "":
+            message_box = QMessageBox()
+            message_box.setText("Please enter the author")
+            message_box.setIcon(QMessageBox.Warning)
+            message_box.exec()
+        elif description == "":
+            message_box = QMessageBox()
+            message_box.setText("Please enter the description")
+            message_box.setIcon(QMessageBox.Warning)
+            message_box.exec()
+        elif not price.isdigit() or price == "":
+            message_box = QMessageBox()
+            message_box.setText("Please enter the price in number")
+            message_box.setIcon(QMessageBox.Warning)
+            message_box.exec()
+        elif title_name != "" and author_name != "" and description != "" and price.isdigit() and price != "":
+            message_box = QMessageBox()
+            message_box.setText("Book has been added")
+            message_box.setIcon(QMessageBox.Information)
+            message_box.exec()
+            self.getMainPanel()
+
+    def save_and_check(self):
         self.check_category()
-        self.sign_in = Sign_in()
-        self.close()
+        self.save_image()
+        self.save_book()
 
 
 if __name__ == "__main__":

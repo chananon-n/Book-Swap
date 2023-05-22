@@ -1,15 +1,19 @@
-
 from PySide6.QtGui import (QFont, QPixmap)
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget)
+from PySide6.QtCore import Qt, Signal
+import os
 
-
-# from Sign_up import Sign_up
 
 class Home(QWidget):
+    buttonClicked = Signal(str)  # Custom signal for button clicks
+
     def __init__(self):
         super().__init__()
+        # Get the absolute path of the current script
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+
         label = QLabel()
-        pixmap = QPixmap(u"../resources/Book_Logo.png")
+        pixmap = QPixmap(os.path.join(script_dir, u"../resources/Book_Logo.png"))
         label.setPixmap(pixmap)
         blank = QLabel("")
 
@@ -27,7 +31,7 @@ class Home(QWidget):
         }
         ''')
         Signin_button.setFont(QFont("Vesper Libre", 25))
-        # Signin_button.clicked.connect(self.getSign_inPanel)
+        Signin_button.clicked.connect(lambda: self.handleButtonClicked("Sign_in"))  # Emit signal for Sign_in button
 
         h_layout3 = QHBoxLayout()
         h_layout3.addSpacing(200)
@@ -43,7 +47,7 @@ class Home(QWidget):
                 background-color: rgb(182, 170, 145);
                 }
                 ''')
-        # Signup_button.clicked.connect(self.getSign_upPanel)
+        Signup_button.clicked.connect(lambda: self.handleButtonClicked("Sign_up"))  # Emit signal for Sign_up button
 
         h_layout4 = QHBoxLayout()
         h_layout4.addSpacing(200)
@@ -63,13 +67,8 @@ class Home(QWidget):
         self.setGeometry(400, 200, 500, 400)
         self.show()
 
-    # def getSign_inPanel(self):
-    #     self.sign_in = Sign_in.Sign_in()
-    #     self.close()
-    #
-    # def getSign_upPanel(self):
-    #     self.sign_up = Sign_up.Sign_up()
-    #     self.close()
+    def handleButtonClicked(self, button_name):
+        self.buttonClicked.emit(button_name)  # Emit the buttonClicked signal with the button name
 
 
 if __name__ == "__main__":

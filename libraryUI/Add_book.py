@@ -1,12 +1,12 @@
-import abstractBook
+import os
 
-from PySide6.QtGui import (QFont, QPixmap)
+from library import abstractBook
+
+from PySide6.QtGui import (QFont, QPixmap, QDragEnterEvent)
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit,
-                               QTextEdit, QCheckBox, QScrollArea, QMainWindow)
-from PySide6.QtCore import Qt, QEvent
-
-import essential
-from Sign_in import Sign_in  # change to main menu by your self na non , left only import sign in and from and import
+                               QTextEdit, QCheckBox, QScrollArea, QMainWindow, QMessageBox)
+from PySide6.QtCore import *
+from libraryUI.Sign_in import Sign_in  # change to main menu by your self na non , left only import sign in and from and import
 import BookCategory
 
 # use in main menu instead
@@ -15,17 +15,30 @@ import BookCategory
 class Add_book(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.Romance = None
         self.sign_in = None
         self.category = []
-        book_image = QLabel()
-        pixmap = QPixmap(u"png")
-        book_image.setPixmap(pixmap)
+        self.book_image = QLabel()
+        self.placeholder_image = QPixmap("placeholder.png")  # replace "placeholder.png" with the path to your placeholder image
+        self.book_image.setPixmap(self.placeholder_image)
+        self.book_image.setScaledContents(True)
+        self.book_image.setMinimumSize(250, 250)
+        self.book_image.setAlignment(Qt.AlignCenter)
+
+        self.book_image.setStyleSheet("border: 2px dashed gray; color: gray;")
+        self.book_image.setText("Please drag and drop a book image here")
+
+        layout = QHBoxLayout()
+        layout.addWidget(self.book_image)
+        central_widget = QWidget()
+        central_widget.setLayout(layout)
+        self.setCentralWidget(central_widget)
+
+        self.setAcceptDrops(True)
         blank = QLabel("")
 
         h_layout1 = QHBoxLayout()
         h_layout1.addWidget(blank)
-        h_layout1.addWidget(book_image)
+        h_layout1.addWidget(self.book_image)
         h_layout1.addWidget(blank)
 
         title = QLabel("Title")
@@ -437,7 +450,7 @@ class Add_book(QMainWindow):
         }
         ''')
         self.add_button.clicked.connect(self.save_and_go_main)
-        # in this one u have to create add book function too na, I cant figure out สมองบวม
+        self.add_button.clicked.connect(self.save_image)
 
         self.cancel_button = QPushButton("Cancel")
         self.cancel_button.setFont(QFont("Vesper Libre", 20))
@@ -447,7 +460,7 @@ class Add_book(QMainWindow):
         color: rgb(148, 132, 99);   
         }
         ''')
-        self.cancel_button.clicked.connect(self.getMainPanel)
+        self.cancel_button.clicked.connect(self.cancel__goback)
 
         h_layout19 = QHBoxLayout()
         h_layout19.addSpacing(20)
@@ -458,6 +471,7 @@ class Add_book(QMainWindow):
 
         v_layout = QVBoxLayout()
         v_layout.addLayout(h_layout1)
+        v_layout.addSpacing(20)
         v_layout.addLayout(h_layout2)
         v_layout.addLayout(h_layout3)
         v_layout.addLayout(h_layout4)
@@ -493,7 +507,7 @@ class Add_book(QMainWindow):
         self.setStyleSheet("background-color: #F9F6EC;")
         self.show()
 
-    def getMainPanel(self):  # wait for main menu done then just import main menu page na
+    def cancel__goback(self):  # wait for main menu done then just import main menu page na
         self.sign_in = Sign_in()
         self.close()
 
@@ -544,7 +558,35 @@ class Add_book(QMainWindow):
             self.category.append(BookCategory.BookCategory(22))
 
     def get_cateogry(self):
+        print(self.category)
         return self.category
+
+    def dragEnterEvent(self, event: QDragEnterEvent):
+        if event.mimeData().hasUrls() and event.mimeData().urls()[0].toString().endswith('.png'):
+            event.acceptProposedAction()
+
+    def dropEvent(self, event):
+        url = event.mimeData().urls()[0]
+        file_path = url.toLocalFile()
+        if file_path.endswith('.png'):
+            self.pixmap = QPixmap(file_path)
+            self.book_image.setPixmap(self.pixmap)
+            self.book_image.setScaledContents(True)
+            self.book_image.setStyleSheet("border: #F9F6EC")
+
+    def save_image(self):
+        title_name = self.title_name.text()
+        # Save the dropped image to the project's images folder and create the folder if it doesn't exist
+        image_dir = 'images'
+        if not os.path.exists(image_dir):
+            os.mkdir(image_dir)
+        if title_name:
+            image_path = os.path.join(image_dir, f'{title_name}.png')
+            self.pixmap.save(image_path, 'PNG')
+        else:
+            # If the user didn't enter a title, show an error message
+            QMessageBox.setStyleSheet("color: black;")                          # make the text in black color and when click the ok button, it come back to previous page
+            QMessageBox.about(self, "Error", "Please enter a title for the book.")
 
     def save_and_go_main(self):
         self.check_category()
@@ -557,4 +599,3 @@ if __name__ == "__main__":
     ui = Add_book()
     app.exec()
 
-# all the connected checkbox used last function isChecked() and get their result at last na I print sentence for u to identify easier

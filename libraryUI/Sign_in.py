@@ -1,11 +1,10 @@
 from PySide6.QtGui import (QFont, QPixmap)
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit, QDialog)
-from PySide6.QtCore import Qt
-
-from libraryUI import Home
+from PySide6.QtCore import Qt, Signal
 
 
 class Sign_in(QWidget):
+    signedIn = Signal()  # Custom signal to indicate successful sign-in
 
     def __init__(self):
         super().__init__()
@@ -147,6 +146,7 @@ class Sign_in(QWidget):
             ''')
             button.clicked.connect(dialog.close)
             button.clicked.connect(self.back_main_menu)
+            self.signedIn.emit()  # Emit the custom signal for successful sign-in
         v_layout = QVBoxLayout()
         v_layout.addWidget(label)
         v_layout.addWidget(button)
@@ -154,7 +154,6 @@ class Sign_in(QWidget):
         dialog.exec()
 
     def back_main_menu(self):
-        self.home = Home.Home()
         self.close()
 
 

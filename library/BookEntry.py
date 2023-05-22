@@ -5,7 +5,8 @@ class BookEntry:
         self.price = price
 
     def __str__(self):
-        return "Type: " + self.get_type() + "\nName: " + self.get_name() + "\nAuthor: " + self.get_author() + "\nPrice: " + str(self.get_price())
+        return "Type: " + self.get_type() + "\nName: " + self.get_name() + "\nAuthor: " + self.get_author() + "\nPrice: " + str(
+            self.get_price())
 
     def get_type(self):
         if self.type == 1:
@@ -24,3 +25,10 @@ class BookEntry:
             return self.price
 
 
+class CreateBook:
+    def __init__(self, entry):
+        self.entry = entry
+
+    def get_book(self):
+        return self.entry
+    

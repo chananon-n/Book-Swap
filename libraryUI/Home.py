@@ -11,7 +11,7 @@ class Home(QWidget):
     def __init__(self):
         super().__init__()
         label = QLabel()
-        pixmap = QPixmap(u"Book_Logo.png")
+        pixmap = QPixmap(u"../resources/Book_Logo.png")
         label.setPixmap(pixmap)
         blank = QLabel("")
 

@@ -1,5 +1,5 @@
 # create class eBook inherits from class Book
-import abstractBook
+from bookingSystem import abstractBook
 
 
 class eBook(abstractBook):

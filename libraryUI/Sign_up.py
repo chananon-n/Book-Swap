@@ -1,16 +1,20 @@
-
+import os
 from PySide6.QtGui import (QFont, QPixmap)
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit, QDialog)
-from PySide6.QtCore import Qt, QEvent
-import Home
-import essential
+from libraryUI import Home
+from PySide6.QtCore import Qt, Signal
 
 
 class Sign_up(QWidget):
+    signedUp = Signal()  # Custom signal to indicate successful sign-up
+
     def __init__(self):
         super().__init__()
+        # Get the absolute path of the current script
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+
         label = QLabel()
-        pixmap = QPixmap(u"Book_Logo.png")
+        pixmap = QPixmap(os.path.join(script_dir, u"../resources/Book_Logo.png"))
         label.setPixmap(pixmap)
         blank = QLabel("")
 
@@ -72,8 +76,8 @@ class Sign_up(QWidget):
         self.setLayout(v_layout)
         self.setStyleSheet("background-color: #F9F6EC;")
         self.setWindowTitle("Sign Up")
+        self.setGeometry(400, 200, 800, 500)
         self.show()
-
         button1.clicked.connect(self.sign_up)
 
     def sign_up(self):
@@ -119,9 +123,9 @@ class Sign_up(QWidget):
             background-color: rgb(182, 170, 145);
             }
             ''')
-
             button.clicked.connect(dialog.close)
             button.clicked.connect(self.back_main_menu)
+            self.signedUp.emit()
         v_layout = QVBoxLayout()
         v_layout.addWidget(label)
         v_layout.addWidget(button)

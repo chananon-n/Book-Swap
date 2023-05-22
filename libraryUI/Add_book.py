@@ -1,9 +1,12 @@
 import os
+
+from library import abstractBook
+
 from PySide6.QtGui import (QFont, QPixmap, QDragEnterEvent)
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit,
                                QTextEdit, QCheckBox, QScrollArea, QMainWindow, QMessageBox, QDialog)
 from PySide6.QtCore import *
-from Sign_in import Sign_in  # change to main menu by your self na non , left only import sign in and from and import
+from libraryUI.Sign_in import Sign_in  # change to main menu by your self na non , left only import sign in and from and import
 import BookCategory
 
 # use in main menu instead
@@ -457,7 +460,7 @@ class Add_book(QMainWindow):
         color: rgb(148, 132, 99);   
         }
         ''')
-        self.cancel_button.clicked.connect(self.getMainPanel)
+        self.cancel_button.clicked.connect(self.cancel__goback)
 
         h_layout19 = QHBoxLayout()
         h_layout19.addSpacing(20)
@@ -504,7 +507,7 @@ class Add_book(QMainWindow):
         self.setStyleSheet("background-color: #F9F6EC;")
         self.show()
 
-    def getMainPanel(self):  # wait for main menu done then just import main menu page na
+    def cancel__goback(self):  # wait for main menu done then just import main menu page na
         self.sign_in = Sign_in()
         self.close()
 

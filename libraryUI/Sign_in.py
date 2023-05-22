@@ -1,16 +1,19 @@
 from PySide6.QtGui import (QFont, QPixmap)
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit, QDialog)
-from PySide6.QtCore import Qt, QEvent
-
-import Home
+from PySide6.QtCore import Qt, Signal
+import os
 
 
 class Sign_in(QWidget):
+    signedIn = Signal()  # Custom signal to indicate successful sign-in
 
     def __init__(self):
         super().__init__()
+        # Get the absolute path of the current script
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+
         label = QLabel()
-        pixmap = QPixmap(u"Book_Logo.png")
+        pixmap = QPixmap(os.path.join(script_dir, u"../resources/Book_Logo.png"))
         label.setPixmap(pixmap)
         blank = QLabel("")
 
@@ -76,7 +79,7 @@ class Sign_in(QWidget):
         self.setLayout(v_layout)
         self.setStyleSheet("background-color: #F9F6EC;")
         self.setWindowTitle("Sign in")
-        self.setGeometry(400, 200, 500, 400)
+        self.setGeometry(400, 200, 800, 500)
         self.show()
 
         button1.clicked.connect(self.sign_in)
@@ -147,6 +150,7 @@ class Sign_in(QWidget):
             ''')
             button.clicked.connect(dialog.close)
             button.clicked.connect(self.back_main_menu)
+            self.signedIn.emit()  # Emit the custom signal for successful sign-in(use with main menu
         v_layout = QVBoxLayout()
         v_layout.addWidget(label)
         v_layout.addWidget(button)
@@ -154,7 +158,6 @@ class Sign_in(QWidget):
         dialog.exec()
 
     def back_main_menu(self):
-        self.home = Home.Home()
         self.close()
 
 

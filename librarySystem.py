@@ -5,6 +5,7 @@ from libraryUI.Home import Home
 from libraryUI.Sign_in import Sign_in
 from libraryUI.Sign_up import Sign_up
 
+
 class librarySystem(QObject):
     # singleton
     __instance = None

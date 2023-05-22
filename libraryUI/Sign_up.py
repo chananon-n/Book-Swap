@@ -1,4 +1,4 @@
-
+import os
 from PySide6.QtGui import (QFont, QPixmap)
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit, QDialog)
 from PySide6.QtCore import Qt
@@ -8,8 +8,11 @@ from libraryUI import Home
 class Sign_up(QWidget):
     def __init__(self):
         super().__init__()
+        # Get the absolute path of the current script
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+
         label = QLabel()
-        pixmap = QPixmap(u"../resources/Book_Logo.png")
+        pixmap = QPixmap(os.path.join(script_dir, u"../resources/Book_Logo.png"))
         label.setPixmap(pixmap)
         blank = QLabel("")
 

@@ -1,8 +1,6 @@
 
 from PySide6.QtGui import (QFont, QPixmap)
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget)
-import Sign_in
-import Sign_up
 
 
 # from Sign_up import Sign_up
@@ -11,7 +9,7 @@ class Home(QWidget):
     def __init__(self):
         super().__init__()
         label = QLabel()
-        pixmap = QPixmap(u"Book_Logo.png")
+        pixmap = QPixmap(u"../resources/Book_Logo.png")
         label.setPixmap(pixmap)
         blank = QLabel("")
 
@@ -29,7 +27,7 @@ class Home(QWidget):
         }
         ''')
         Signin_button.setFont(QFont("Vesper Libre", 25))
-        Signin_button.clicked.connect(self.getSign_inPanel)
+        # Signin_button.clicked.connect(self.getSign_inPanel)
 
         h_layout3 = QHBoxLayout()
         h_layout3.addSpacing(200)
@@ -45,7 +43,7 @@ class Home(QWidget):
                 background-color: rgb(182, 170, 145);
                 }
                 ''')
-        Signup_button.clicked.connect(self.getSign_upPanel)
+        # Signup_button.clicked.connect(self.getSign_upPanel)
 
         h_layout4 = QHBoxLayout()
         h_layout4.addSpacing(200)
@@ -65,13 +63,13 @@ class Home(QWidget):
         self.setGeometry(400, 200, 500, 400)
         self.show()
 
-    def getSign_inPanel(self):
-        self.sign_in = Sign_in.Sign_in()
-        self.close()
-
-    def getSign_upPanel(self):
-        self.sign_up = Sign_up.Sign_up()
-        self.close()
+    # def getSign_inPanel(self):
+    #     self.sign_in = Sign_in.Sign_in()
+    #     self.close()
+    #
+    # def getSign_upPanel(self):
+    #     self.sign_up = Sign_up.Sign_up()
+    #     self.close()
 
 
 if __name__ == "__main__":

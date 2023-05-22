@@ -1,5 +1,5 @@
 # create class Book inherits from class abstractBook
-import abstractBook
+from library import abstractBook
 
 
 class Book(abstractBook):

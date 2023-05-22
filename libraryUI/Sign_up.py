@@ -1,16 +1,15 @@
 
 from PySide6.QtGui import (QFont, QPixmap)
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit, QDialog)
-from PySide6.QtCore import Qt, QEvent
-import Home
-import essential
+from PySide6.QtCore import Qt
+from libraryUI import Home
 
 
 class Sign_up(QWidget):
     def __init__(self):
         super().__init__()
         label = QLabel()
-        pixmap = QPixmap(u"Book_Logo.png")
+        pixmap = QPixmap(u"../resources/Book_Logo.png")
         label.setPixmap(pixmap)
         blank = QLabel("")
 
@@ -119,7 +118,6 @@ class Sign_up(QWidget):
             background-color: rgb(182, 170, 145);
             }
             ''')
-
             button.clicked.connect(dialog.close)
             button.clicked.connect(self.back_main_menu)
         v_layout = QVBoxLayout()

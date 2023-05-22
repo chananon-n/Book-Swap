@@ -1,7 +1,5 @@
-from PySide6.QtGui import (QFont, QPixmap)
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit,
-                               QTextEdit, QCheckBox, QScrollArea)
-from Sign_in import Sign_in  # change to main menu by your self na non , left only import sign in and from and import
+from PySide6.QtWidgets import (QApplication, QWidget)
+from libraryUI.Sign_in import Sign_in  # change to main menu by your self na non , left only import sign in and from and import
 
 
 class Remove_book(QWidget):

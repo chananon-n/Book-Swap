@@ -26,19 +26,18 @@ class librarySystem(QObject):
     def handleButtonClicked(self, button_name):
         if button_name == "Sign_in":
             # Navigate to the Sign_in panel
-            from libraryUI.Home import Home
             self.__current.close()
             sign_in = Sign_in()
-            sign_in.signedIn.connect(self.backToHome)  # Connect to the signedIn signal
+            sign_in.signedIn.connect(self.backToHome)  # Main Menu
             self.__current = sign_in
         elif button_name == "Sign_up":
             # Navigate to the Sign_up panel
-            from libraryUI.Home import Home
             self.__current.close()
+            sign_up = Sign_up()
+            sign_up.signedUp.connect(self.backToHome)  # Connect to the signedIn signal
             self.__current = Sign_up()
 
     def backToHome(self):
-        from libraryUI.Home import Home
         self.__current.close()
         self.__current = Home()
 

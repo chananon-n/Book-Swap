@@ -1,11 +1,13 @@
 import os
 from PySide6.QtGui import (QFont, QPixmap)
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit, QDialog)
-from PySide6.QtCore import Qt
 from libraryUI import Home
+from PySide6.QtCore import Qt, Signal
 
 
 class Sign_up(QWidget):
+    signedUp = Signal()  # Custom signal to indicate successful sign-up
+
     def __init__(self):
         super().__init__()
         # Get the absolute path of the current script
@@ -123,6 +125,7 @@ class Sign_up(QWidget):
             ''')
             button.clicked.connect(dialog.close)
             button.clicked.connect(self.back_main_menu)
+            self.signedUp.emit()
         v_layout = QVBoxLayout()
         v_layout.addWidget(label)
         v_layout.addWidget(button)

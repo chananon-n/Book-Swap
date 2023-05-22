@@ -150,7 +150,7 @@ class Sign_in(QWidget):
             ''')
             button.clicked.connect(dialog.close)
             button.clicked.connect(self.back_main_menu)
-            self.signedIn.emit()  # Emit the custom signal for successful sign-in
+            self.signedIn.emit()  # Emit the custom signal for successful sign-in(use with main menu
         v_layout = QVBoxLayout()
         v_layout.addWidget(label)
         v_layout.addWidget(button)

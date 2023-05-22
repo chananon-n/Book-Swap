@@ -9,6 +9,7 @@ from library import Book
 from library import eBook
 import storageSystem
 
+
 class librarySystem(QObject):
     # singleton
     __instance = None
@@ -16,12 +17,15 @@ class librarySystem(QObject):
     # constructor
     def __init__(self):
         # check if LibrarySystem is already created
+        super().__init__()
         self.s = storageSystem.storageSystem()
         if librarySystem.__instance is not None:
             raise Exception("This class is a singleton!")
         else:
             librarySystem.__instance = self
             self.__current = None
+        self.book_list = []
+        self.ebook_list = []
 
     def start(self):
         self.__current = Home()
@@ -52,28 +56,38 @@ class librarySystem(QObject):
             librarySystem()
         return librarySystem.__instance
 
-
     def getUserID(self):
         pass
 
     def getUserName(self, user_id):
         return self.s.getUserName(user_id)
 
-    def addNewBook(self, picture, name, author, description, category,price):
+    def addNewBook(self, picture, name, author, description, category, price):
         book = Book.Book(picture, name, author, description, category)
         book.set_price(price)
         self.s.createNewBook(name)
+        self.book_list.append(book)
         return book
 
-    def addNewEbook(self, picture, name, author, description, category,price):
+    def addNewEbook(self, picture, name, author, description, category, price):
         ebook = eBook.eBook(picture, name, author, description, category)
         ebook.set_price(price)
+        self.ebook_list.append(ebook)
         return ebook
 
+    def searchBook(self, name):
+        search_result = []
+        for book in self.book_list:
+            if name in book.get_name():
+                search_result.append(book)
+        return search_result
 
-    @staticmethod
-    def get_id():
-        return "kkkkk"
+    def searchEbook(self, name):
+        search_result = []
+        for ebook in self.ebook_list:
+            if name in ebook.get_name():
+                search_result.append(ebook)
+        return search_result
 
     @staticmethod
     def save_images(pixmap, title_name):
@@ -87,6 +101,8 @@ class librarySystem(QObject):
             return True
         else:
             return False
+
+
 
 
 if __name__ == "__main__":

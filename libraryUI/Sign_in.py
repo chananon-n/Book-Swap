@@ -79,7 +79,7 @@ class Sign_in(QWidget):
         self.setLayout(v_layout)
         self.setStyleSheet("background-color: #F9F6EC;")
         self.setWindowTitle("Sign in")
-        self.setGeometry(400, 200, 500, 400)
+        self.setGeometry(400, 200, 800, 500)
         self.show()
 
         button1.clicked.connect(self.sign_in)

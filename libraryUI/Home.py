@@ -64,7 +64,7 @@ class Home(QWidget):
         self.setLayout(v_layout)
         self.setStyleSheet("background-color: #F9F6EC;")
         self.setWindowTitle("Home")
-        self.setGeometry(400, 200, 500, 400)
+        self.setGeometry(400, 200, 800, 500)
         self.show()
 
     def handleButtonClicked(self, button_name):

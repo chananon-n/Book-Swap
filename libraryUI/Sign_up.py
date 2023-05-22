@@ -74,8 +74,8 @@ class Sign_up(QWidget):
         self.setLayout(v_layout)
         self.setStyleSheet("background-color: #F9F6EC;")
         self.setWindowTitle("Sign Up")
+        self.setGeometry(400, 200, 800, 500)
         self.show()
-
         button1.clicked.connect(self.sign_up)
 
     def sign_up(self):

@@ -1,7 +1,6 @@
 import os
-from PySide6.QtGui import (QFont, QPixmap)
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit, QDialog)
-from libraryUI import Home
+from PySide6.QtGui import QFont, QPixmap
+from PySide6.QtWidgets import QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit, QDialog
 from PySide6.QtCore import Qt, Signal
 
 
@@ -59,6 +58,7 @@ class Sign_up(QWidget):
                 background-color: rgb(182, 170, 145);
                 }
                 ''')
+        button1.clicked.connect(self.sign_up)
 
         h_layout4 = QHBoxLayout()
         h_layout4.addSpacing(200)
@@ -78,7 +78,6 @@ class Sign_up(QWidget):
         self.setWindowTitle("Sign Up")
         self.setGeometry(400, 200, 800, 500)
         self.show()
-        button1.clicked.connect(self.sign_up)
 
     def sign_up(self):
         text = self.enter1.text()
@@ -124,20 +123,10 @@ class Sign_up(QWidget):
             }
             ''')
             button.clicked.connect(dialog.close)
-            button.clicked.connect(self.back_main_menu)
-            self.signedUp.emit()
+            button.clicked.connect(self.signedUp.emit)  # Emit the signedUp signal upon successful sign-up
+
         v_layout = QVBoxLayout()
         v_layout.addWidget(label)
         v_layout.addWidget(button)
         dialog.setLayout(v_layout)
         dialog.exec()
-
-    def back_main_menu(self):
-        self.home = Home.Home()
-        self.close()
-
-
-if __name__ == "__main__":
-    app = QApplication()
-    ui = Sign_up()
-    app.exec()

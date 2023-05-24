@@ -4,6 +4,9 @@ from tortoise import run_async
 import CustomExeptionalHandler as CEH
 
 import database
+from database import Tolocal
+from library.Book import Book
+from library.eBook import eBook
 
 
 class storageSystem:
@@ -121,3 +124,29 @@ class storageSystem:
             return temp
         except CEH.databaseException as e:
             return e.message + "Error in editBookName"
+
+    @staticmethod
+    def getBooksFromLocal():
+        books = Tolocal.load_book_from_resource()
+        result = []
+        # get type of books
+        for i in range(len(books)):
+            if type(books[i]) == Book:
+                result.append(books[i])
+        return result
+
+    @staticmethod
+    def getEBooksFromLocal():
+        books = Tolocal.load_book_from_resource()
+        result = []
+        # get type of books
+        for i in range(len(books)):
+            if type(books[i]) == eBook:
+                result.append(books[i])
+        return result
+
+    @staticmethod
+    def saveToLocal(books):
+        Tolocal.save_book_to_resource(books)
+        return True
+

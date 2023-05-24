@@ -2,12 +2,12 @@ import os
 import sys
 from PySide6.QtWidgets import QApplication
 from PySide6.QtCore import QObject
-from libraryUI.Home import Home
-from libraryUI.Sign_in import Sign_in
-from libraryUI.Sign_up import Sign_up
 from library import Book
 from library import eBook
 import storageSystem
+from libraryUI.Home import Home
+from libraryUI.Sign_in import Sign_in
+from libraryUI.Sign_up import Sign_up
 
 
 class librarySystem(QObject):
@@ -151,10 +151,10 @@ class librarySystem(QObject):
 
     @staticmethod
     def save_images(pixmap, title_name):
-        # set image directory BookSwap resources/images
-        image_dir = os.path.join(os.path.dirname(__file__), 'resources', 'images')
+        # create BookSwap resources/images folder if not exist
+        image_dir = os.path.join(os.path.dirname(__file__), 'BookSwap resources/images')
         if not os.path.exists(image_dir):
-            os.mkdir(image_dir)
+            os.makedirs(image_dir)
         if title_name is not None:
             image_path = os.path.join(image_dir, title_name + '.jpg')
             pixmap.save(image_path, 'jpg')

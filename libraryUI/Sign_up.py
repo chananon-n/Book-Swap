@@ -120,8 +120,8 @@ class Sign_up(QWidget):
             color: rgb(132, 113, 77);
             }
             '''
-            )
-            user = QLabel("Your ID is " + f"{librarySystem.librarySystem.get_id()}")
+                                )
+            user = QLabel("Your ID is " + f"{librarySystem.librarySystem.getUserID(store_name)}")
             user.setFont(QFont("Vesper Libre", 15))
             user.setStyleSheet('''QLabel {
                         color: rgb(132, 113, 77);

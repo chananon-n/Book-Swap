@@ -125,6 +125,15 @@ class storageSystem:
         except CEH.databaseException as e:
             return e.message + "Error in editBookName"
 
+    def removeBookStatus(self, book_id, user_id):
+        try:
+            temp = asyncio.run(database.databaseTools.remove_book_status(book_id, user_id))
+            if temp is None:
+                return "Book not found"
+            return temp
+        except CEH.databaseException as e:
+            return e.message + "Error in removeBookStatus"
+
     @staticmethod
     def getBooksFromLocal():
         books = Tolocal.load_book_from_resource()

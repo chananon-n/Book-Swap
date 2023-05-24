@@ -9,13 +9,13 @@ class AddBook:
         self.date = datetime.now()
 
 
-class Module:
+class History:
     def __init__(self):
         self.author = None
         self.name = None
         self.history = []
 
-    def add_history(self,a: AddBook):
+    def add_history(self, a: AddBook):
         self.history.append(a)
 
     def display(self):

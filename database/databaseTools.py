@@ -112,7 +112,7 @@ async def remove_book_status(book_id, user_id):
         book_status = await ID_BookID_Status.get(bookId_id=book_id, userId_id=user_id)
         await book_status.delete()
         return True
-    return False
+    return None
 
 
 async def get_all_book(command, user_id):

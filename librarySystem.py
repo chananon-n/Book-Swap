@@ -8,6 +8,7 @@ import storageSystem
 from libraryUI.Home import Home
 from libraryUI.Sign_in import Sign_in
 from libraryUI.Sign_up import Sign_up
+from library import AddBook
 
 
 class librarySystem(QObject):
@@ -18,10 +19,7 @@ class librarySystem(QObject):
     def __init__(self):
         # check if LibrarySystem is already created
         self.userID = None
-        self.bookID = None
         self.s = storageSystem.storageSystem()
-        self.book = Book.Book()
-        self.eBook = eBook.eBook()
         if librarySystem.__instance is not None:
             raise Exception("This class is a singleton!")
         else:
@@ -68,7 +66,7 @@ class librarySystem(QObject):
             self.s.createNewUser(name)
             return True
 
-    def CheckUserID(self,id):
+    def CheckUserID(self, id):
         self.userID = id
         return self.s.checkUserID(id)
 
@@ -81,12 +79,16 @@ class librarySystem(QObject):
         self.s.createNewBook(name)
         book.setBookID(self.s.getBookID(name))
         self.book_list.append(book)
+        history = AddBook.AddBook(1, name, author)
+        self.history_list.append(history)
         return book
 
     def addNewEbook(self, picture, name, author, description, category, price):
         ebook = eBook.eBook(picture, name, author, description, category)
         ebook.set_price(price)
         self.ebook_list.append(ebook)
+        history = AddBook.AddBook(2, name, author)
+        self.history_list.append(history)
         return ebook
 
     def getBookID(self, name):
@@ -123,31 +125,52 @@ class librarySystem(QObject):
     def getBorrowList(self, userID):
         return self.s.getBorrowedBooks(userID)
 
-    def getBookList(self, userID):
+    def getBookListFromDB(self, userID):
         return self.s.getAllBooks(userID)
 
-    def getEBookList(self, userID):
-        pass
+    def getEBookListFromLocal(self):
+        return self.s.getEBooksFromLocal()
 
-    def checkStatus(self,bookID,userID, status):
-        return self.s.checkStatusWithLocal(bookID,userID,status)
+    def getBookListFromLocal(self):
+        return self.s.getBooksFromLocal()
 
-    def editBook(self, bookID, name, author, description, category, price):
+    def checkStatus(self, bookID, userID, status):
+        return self.s.checkStatusWithLocal(bookID, userID, status)
+
+    def editBook(self, b: Book, bookID, name, author, description, category, price):
         self.s.editBookName(bookID, name)
-        self.book.setName(name)
-        self.book.setauthor(author)
-        self.book.setdescription(description)
-        self.book.setcategory(category)
-        self.book.set_price(price)
+        b.setName(name)
+        b.setauthor(author)
+        b.setdescription(description)
+        b.setcategory(category)
+        b.set_price(price)
         return True
 
-    def editEbook(self, ebookID, name, author, description, category, price):
-        self.eBook.setName(name)
-        self.eBook.setauthor(author)
-        self.eBook.setdescription(description)
-        self.eBook.setcategory(category)
-        self.eBook.set_price(price)
+    def removeBook(self, b: Book, bookID, userID):
+        self.s.removeBookStatus(bookID, userID)
+        del b
         return True
+
+    @staticmethod
+    def removeEBook(self, e: eBook):
+        del e
+        return True
+
+    @staticmethod
+    def editEbook(self, e: eBook, name, author, description, category, price):
+        e.setName(name)
+        e.setauthor(author)
+        e.setdescription(description)
+        e.eBook.setcategory(category)
+        e.eBook.set_price(price)
+        return True
+
+    def finishAndSave(self):
+        book = self.getBookListFromDB(self.userID)
+        bookLocal = self.getBookListFromLocal()
+        if book == bookLocal:
+            return self.s.saveToLocal(self.book)
+        return False
 
     @staticmethod
     def save_images(pixmap, title_name):

@@ -2,6 +2,7 @@
 from abc import ABCMeta, abstractmethod
 from library import BookType
 
+
 class Book(object):
     __metaclass__ = ABCMeta
 
@@ -15,6 +16,7 @@ class Book(object):
 
     def get_tyoe(self):
         return self.type
+
     def get_picture(self):
         return self.picture
 
@@ -29,7 +31,6 @@ class Book(object):
 
     def get_category(self):
         return self.category
-
 
     def set_picture(self, picture):
         self.picture = picture

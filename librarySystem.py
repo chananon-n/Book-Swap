@@ -26,6 +26,7 @@ class librarySystem(QObject):
             self.__current = None
         self.book_list = []
         self.ebook_list = []
+        self.history_list = []
 
     def start(self):
         self.__current = Home()

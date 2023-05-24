@@ -19,7 +19,6 @@ class librarySystem:
         # check if LibrarySystem is already created
         super().__init__()
         self.userID = None
-        self.s = storageSystem.storageSystem()
         if librarySystem.__instance is not None:
             raise Exception("This class is a singleton!")
         else:
@@ -59,16 +58,17 @@ class librarySystem:
         return librarySystem.__instance
 
     def CheckUserID(self, id):
-        self.userID = id
-        return self.s.checkUserID(id)
+        if storageSystem.storageSystem.checkUserID(id):
+            self.userID = id
+        return self.userID
 
     def getUserName(self, user_id):
-        return self.s.getUserName(user_id)
+        return storageSystem.storageSystem.getUserName(user_id)
 
     def addNewBook(self, picture, name, author, description, category, price):
         book = Book.Book(picture, name, author, description, category, price)
-        self.s.createNewBook(name)
-        book.setBookID(self.s.getBookID(name))
+        storageSystem.storageSystem.createNewBook(name)
+        book.setBookID(storageSystem.storageSystem.getBookID(name))
         self.book_list.append(book)
         history = AddBook.AddBook(1, name, author)
         self.history_list.append(history)
@@ -82,7 +82,7 @@ class librarySystem:
         return ebook
 
     def getBookID(self, name):
-        return self.s.getBookID(name)
+        return storageSystem.storageSystem.getBookID(name)
 
     def searchBook(self, name):
         search_result = []
@@ -100,43 +100,43 @@ class librarySystem:
 
     def filterCategory(self, category):
         bookList = []
-        allBook = self.s.getAllBooks(self.userID)
+        allBook = storageSystem.storageSystem.getAllBooks(self.userID)
         for book in allBook:
             if (book.get_category() == category) and (book not in bookList):
                 bookList.append(book)
         return bookList
 
     def createBookStatus(self, bookID, userID, status):
-        self.s.createBookStatus(bookID, userID, status)
+        storageSystem.storageSystem.createBookStatus(bookID, userID, status)
         return True
 
     def getBookStatus(self, bookID, userID):
-        return self.s.getBookStatus(bookID, userID)
+        return storageSystem.storageSystem.getBookStatus(bookID, userID)
 
     def removeBookStatus(self, bookID, userID):
         self.s.removeBookStatus(bookID, userID)
         return True
 
     def getBookAvailable(self, userID):
-        return self.s.getAvailableBooks(userID)
+        return storageSystem.storageSystem.getAvailableBooks(userID)
 
     def getBorrowList(self, userID):
-        return self.s.getBorrowedBooks(userID)
+        return storageSystem.storageSystem.getBorrowedBooks(userID)
 
     def getBookListFromDB(self, userID):
-        return self.s.getAllBooks(userID)
+        return storageSystem.storageSystem.getAllBooks(userID)
 
     def getEBookListFromLocal(self):
-        return self.s.getEBooksFromLocal()
+        return storageSystem.storageSystem.getEBooksFromLocal()
 
     def getBookListFromLocal(self):
-        return self.s.getBooksFromLocal()
+        return storageSystem.storageSystem.getBooksFromLocal()
 
     def checkStatus(self, bookID, userID, status):
-        return self.s.checkStatusWithLocal(bookID, userID, status)
+        return storageSystem.storageSystem.checkStatusWithLocal(bookID, userID, status)
 
     def editBook(self, b: Book, bookID, name, author, description, category, price):
-        self.s.editBookName(bookID, name)
+        storageSystem.storageSystem.editBookName(bookID, name)
         b.setName(name)
         b.setauthor(author)
         b.setdescription(description)
@@ -145,7 +145,7 @@ class librarySystem:
         return True
 
     def removeBook(self, b: Book, bookID, userID):
-        self.s.removeBookStatus(bookID, userID)
+        storageSystem.storageSystem.removeBookStatus(bookID, userID)
         del b
         return True
 

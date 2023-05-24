@@ -5,7 +5,9 @@ from PySide6.QtCore import QObject
 from libraryUI.Home import Home
 from libraryUI.Sign_in import Sign_in
 from libraryUI.Sign_up import Sign_up
-
+from library import Book
+from library import eBook
+import storageSystem
 
 class librarySystem(QObject):
     # singleton
@@ -14,6 +16,7 @@ class librarySystem(QObject):
     # constructor
     def __init__(self):
         # check if LibrarySystem is already created
+        self.s = storageSystem.storageSystem()
         if librarySystem.__instance is not None:
             raise Exception("This class is a singleton!")
         else:
@@ -48,6 +51,24 @@ class librarySystem(QObject):
         if librarySystem.__instance is None:
             librarySystem()
         return librarySystem.__instance
+
+
+    def getUserID(self):
+        pass
+
+    def getUserName(self, user_id):
+        return self.s.getUserName(user_id)
+
+    def addNewBook(self, picture, name, author, description, category,price):
+        book = Book.Book(picture, name, author, description, category)
+        book.set_price(price)
+        self.s.createNewBook(name)
+        return book
+
+    def addNewEbook(self, picture, name, author, description, category,price):
+        ebook = eBook.eBook(picture, name, author, description, category)
+        ebook.set_price(price)
+        return ebook
 
 
     @staticmethod

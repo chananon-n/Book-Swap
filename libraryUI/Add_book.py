@@ -585,7 +585,7 @@ class Add_book(QMainWindow):
             self.pixmap.save(image_path, 'PNG')
         else:
             # If the user didn't enter a title, show an error message
-            QMessageBox.setStyleSheet("color: black;")                          # make the text in black color and when click the ok button, it come back to previous page
+            QMessageBox.setStyleSheet("color: black;")                          # make the text in black color and when click the ok button, come back to previous page
             QMessageBox.about(self, "Error", "Please enter a title for the book.")
 
     def save_and_go_main(self):

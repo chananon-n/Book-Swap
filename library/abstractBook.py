@@ -5,13 +5,12 @@ from abc import ABCMeta, abstractmethod
 class Book(object):
     __metaclass__ = ABCMeta
 
-    def __init__(self, picture, title, author, description, category, tags):
+    def __init__(self, picture, title, author, description, category):
         self.picture = picture
         self.title = title
         self.author = author
         self.description = description
         self.category = category
-        self.tags = tags
 
     def get_picture(self):
         return self.picture
@@ -28,8 +27,7 @@ class Book(object):
     def get_category(self):
         return self.category
 
-    def get_tags(self):
-        return self.tags
+
 
     def set_picture(self, picture):
         self.picture = picture
@@ -46,8 +44,7 @@ class Book(object):
     def set_category(self, category):
         self.category = category
 
-    def set_tags(self, tags):
-        self.tags = tags
+
 
     @abstractmethod
     def set_price(self, price):

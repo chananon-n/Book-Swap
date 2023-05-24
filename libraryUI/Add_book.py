@@ -622,6 +622,7 @@ class Add_book(QMainWindow):
         self.save_book()
 
 
+
 if __name__ == "__main__":
     app = QApplication()
     ui = Add_book()

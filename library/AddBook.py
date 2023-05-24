@@ -15,8 +15,8 @@ class Module:
         self.name = None
         self.history = []
 
-    def enrol(self):
-        self.history.append(AddBook(self.name, self.author))
+    def add_history(self,a: AddBook):
+        self.history.append(a)
 
     def display(self):
         for i in self.history:

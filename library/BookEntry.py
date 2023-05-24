@@ -1,18 +1,21 @@
 import BookType
-class BookEntry:
-    def __init__(self, t, name, author, price):
-        self.type = t
-        self.author = author
-        self.price = price
+
+from library import abstractBook
+from library import BookType
+class BookEntry(abstractBook):
+    def __init__(self, picture, title, author, description, category):
+        super(BookEntry, self).__init__(picture, title, author, description, category)
+        self.price = 0.0
+        self.type = None
 
     def __str__(self):
         return "Type: " + self.get_type() + "\nName: " + self.get_name() + "\nAuthor: " + self.get_author() + "\nPrice: " + str(
             self.get_price())
 
     def get_type(self):
-        if self.type == 1:
+        if self.type == BookType.BookType(1):
             return "Book"
-        elif self.type == 2:
+        elif self.type == BookType.BookType(2):
             return "eBook"
 
     def get_name(self):
@@ -32,4 +35,3 @@ class CreateBook:
 
     def get_book(self):
         return self.entry
-

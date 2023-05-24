@@ -5,6 +5,8 @@ from library import Book
 from library import eBook
 import storageSystem
 from libraryUI.Home import Home
+import libraryUI.Sign_in as Sign_in
+import libraryUI.Sign_up as Sign_up
 from library import AddBook
 
 
@@ -36,15 +38,15 @@ class librarySystem:
         if button_name == "Sign_in":
             # Navigate to the Sign_in panel
             self.__current.close()
-            sign_in = Sign_in()
+            sign_in = Sign_in.Sign_in()
             sign_in.signedIn.connect(self.backToHome)  # Main Menu
             self.__current = sign_in
         elif button_name == "Sign_up":
             # Navigate to the Sign_up panel
             self.__current.close()
-            sign_up = Sign_up()
+            sign_up = Sign_up.Sign_up()
             sign_up.signedUp.connect(self.backToHome)  # Connect to the signedIn signal
-            self.__current = Sign_up()
+            self.__current = Sign_up.Sign_up()
 
     def backToHome(self):
         self.__current.close()
@@ -55,14 +57,6 @@ class librarySystem:
         if librarySystem.__instance is None:
             librarySystem()
         return librarySystem.__instance
-
-    @staticmethod
-    def checkSignUp(self, name):
-        if name == "" or name == "Enter the store name":
-            return False
-        else:
-            self.s.createNewUser(name)
-            return True
 
     def CheckUserID(self, id):
         self.userID = id
@@ -156,12 +150,13 @@ class librarySystem:
         return True
 
     @staticmethod
-    def removeEBook(self, e: eBook):
-        del e
+    def removeEBook(e: eBook):
+        # delete ebook from local
+        e.deleteEBook()
         return True
 
     @staticmethod
-    def editEbook(self, e: eBook, name, author, description, category, price):
+    def editEbook(e: eBook, name, author, description, category, price):
         e.setName(name)
         e.setauthor(author)
         e.setdescription(description)
@@ -195,4 +190,3 @@ if __name__ == "__main__":
     library_system = librarySystem.get_instance()
     library_system.start()
     sys.exit(app.exec())
-

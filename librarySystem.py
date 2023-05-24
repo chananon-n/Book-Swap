@@ -108,6 +108,14 @@ class librarySystem(QObject):
                 search_result.append(ebook)
         return search_result
 
+    def filterCategory(self, category):
+        bookList = []
+        allBook = self.s.getAllBooks(self.userID)
+        for book in allBook:
+            if (book.get_category() == category) and (book not in bookList):
+                bookList.append(book)
+        return bookList
+
     def createBookStatus(self, bookID, userID, status):
         self.s.createBookStatus(bookID, userID, status)
         return True

@@ -49,12 +49,6 @@ class librarySystem(QObject):
             librarySystem()
         return librarySystem.__instance
 
-    @staticmethod
-    def checkSignUp_SignIn(name, text):
-        if name == "" or name == text:
-            return False
-        else:
-            return True
 
     @staticmethod
     def get_id():

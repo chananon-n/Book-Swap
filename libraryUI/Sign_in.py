@@ -3,6 +3,8 @@ from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, Q
 from PySide6.QtCore import Qt, Signal
 import os
 
+import librarySystem
+
 
 class Sign_in(QWidget):
     signedIn = Signal()  # Custom signal to indicate successful sign-in
@@ -87,7 +89,7 @@ class Sign_in(QWidget):
     def sign_in(self):
         text = self.enter1.text()
         dialog = QDialog()
-        if text == "Enter the ID" or text == "":
+        if text == "Enter the ID" or text.strip(" ") == "":
             dialog.setWindowTitle("Error")
             dialog.setWindowModality(Qt.ApplicationModal)
             dialog.resize(300, 100)

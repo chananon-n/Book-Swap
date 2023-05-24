@@ -85,7 +85,7 @@ class Sign_up(QWidget):
     def sign_up(self):
         text = self.enter1.text()
         dialog = QDialog()
-        if not librarySystem.librarySystem.checkSignUp(text):
+        if text == "Enter the store name" or text.strip(" ") == "":
             dialog.setWindowTitle("Error")
             dialog.setWindowModality(Qt.ApplicationModal)
             dialog.resize(300, 100)

@@ -3,7 +3,7 @@ from abc import ABCMeta, abstractmethod
 from library import BookType
 
 
-class Book(object):
+class abstractBook(metaclass=ABCMeta):
     __metaclass__ = ABCMeta
 
     def __init__(self, tp, picture, name, author, description, category,price):

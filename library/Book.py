@@ -1,13 +1,15 @@
 # create class Book inherits from class abstractBook
-from library import abstractBook
+import library
 from datetime import datetime
+
+from library.abstractBook import abstractBook
 
 
 class Book(abstractBook):
     def __init__(self, picture, name, author, description, category, price):
         super(Book, self).__init__(picture, name, author, description, category, price)
         self.day = datetime.now()
-        self.ID = None
+        self.ID = 0
         self.status = True
 
     def setStatus(self, status):

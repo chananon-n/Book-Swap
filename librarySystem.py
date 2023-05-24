@@ -11,13 +11,14 @@ from libraryUI.Sign_up import Sign_up
 from library import AddBook
 
 
-class librarySystem(QObject):
+class librarySystem:
     # singleton
     __instance = None
 
     # constructor
     def __init__(self):
         # check if LibrarySystem is already created
+        super().__init__()
         self.userID = None
         self.s = storageSystem.storageSystem()
         if librarySystem.__instance is not None:
@@ -74,8 +75,7 @@ class librarySystem(QObject):
         return self.s.getUserName(user_id)
 
     def addNewBook(self, picture, name, author, description, category, price):
-        book = Book.Book(picture, name, author, description, category)
-        book.set_price(price)
+        book = Book.Book(picture, name, author, description, category, price)
         self.s.createNewBook(name)
         book.setBookID(self.s.getBookID(name))
         self.book_list.append(book)
@@ -84,8 +84,7 @@ class librarySystem(QObject):
         return book
 
     def addNewEbook(self, picture, name, author, description, category, price):
-        ebook = eBook.eBook(picture, name, author, description, category)
-        ebook.set_price(price)
+        ebook = eBook.eBook(picture, name, author, description, category, price)
         self.ebook_list.append(ebook)
         history = AddBook.AddBook(2, name, author)
         self.history_list.append(history)
@@ -199,3 +198,4 @@ if __name__ == "__main__":
     library_system = librarySystem.get_instance()
     library_system.start()
     sys.exit(app.exec())
+

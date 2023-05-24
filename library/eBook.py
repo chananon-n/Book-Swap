@@ -1,13 +1,12 @@
 # create class eBook inherits from class Book
 import random
 
-from library import abstractBook
+from library.abstractBook import abstractBook
 
 
 class eBook(abstractBook):
-    def __init__(self,picture, name, author, description, category):
-        super(eBook, self).__init__(picture, name, author, description, category)
-        self.price = 0.0
+    def __init__(self,picture, name, author, description, category,price):
+        super(eBook, self).__init__(picture, name, author, description, category,price)
         self.pdf = None
         self.ID = random.randint(10000, 100000)
 

@@ -6,14 +6,17 @@ from library import BookType
 class Book(object):
     __metaclass__ = ABCMeta
 
-    def __init__(self, tp, picture, name, author, description, category):
+    def __init__(self, tp, picture, name, author, description, category,price):
         self.type = tp
         self.picture = picture
         self.name = name
         self.author = author
         self.description = description
         self.category = category
+        self.price = price
 
+    def get_price(self):
+        return self.price
     def get_tyoe(self):
         return self.type
 
@@ -46,6 +49,9 @@ class Book(object):
 
     def set_category(self, category):
         self.category = category
+
+    def set_price(self, price):
+        self.price = price
 
     def __dict__(self):
         return {

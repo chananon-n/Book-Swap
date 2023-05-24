@@ -1,3 +1,4 @@
+import os
 import sys
 from PySide6.QtWidgets import QApplication
 from PySide6.QtCore import QObject
@@ -7,6 +8,7 @@ from libraryUI.Sign_up import Sign_up
 from library import Book
 from library import eBook
 import storageSystem
+
 
 class librarySystem(QObject):
     # singleton
@@ -58,7 +60,7 @@ class librarySystem(QObject):
         return librarySystem.__instance
 
     @staticmethod
-    def checkSignUp(self,name):
+    def checkSignUp(self, name):
         if name == "" or name == "Enter the store name":
             return False
         else:
@@ -87,6 +89,7 @@ class librarySystem(QObject):
 
     def getBookID(self, name):
         return self.s.getBookID(name)
+
     def searchBook(self, name):
         search_result = []
         for book in self.book_list:
@@ -104,6 +107,26 @@ class librarySystem(QObject):
     def createBookStatus(self, bookID, userID, status):
         self.s.createBookStatus(bookID, userID, status)
         return True
+
+    def getBookStatus(self, bookID, userID):
+        return self.s.getBookStatus(bookID, userID)
+
+    def removeBookStatus(self, bookID, userID):
+        self.s.removeBookStatus(bookID, userID)
+        return True
+
+    def getBookAvailable(self, userID):
+        return self.s.getAvailableBooks(userID)
+
+    def getBorrowList(self, userID):
+        return self.s.getBorrowedBooks(userID)
+
+    def getBookList(self, userID):
+        return self.s.getAllBooks(userID)
+
+    def getEBookList(self, userID):
+        pass
+
     @staticmethod
     def save_images(pixmap, title_name):
         # set image directory BookSwap resources/images
@@ -116,8 +139,6 @@ class librarySystem(QObject):
             return True
         else:
             return False
-
-
 
 
 if __name__ == "__main__":

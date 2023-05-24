@@ -2,6 +2,7 @@ import asyncio
 
 from tortoise import run_async
 import CustomExeptionalHandler as CEH
+
 import database
 
 
@@ -98,3 +99,12 @@ class storageSystem:
             return temp
         except CEH.databaseException as e:
             return e.message + "Error in getAllBooks"
+
+    def checkStatusWithLocal(self, book_id, user_id, status):
+        try:
+            temp = asyncio.run(database.databaseTools.get_book_status(book_id, user_id))
+            if temp is None:
+                return "Book status not found"
+            return temp == status
+        except CEH.databaseException as e:
+            return e.message + "Error in checkStatusWithLocal"

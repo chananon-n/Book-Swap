@@ -17,6 +17,7 @@ class librarySystem(QObject):
     # constructor
     def __init__(self):
         # check if LibrarySystem is already created
+        self.userID = None
         self.bookID = None
         self.s = storageSystem.storageSystem()
         self.book = Book.Book()
@@ -67,8 +68,9 @@ class librarySystem(QObject):
             self.s.createNewUser(name)
             return True
 
-    def getUserID(self):
-        pass
+    def CheckUserID(self,id):
+        self.userID = id
+        return self.s.checkUserID(id)
 
     def getUserName(self, user_id):
         return self.s.getUserName(user_id)
@@ -126,6 +128,26 @@ class librarySystem(QObject):
 
     def getEBookList(self, userID):
         pass
+
+    def checkStatus(self,bookID,userID, status):
+        return self.s.checkStatusWithLocal(bookID,userID,status)
+
+    def editBook(self, bookID, name, author, description, category, price):
+        self.s.editBookName(bookID, name)
+        self.book.setName(name)
+        self.book.setauthor(author)
+        self.book.setdescription(description)
+        self.book.setcategory(category)
+        self.book.set_price(price)
+        return True
+
+    def editEbook(self, ebookID, name, author, description, category, price):
+        self.eBook.setName(name)
+        self.eBook.setauthor(author)
+        self.eBook.setdescription(description)
+        self.eBook.setcategory(category)
+        self.eBook.set_price(price)
+        return True
 
     @staticmethod
     def save_images(pixmap, title_name):

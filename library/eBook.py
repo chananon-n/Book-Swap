@@ -9,7 +9,7 @@ class eBook(abstractBook):
         super(eBook, self).__init__(picture, name, author, description, category)
         self.price = 0.0
         self.pdf = None
-        self.ID = None
+        self.ID = random.randint(10000, 100000)
 
     def get_ID(self):
         return self.ID
@@ -26,8 +26,6 @@ class eBook(abstractBook):
     def get_price(self):
         return self.price
 
-    def createEbookID(self):
-        self.ID = random.randint(10000, 100000)
 
     def display(self):
         pass

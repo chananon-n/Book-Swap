@@ -25,6 +25,11 @@ class storageSystem:
         except CEH.databaseException as e:
             return e.message + "Error in getUserName"
 
+    def checkUserID(self, id):
+        try:
+            return asyncio.run(database.databaseTools.check_id(id))
+        except CEH.databaseException as e:
+            return e.message + "Error in checkUserID"
     def createNewBook(self, name):
         try:
             run_async(database.databaseTools.create_book_id_name(name))

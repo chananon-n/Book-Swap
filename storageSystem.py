@@ -3,7 +3,7 @@ import asyncio
 from tortoise import run_async
 import CustomExeptionalHandler as CEH
 
-import database
+from database import databaseTools
 from database import Tolocal
 from library.Book import Book
 from library.eBook import eBook
@@ -13,14 +13,14 @@ class storageSystem:
     @staticmethod
     def createNewUser(name):
         try:
-            return asyncio.run(database.databaseTools.create_id_name(name))
+            return asyncio.run(databaseTools.create_id_name(name))
         except CEH.databaseException as e:
             return e.message + "Error in createNewUser"
 
     @staticmethod
     def getUserName(id):
         try:
-            temp = asyncio.run(database.databaseTools.get_name(id))
+            temp = asyncio.run(databaseTools.get_name(id))
             if temp is None:
                 return "User not found"
             return temp
@@ -30,7 +30,7 @@ class storageSystem:
     @staticmethod
     def checkUserID(id):
         try:
-            temp = asyncio.run(database.databaseTools.check_id(id))
+            temp = asyncio.run(databaseTools.check_id(id))
             if temp is None:
                 return "User not found"
             return temp
@@ -40,7 +40,7 @@ class storageSystem:
     @staticmethod
     def createNewBook(name):
         try:
-            run_async(database.databaseTools.create_book_id_name(name))
+            run_async(databaseTools.create_book_id_name(name))
         except CEH.databaseException as e:
             return e.message + "Error in createNewBook"
         return True
@@ -48,7 +48,7 @@ class storageSystem:
     @staticmethod
     def getBookName(id):
         try:
-            temp = asyncio.run(database.databaseTools.get_book_name(id))
+            temp = asyncio.run(databaseTools.get_book_name(id))
             if temp is None:
                 return "Book not found"
             return temp
@@ -58,7 +58,7 @@ class storageSystem:
     @staticmethod
     def getBookID(name):
         try:
-            temp = asyncio.run(database.databaseTools.get_book_id(name))
+            temp = asyncio.run(databaseTools.get_book_id(name))
             if temp is None:
                 return "Book not found"
             return temp
@@ -68,7 +68,7 @@ class storageSystem:
     @staticmethod
     def createBookStatus(book_id, user_id, status):
         try:
-            run_async(database.databaseTools.create_book_status(book_id, user_id, status))
+            run_async(databaseTools.create_book_status(book_id, user_id, status))
         except CEH.databaseException as e:
             return e.message + "Error in createBookStatus"
         return True
@@ -76,7 +76,7 @@ class storageSystem:
     @staticmethod
     def getBookStatus(book_id, user_id):
         try:
-            temp = asyncio.run(database.databaseTools.get_book_status(book_id, user_id))
+            temp = asyncio.run(databaseTools.get_book_status(book_id, user_id))
             if temp is None:
                 return "Book status not found"
             return temp
@@ -86,7 +86,7 @@ class storageSystem:
     @staticmethod
     def removeBookStatus(book_id, user_id):
         try:
-            temp = asyncio.run(database.databaseTools.remove_book_status(book_id, user_id))
+            temp = asyncio.run(databaseTools.remove_book_status(book_id, user_id))
             if temp is None:
                 return "Book not found"
             return temp
@@ -96,7 +96,7 @@ class storageSystem:
     @staticmethod
     def getAvailableBooks(user_id):
         try:
-            temp = asyncio.run(database.databaseTools.get_all_book("available", user_id))
+            temp = asyncio.run(databaseTools.get_all_book("available", user_id))
             if temp is None:
                 return "Book status not found"
             return temp
@@ -106,7 +106,7 @@ class storageSystem:
     @staticmethod
     def getBorrowedBooks(user_id):
         try:
-            temp = asyncio.run(database.databaseTools.get_all_book("borrowed", user_id))
+            temp = asyncio.run(databaseTools.get_all_book("borrowed", user_id))
             if temp is None:
                 return "Book status not found"
             return temp
@@ -116,7 +116,7 @@ class storageSystem:
     @staticmethod
     def getAllBooks(user_id):
         try:
-            temp = asyncio.run(database.databaseTools.get_all_book("all", user_id))
+            temp = asyncio.run(databaseTools.get_all_book("all", user_id))
             if temp is None:
                 return "Book status not found"
             return temp
@@ -126,7 +126,7 @@ class storageSystem:
     @staticmethod
     def checkStatusWithLocal(book_id, user_id, status):
         try:
-            temp = asyncio.run(database.databaseTools.get_book_status(book_id, user_id))
+            temp = asyncio.run(databaseTools.get_book_status(book_id, user_id))
             if temp is None:
                 return "Book status not found"
             return temp == status
@@ -136,7 +136,7 @@ class storageSystem:
     @staticmethod
     def editBookName(book_id, name):
         try:
-            temp = asyncio.run(database.databaseTools.edit_book_name(book_id, name))
+            temp = asyncio.run(databaseTools.edit_book_name(book_id, name))
             if temp is None:
                 return "Book not found"
             return temp

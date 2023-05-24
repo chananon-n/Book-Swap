@@ -1,6 +1,8 @@
 import os
 from PySide6.QtGui import (QFont, QPixmap)
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit, QDialog)
+
+import librarySystem
 from libraryUI import Home
 from PySide6.QtCore import Qt, Signal
 
@@ -83,7 +85,7 @@ class Sign_up(QWidget):
     def sign_up(self):
         text = self.enter1.text()
         dialog = QDialog()
-        if text == "Enter the store name" or text == "":
+        if not librarySystem.librarySystem.checkSignUp(text):
             dialog.setWindowTitle("Error")
             dialog.setWindowModality(Qt.ApplicationModal)
             dialog.resize(300, 100)
@@ -114,6 +116,12 @@ class Sign_up(QWidget):
             color: rgb(132, 113, 77);
             }
             ''')
+            label = QLabel(f"{librarySystem.librarySystem.get_id()}")
+            label.setFont(QFont("Vesper Libre", 15))
+            label.setStyleSheet('''QLabel {
+                        color: rgb(132, 113, 77);
+                        }
+                        ''')
             button = QPushButton("OK")
             button.setFont(QFont("Vesper Libre", 15))
             button.setStyleSheet('''

@@ -15,7 +15,10 @@ class librarySystem(QObject):
     # constructor
     def __init__(self):
         # check if LibrarySystem is already created
+        self.bookID = None
         self.s = storageSystem.storageSystem()
+        self.book = Book.Book()
+        self.eBook = eBook.eBook()
         if librarySystem.__instance is not None:
             raise Exception("This class is a singleton!")
         else:
@@ -69,6 +72,7 @@ class librarySystem(QObject):
         book = Book.Book(picture, name, author, description, category)
         book.set_price(price)
         self.s.createNewBook(name)
+        book.setBookID(self.s.getBookID(name))
         return book
 
     def addNewEbook(self, picture, name, author, description, category,price):
@@ -76,11 +80,12 @@ class librarySystem(QObject):
         ebook.set_price(price)
         return ebook
 
+    def getBookID(self, name):
+        return self.s.getBookID(name)
 
-    @staticmethod
-    def get_id():
-        return "kkkkk"
-
+    def createBookStatus(self, bookID, userID, status):
+        self.s.createBookStatus(bookID, userID, status)
+        return True
 
 if __name__ == "__main__":
     app = QApplication([])

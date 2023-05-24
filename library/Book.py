@@ -14,6 +14,8 @@ class Book(abstractBook):
     def setStatus(self, status):
         self.status = status
 
+    def setBookID(self, ID):
+        self.ID = ID
     def get_day(self):
         return self.day
 

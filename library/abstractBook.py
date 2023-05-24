@@ -1,22 +1,25 @@
 # create an abstract class Book
 from abc import ABCMeta, abstractmethod
-
+from library import BookType
 
 class Book(object):
     __metaclass__ = ABCMeta
 
-    def __init__(self, picture, title, author, description, category):
+    def __init__(self, tp, picture, name, author, description, category):
+        self.type = tp
         self.picture = picture
-        self.title = title
+        self.name = name
         self.author = author
         self.description = description
         self.category = category
 
+    def get_tyoe(self):
+        return self.type
     def get_picture(self):
         return self.picture
 
     def get_title(self):
-        return self.title
+        return self.name
 
     def get_author(self):
         return self.author
@@ -28,12 +31,11 @@ class Book(object):
         return self.category
 
 
-
     def set_picture(self, picture):
         self.picture = picture
 
     def set_title(self, title):
-        self.title = title
+        self.name = title
 
     def set_author(self, author):
         self.author = author
@@ -44,7 +46,14 @@ class Book(object):
     def set_category(self, category):
         self.category = category
 
-
+    def __dict__(self):
+        return {
+            'picture': self.picture,
+            'Name': self.name,
+            'author': self.author,
+            'description': self.description,
+            'category': self.category
+        }
 
     @abstractmethod
     def set_price(self, price):

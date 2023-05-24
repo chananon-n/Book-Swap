@@ -40,7 +40,7 @@ def json_to_book(json_file):
 
 # create BookSwap resource directory
 def create_resource_directory():
-    if not os.path.exists('BookSwap resource'):
-        os.makedirs('BookSwap resource')
+    if not os.path.exists('BookSwap resources'):
+        os.makedirs('BookSwap resources')
         return True
     return False

@@ -9,11 +9,11 @@ class Sign_in(QWidget):
 
     def __init__(self):
         super().__init__()
-        # Get the absolute path of the current script
+
         script_dir = os.path.dirname(os.path.abspath(__file__))
 
         label = QLabel()
-        pixmap = QPixmap(os.path.join(script_dir, u"../resources/Book_Logo.png"))
+        pixmap = QPixmap(os.path.join(script_dir, "../resources/Book_Logo.png"))
         label.setPixmap(pixmap)
         blank = QLabel("")
 
@@ -87,70 +87,38 @@ class Sign_in(QWidget):
     def sign_in(self):
         text = self.enter1.text()
         dialog = QDialog()
+        dialog.setWindowTitle("Error")
+        dialog.setWindowModality(Qt.ApplicationModal)
+        dialog.resize(300, 100)
+        label = QLabel()
+        label.setFont(QFont("Vesper Libre", 15))
+        label.setStyleSheet('''
+            QLabel {
+            color: rgb(132, 113, 77);
+            }
+            ''')
+        button = QPushButton("OK")
+        button.setFont(QFont("Vesper Libre", 15))
+        button.setStyleSheet('''
+            QPushButton {
+            border: 3px solid rgb(132, 113, 77);
+            color: rgb(249, 246, 236);
+            background-color: rgb(182, 170, 145);
+            }
+            ''')
+        button.clicked.connect(dialog.close)
+
         if text == "Enter the ID" or text == "":
-            dialog.setWindowTitle("Error")
-            dialog.setWindowModality(Qt.ApplicationModal)
-            dialog.resize(300, 100)
-            label = QLabel("Please enter your ID")
-            label.setFont(QFont("Vesper Libre", 15))
-            label.setStyleSheet('''
-            QLabel {
-            color: rgb(132, 113, 77);
-            }
-            ''')
-            button = QPushButton("OK")
-            button.setFont(QFont("Vesper Libre", 15))
-            button.setStyleSheet('''
-            QPushButton {
-            border: 3px solid rgb(132, 113, 77);
-            color: rgb(249, 246, 236);
-            background-color: rgb(182, 170, 145);
-            }
-            ''')
-            button.clicked.connect(dialog.close)
-        if len(text) != 8 or not text.isdigit():
-            dialog.setWindowTitle("Error")
-            dialog.setWindowModality(Qt.ApplicationModal)
-            dialog.resize(300, 100)
-            label = QLabel("Please enter number 8 digits")
-            label.setFont(QFont("Vesper Libre", 15))
-            label.setStyleSheet('''
-            QLabel {
-            color: rgb(132, 113, 77);
-            }
-            ''')
-            button = QPushButton("OK")
-            button.setFont(QFont("Vesper Libre", 15))
-            button.setStyleSheet('''
-            QPushButton {
-            border: 3px solid rgb(132, 113, 77);
-            color: rgb(249, 246, 236);
-            background-color: rgb(182, 170, 145);
-            }
-            ''')
-            button.clicked.connect(dialog.close)
+            label.setText("Please enter your ID")
+        elif len(text) != 8 or not text.isdigit():
+            label.setText("Please enter 8 digits as your ID")
         else:
             dialog.setWindowTitle("Success")
-            dialog.setWindowModality(Qt.ApplicationModal)
             dialog.resize(300, 100)
-            label = QLabel("Login successfully")
-            label.setFont(QFont("Vesper Libre", 15))
-            label.setStyleSheet('''QLabel {
-            color: rgb(132, 113, 77);
-            }
-            ''')
-            button = QPushButton("OK")
-            button.setFont(QFont("Vesper Libre", 15))
-            button.setStyleSheet('''
-            QPushButton {
-            border: 3px solid rgb(132, 113, 77);
-            color: rgb(249, 246, 236);
-            background-color: rgb(182, 170, 145);
-            }
-            ''')
-            button.clicked.connect(dialog.close)
+            label.setText("Login successfully")
+            self.signedIn.emit()  # Emit the custom signal for successful sign-in
             button.clicked.connect(self.back_main_menu)
-            self.signedIn.emit()  # Emit the custom signal for successful sign-in(use with main menu
+
         v_layout = QVBoxLayout()
         v_layout.addWidget(label)
         v_layout.addWidget(button)
@@ -162,6 +130,6 @@ class Sign_in(QWidget):
 
 
 if __name__ == "__main__":
-    app = QApplication()
+    app = QApplication([])
     ui = Sign_in()
     app.exec()

@@ -1,6 +1,6 @@
 from PySide6.QtGui import (QFont, QPixmap)
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget)
-from PySide6.QtCore import Qt, Signal
+from PySide6.QtCore import Signal
 import os
 
 
@@ -22,36 +22,36 @@ class Home(QWidget):
         h_layout2.addWidget(label)
         h_layout2.addWidget(blank)
 
-        Signin_button = QPushButton("Signin")
-        Signin_button.setStyleSheet('''
+        signin_button = QPushButton("Signin")
+        signin_button.setStyleSheet('''
         QPushButton {
         border: 3px solid rgb(132, 113, 77);
         color: rgb(249, 246, 236);
         background-color: rgb(182, 170, 145);
         }
         ''')
-        Signin_button.setFont(QFont("Vesper Libre", 25))
-        Signin_button.clicked.connect(lambda: self.handleButtonClicked("Sign_in"))  # Emit signal for Sign_in button
+        signin_button.setFont(QFont("Vesper Libre", 25))
+        signin_button.clicked.connect(lambda: self.handleButtonClicked("Sign_in"))  # Emit signal for Sign_in button
 
         h_layout3 = QHBoxLayout()
         h_layout3.addSpacing(200)
-        h_layout3.addWidget(Signin_button)
+        h_layout3.addWidget(signin_button)
         h_layout3.addSpacing(200)
 
-        Signup_button = QPushButton("Sign up")
-        Signup_button.setFont(QFont("Vesper Libre", 25))
-        Signup_button.setStyleSheet('''
+        signup_button = QPushButton("Sign up")
+        signup_button.setFont(QFont("Vesper Libre", 25))
+        signup_button.setStyleSheet('''
                 QPushButton {
                 border: 3px solid rgb(132, 113, 77);
                 color: rgb(249, 246, 236);
                 background-color: rgb(182, 170, 145);
                 }
                 ''')
-        Signup_button.clicked.connect(lambda: self.handleButtonClicked("Sign_up"))  # Emit signal for Sign_up button
+        signup_button.clicked.connect(lambda: self.handleButtonClicked("Sign_up"))  # Emit signal for Sign_up button
 
         h_layout4 = QHBoxLayout()
         h_layout4.addSpacing(200)
-        h_layout4.addWidget(Signup_button)
+        h_layout4.addWidget(signup_button)
         h_layout4.addSpacing(200)
 
         v_layout = QVBoxLayout()

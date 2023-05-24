@@ -1,12 +1,11 @@
 import sys
 from PySide6.QtWidgets import QApplication
-from PySide6.QtCore import QObject
 from libraryUI.Home import Home
 from libraryUI.Sign_in import Sign_in
 from libraryUI.Sign_up import Sign_up
 
 
-class librarySystem(QObject):
+class librarySystem:
     # singleton
     __instance = None
 
@@ -17,30 +16,23 @@ class librarySystem(QObject):
             raise Exception("This class is a singleton!")
         else:
             librarySystem.__instance = self
-            self.__current = None
-
-    def start(self):
-        self.__current = Home()
-        # Connect to the buttonClicked signal from the Home panel
-        self.__current.buttonClicked.connect(self.handleButtonClicked)
+            self.__current = Home()
+            # Connect to the buttonClicked signal from the Home panel
+            self.__current.buttonClicked.connect(self.handleButtonClicked)
 
     def handleButtonClicked(self, button_name):
         if button_name == "Sign_in":
             # Navigate to the Sign_in panel
             self.__current.close()
             sign_in = Sign_in()
-            sign_in.signedIn.connect(self.backToHome)  # Main Menu
+            sign_in.signedIn.connect(self.backToHome)  # Connect to the signedIn signal
             self.__current = sign_in
         elif button_name == "Sign_up":
             # Navigate to the Sign_up panel
             self.__current.close()
             sign_up = Sign_up()
-            sign_up.signedUp.connect(self.backToHome)  # Connect to the signedIn signal
-            self.__current = Sign_up()
-
-    def backToHome(self):
-        self.__current.close()
-        self.__current = Home()
+            sign_up.signedUp.connect(self.backToHome)  # Connect to the signedUp signal
+            self.__current = sign_up
 
     @staticmethod
     def get_instance():
@@ -48,11 +40,13 @@ class librarySystem(QObject):
             librarySystem()
         return librarySystem.__instance
 
-    # @staticmethod
-
+    def backToHome(self):
+        self.__current.close()
+        self.__current = Home()
+        self.__current.buttonClicked.connect(self.handleButtonClicked)  # Reconnect the signal
+        self.__current.show()
 
 if __name__ == "__main__":
     app = QApplication([])
     library_system = librarySystem.get_instance()
-    library_system.start()
     sys.exit(app.exec())

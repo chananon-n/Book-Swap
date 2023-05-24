@@ -12,10 +12,9 @@ class storageSystem:
 
     def createNewUser(self, name):
         try:
-            run_async(database.databaseTools.create_id_name(name))
+            return asyncio.run(database.databaseTools.create_id_name(name))
         except CEH.databaseException as e:
             return e.message + "Error in createNewUser"
-        return True
 
     def getUserName(self, id):
         try:
@@ -108,3 +107,12 @@ class storageSystem:
             return temp == status
         except CEH.databaseException as e:
             return e.message + "Error in checkStatusWithLocal"
+
+    def editBookName(self, book_id, name):
+        try:
+            temp = asyncio.run(database.databaseTools.edit_book_name(book_id, name))
+            if temp is None:
+                return "Book not found"
+            return temp
+        except CEH.databaseException as e:
+            return e.message + "Error in editBookName"

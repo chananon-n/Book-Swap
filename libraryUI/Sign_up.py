@@ -85,7 +85,7 @@ class Sign_up(QWidget):
     def sign_up(self):
         store_name = self.enter1.text()
         dialog = QDialog()
-        if store_name == "Enter the store name" or text.strip(" ") == "":
+        if store_name == "Enter the store name" or store_name.strip(" ") == "":
             dialog.setWindowTitle("Error")
             dialog.setWindowModality(Qt.ApplicationModal)
             dialog.resize(300, 100)
@@ -120,8 +120,8 @@ class Sign_up(QWidget):
             color: rgb(132, 113, 77);
             }
             '''
-            )
-            user = QLabel("Your ID is " + f"{librarySystem.librarySystem.get_id()}")
+                                )
+            user = QLabel("Your ID is " + f"{librarySystem.librarySystem.getUserID(store_name)}")
             user.setFont(QFont("Vesper Libre", 15))
             user.setStyleSheet('''QLabel {
                         color: rgb(132, 113, 77);

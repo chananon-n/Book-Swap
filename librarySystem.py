@@ -57,10 +57,11 @@ class librarySystem:
             librarySystem()
         return librarySystem.__instance
 
-    def CheckUserID(self, id):
+    @staticmethod
+    def CheckUserID(id):
         if storageSystem.storageSystem.checkUserID(id):
-            self.userID = id
-        return self.userID
+            librarySystem.__instance.userID = id
+        return librarySystem.__instance.userID
 
     def getUserName(self, user_id):
         return storageSystem.storageSystem.getUserName(user_id)

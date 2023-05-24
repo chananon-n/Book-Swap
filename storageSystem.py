@@ -30,7 +30,10 @@ class storageSystem:
     @staticmethod
     def checkUserID(id):
         try:
-            return asyncio.run(database.databaseTools.check_id(id))
+            temp = asyncio.run(database.databaseTools.check_id(id))
+            if temp is None:
+                return "User not found"
+            return temp
         except CEH.databaseException as e:
             return e.message + "Error in checkUserID"
 

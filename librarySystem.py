@@ -1,4 +1,3 @@
-import os
 import sys
 from PySide6.QtWidgets import QApplication
 from PySide6.QtCore import QObject
@@ -25,6 +24,9 @@ class librarySystem(QObject):
         else:
             librarySystem.__instance = self
             self.__current = None
+        self.book_list = []
+        self.ebook_list = []
+        self.history_list = []
 
     def start(self):
         self.__current = Home()
@@ -69,24 +71,54 @@ class librarySystem(QObject):
     def getUserName(self, user_id):
         return self.s.getUserName(user_id)
 
-    def addNewBook(self, picture, name, author, description, category,price):
+    def addNewBook(self, picture, name, author, description, category, price):
         book = Book.Book(picture, name, author, description, category)
         book.set_price(price)
         self.s.createNewBook(name)
         book.setBookID(self.s.getBookID(name))
+        self.book_list.append(book)
         return book
 
-    def addNewEbook(self, picture, name, author, description, category,price):
+    def addNewEbook(self, picture, name, author, description, category, price):
         ebook = eBook.eBook(picture, name, author, description, category)
         ebook.set_price(price)
+        self.ebook_list.append(ebook)
         return ebook
 
     def getBookID(self, name):
         return self.s.getBookID(name)
+    def searchBook(self, name):
+        search_result = []
+        for book in self.book_list:
+            if name in book.get_name():
+                search_result.append(book)
+        return search_result
+
+    def searchEbook(self, name):
+        search_result = []
+        for ebook in self.ebook_list:
+            if name in ebook.get_name():
+                search_result.append(ebook)
+        return search_result
 
     def createBookStatus(self, bookID, userID, status):
         self.s.createBookStatus(bookID, userID, status)
         return True
+    @staticmethod
+    def save_images(pixmap, title_name):
+        # set image directory BookSwap resources/images
+        image_dir = os.path.join(os.path.dirname(__file__), 'resources', 'images')
+        if not os.path.exists(image_dir):
+            os.mkdir(image_dir)
+        if title_name is not None:
+            image_path = os.path.join(image_dir, title_name + '.jpg')
+            pixmap.save(image_path, 'jpg')
+            return True
+        else:
+            return False
+
+
+
 
 if __name__ == "__main__":
     app = QApplication([])

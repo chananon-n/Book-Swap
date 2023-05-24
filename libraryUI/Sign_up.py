@@ -83,9 +83,9 @@ class Sign_up(QWidget):
         button1.clicked.connect(self.sign_up)
 
     def sign_up(self):
-        text = self.enter1.text()
+        store_name = self.enter1.text()
         dialog = QDialog()
-        if not librarySystem.librarySystem.checkSignUp(text):
+        if store_name == "Enter the store name" or text.strip(" ") == "":
             dialog.setWindowTitle("Error")
             dialog.setWindowModality(Qt.ApplicationModal)
             dialog.resize(300, 100)
@@ -105,6 +105,10 @@ class Sign_up(QWidget):
             background-color: rgb(182, 170, 145);
             }
             ''')
+            v_layout = QVBoxLayout()
+            v_layout.addWidget(label)
+            v_layout.addWidget(button)
+            dialog.setLayout(v_layout)
             button.clicked.connect(dialog.close)
         else:
             dialog.setWindowTitle("Success")
@@ -115,10 +119,17 @@ class Sign_up(QWidget):
             label.setStyleSheet('''QLabel {
             color: rgb(132, 113, 77);
             }
-            ''')
-            label = QLabel(f"{librarySystem.librarySystem.get_id()}")
-            label.setFont(QFont("Vesper Libre", 15))
-            label.setStyleSheet('''QLabel {
+            '''
+            )
+            user = QLabel("Your ID is " + f"{librarySystem.librarySystem.get_id()}")
+            user.setFont(QFont("Vesper Libre", 15))
+            user.setStyleSheet('''QLabel {
+                        color: rgb(132, 113, 77);
+                        }
+                        ''')
+            id_create = QLabel("Please remember your ID")
+            id_create.setFont(QFont("Vesper Libre", 15))
+            id_create.setStyleSheet('''QLabel {
                         color: rgb(132, 113, 77);
                         }
                         ''')
@@ -132,20 +143,11 @@ class Sign_up(QWidget):
             }
             ''')
             button.clicked.connect(dialog.close)
-            button.clicked.connect(self.back_main_menu)
-            self.signedUp.emit()
-        v_layout = QVBoxLayout()
-        v_layout.addWidget(label)
-        v_layout.addWidget(button)
-        dialog.setLayout(v_layout)
+            button.clicked.connect(self.signedUp.emit)  # Emit the signedUp signal upon successful sign-up
+            v_layout = QVBoxLayout()
+            v_layout.addWidget(label)
+            v_layout.addWidget(user)
+            v_layout.addWidget(id_create)
+            v_layout.addWidget(button)
+            dialog.setLayout(v_layout)
         dialog.exec()
-
-    def back_main_menu(self):
-        self.home = Home.Home()
-        self.close()
-
-
-if __name__ == "__main__":
-    app = QApplication()
-    ui = Sign_up()
-    app.exec()

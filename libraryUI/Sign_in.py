@@ -3,8 +3,6 @@ from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, Q
 from PySide6.QtCore import Qt, Signal
 import os
 
-import librarySystem
-
 
 class Sign_in(QWidget):
     signedIn = Signal()  # Custom signal to indicate successful sign-in
@@ -15,7 +13,7 @@ class Sign_in(QWidget):
         script_dir = os.path.dirname(os.path.abspath(__file__))
 
         label = QLabel()
-        pixmap = QPixmap(os.path.join(script_dir, "../resources/Book_Logo.png"))
+        pixmap = QPixmap(os.path.join(script_dir, u"../resources/Book_Logo.png"))
         label.setPixmap(pixmap)
         blank = QLabel("")
 
@@ -89,7 +87,7 @@ class Sign_in(QWidget):
     def sign_in(self):
         text = self.enter1.text()
         dialog = QDialog()
-        if text == "Enter the ID" or text == "":
+        if text == "Enter the ID" or text.strip(" ") == "":
             dialog.setWindowTitle("Error")
             dialog.setWindowModality(Qt.ApplicationModal)
             dialog.resize(300, 100)

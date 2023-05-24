@@ -3,8 +3,8 @@ from library import abstractBook
 
 
 class eBook(abstractBook):
-    def __init__(self, picture, title, author, description, category, tags):
-        super(eBook, self).__init__(picture, title, author, description, category, tags)
+    def __init__(self, picture, name, author, description, category, tags):
+        super(eBook, self).__init__(picture, name, author, description, category, tags)
         self.price = 0.0
         self.pdf = None
 

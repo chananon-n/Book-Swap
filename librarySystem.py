@@ -1,3 +1,4 @@
+import os
 import sys
 from PySide6.QtWidgets import QApplication
 from PySide6.QtCore import QObject
@@ -58,6 +59,19 @@ class librarySystem(QObject):
     @staticmethod
     def get_id():
         return "kkkkk"
+
+    @staticmethod
+    def save_images(pixmap, title_name):
+        # set image directory BookSwap resources/images
+        image_dir = os.path.join(os.path.dirname(__file__), 'resources', 'images')
+        if not os.path.exists(image_dir):
+            os.mkdir(image_dir)
+        if title_name is not None:
+            image_path = os.path.join(image_dir, title_name + '.jpg')
+            pixmap.save(image_path, 'jpg')
+            return True
+        else:
+            return False
 
 
 if __name__ == "__main__":

@@ -94,6 +94,24 @@ async def remove_book_status(book_id, user_id):
     return False
 
 
+async def get_all_book(command, user_id):
+    # check if user id is in database, return None if it is not
+    if await ID_NAME.exists(id=user_id):
+        if command == "borrow":
+            # return all book id and name that user borrowed
+            book_status = await ID_BookID_Status.filter(userId_id=user_id, status=0)
+            return book_status
+        elif command == "available":
+            # return all book id and name that user can borrow
+            book_status = await ID_BookID_Status.filter(userId_id=user_id, status=1)
+            return book_status
+        elif command == "all":
+            # return all book id and name
+            book_status = await ID_BookID_Status.filter(userId_id=user_id)
+            return book_status
+    return None
+
+
 run_async(init())
 # run_async(create_id_name("test"))
 # print(asyncio.run(get_name(659)))

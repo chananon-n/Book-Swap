@@ -72,5 +72,29 @@ class storageSystem:
         except CEH.databaseException as e:
             return e.message + "Error in removeBookStatus"
 
+    def getAvailableBooks(self, user_id):
+        try:
+            temp = asyncio.run(database.databaseTools.get_all_book("available", user_id))
+            if temp is None:
+                return "Book status not found"
+            return temp
+        except CEH.databaseException as e:
+            return e.message + "Error in getAvailableBooks"
 
+    def getBorrowedBooks(self, user_id):
+        try:
+            temp = asyncio.run(database.databaseTools.get_all_book("borrowed", user_id))
+            if temp is None:
+                return "Book status not found"
+            return temp
+        except CEH.databaseException as e:
+            return e.message + "Error in getBorrowedBooks"
 
+    def getAllBooks(self, user_id):
+        try:
+            temp = asyncio.run(database.databaseTools.get_all_book("all", user_id))
+            if temp is None:
+                return "Book status not found"
+            return temp
+        except CEH.databaseException as e:
+            return e.message + "Error in getAllBooks"

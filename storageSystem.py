@@ -11,7 +11,7 @@ from library.eBook import eBook
 
 class storageSystem:
     def __init__(self):
-        run_async(database.init())
+        pass
 
     def createNewUser(self, name):
         try:

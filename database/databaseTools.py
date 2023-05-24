@@ -20,6 +20,14 @@ async def create_id_name(name):
     return rand_id
 
 
+# check id
+async def check_id(input_id):
+    # check if id is in database, return None if it is not
+    if await ID_NAME.exists(id=input_id):
+        return True
+    return False
+
+
 # get name by id
 async def get_name(input_id):
     # check if id is in database, return None if it is not

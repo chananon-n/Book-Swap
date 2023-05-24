@@ -113,4 +113,3 @@ run_async(init())
 
 # run_async(create_book_status(624, 654, 0))
 # run_async(remove_book_status(492, 654))
-

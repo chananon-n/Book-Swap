@@ -50,8 +50,8 @@ class librarySystem(QObject):
         return librarySystem.__instance
 
     @staticmethod
-    def checkSignUp(name):
-        if name == "" or name == "Enter the store name":
+    def checkSignUp_SignIn(name, text):
+        if name == "" or name == text:
             return False
         else:
             return True

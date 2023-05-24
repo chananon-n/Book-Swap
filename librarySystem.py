@@ -51,7 +51,6 @@ class librarySystem(QObject):
     # @staticmethod
 
 
-
 if __name__ == "__main__":
     app = QApplication([])
     library_system = librarySystem.get_instance()

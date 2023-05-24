@@ -2,7 +2,8 @@ from datetime import datetime
 
 
 class AddBook:
-    def __init__(self, name, author):
+    def __init__(self, type, name, author):
+        self.type = type
         self.name = name
         self.author = author
         self.date = datetime.now()

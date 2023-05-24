@@ -1,3 +1,4 @@
+import BookType
 class BookEntry:
     def __init__(self, t, name, author, price):
         self.type = t
@@ -31,4 +32,4 @@ class CreateBook:
 
     def get_book(self):
         return self.entry
-    
+

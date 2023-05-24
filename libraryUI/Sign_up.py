@@ -1,5 +1,6 @@
 import os
 from PySide6.QtGui import QFont, QPixmap
+import librarySystem
 from PySide6.QtWidgets import QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit, QDialog
 from PySide6.QtCore import Qt, Signal
 
@@ -80,9 +81,11 @@ class Sign_up(QWidget):
         self.show()
 
     def sign_up(self):
-        text = self.enter1.text()
+        store_name = self.enter1.text()
         dialog = QDialog()
-        if text == "Enter the store name" or text == "":
+        user = ""
+        id_create = ""
+        if not librarySystem.librarySystem.checkSignUp(store_name):
             dialog.setWindowTitle("Error")
             dialog.setWindowModality(Qt.ApplicationModal)
             dialog.resize(300, 100)
@@ -102,6 +105,10 @@ class Sign_up(QWidget):
             background-color: rgb(182, 170, 145);
             }
             ''')
+            v_layout = QVBoxLayout()
+            v_layout.addWidget(label)
+            v_layout.addWidget(button)
+            dialog.setLayout(v_layout)
             button.clicked.connect(dialog.close)
         else:
             dialog.setWindowTitle("Success")
@@ -112,7 +119,20 @@ class Sign_up(QWidget):
             label.setStyleSheet('''QLabel {
             color: rgb(132, 113, 77);
             }
-            ''')
+            '''
+            )
+            user = QLabel("Your ID is " + f"{librarySystem.librarySystem.get_id()}")
+            user.setFont(QFont("Vesper Libre", 15))
+            user.setStyleSheet('''QLabel {
+                        color: rgb(132, 113, 77);
+                        }
+                        ''')
+            id_create = QLabel("Please remember your ID")
+            id_create.setFont(QFont("Vesper Libre", 15))
+            id_create.setStyleSheet('''QLabel {
+                        color: rgb(132, 113, 77);
+                        }
+                        ''')
             button = QPushButton("OK")
             button.setFont(QFont("Vesper Libre", 15))
             button.setStyleSheet('''
@@ -124,9 +144,10 @@ class Sign_up(QWidget):
             ''')
             button.clicked.connect(dialog.close)
             button.clicked.connect(self.signedUp.emit)  # Emit the signedUp signal upon successful sign-up
-
-        v_layout = QVBoxLayout()
-        v_layout.addWidget(label)
-        v_layout.addWidget(button)
-        dialog.setLayout(v_layout)
+            v_layout = QVBoxLayout()
+            v_layout.addWidget(label)
+            v_layout.addWidget(user)
+            v_layout.addWidget(id_create)
+            v_layout.addWidget(button)
+            dialog.setLayout(v_layout)
         dialog.exec()

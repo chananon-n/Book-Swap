@@ -2,7 +2,7 @@ import sys
 from PySide6.QtWidgets import QApplication
 from libraryUI.Home import Home
 from libraryUI.Sign_in import Sign_in
-from libraryUI.Sign_up import Sign_up
+import libraryUI.Sign_up
 
 
 class librarySystem:
@@ -30,7 +30,7 @@ class librarySystem:
         elif button_name == "Sign_up":
             # Navigate to the Sign_up panel
             self.__current.close()
-            sign_up = Sign_up()
+            sign_up = libraryUI.Sign_up.Sign_up()
             sign_up.signedUp.connect(self.backToHome)  # Connect to the signedUp signal
             self.__current = sign_up
 
@@ -39,6 +39,17 @@ class librarySystem:
         if librarySystem.__instance is None:
             librarySystem()
         return librarySystem.__instance
+
+    @staticmethod
+    def checkSignUp(store_name):
+        if store_name == "":
+            return False
+        else:
+            return True
+
+    @staticmethod
+    def get_id():
+        return "12345678"
 
     def backToHome(self):
         self.__current.close()

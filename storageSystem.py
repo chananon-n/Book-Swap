@@ -10,16 +10,15 @@ from library.eBook import eBook
 
 
 class storageSystem:
-    def __init__(self):
-        pass
-
-    def createNewUser(self, name):
+    @staticmethod
+    def createNewUser(name):
         try:
             return asyncio.run(database.databaseTools.create_id_name(name))
         except CEH.databaseException as e:
             return e.message + "Error in createNewUser"
 
-    def getUserName(self, id):
+    @staticmethod
+    def getUserName(id):
         try:
             temp = asyncio.run(database.databaseTools.get_name(id))
             if temp is None:
@@ -28,19 +27,23 @@ class storageSystem:
         except CEH.databaseException as e:
             return e.message + "Error in getUserName"
 
-    def checkUserID(self, id):
+    @staticmethod
+    def checkUserID(id):
         try:
             return asyncio.run(database.databaseTools.check_id(id))
         except CEH.databaseException as e:
             return e.message + "Error in checkUserID"
-    def createNewBook(self, name):
+
+    @staticmethod
+    def createNewBook(name):
         try:
             run_async(database.databaseTools.create_book_id_name(name))
         except CEH.databaseException as e:
             return e.message + "Error in createNewBook"
         return True
 
-    def getBookName(self, id):
+    @staticmethod
+    def getBookName(id):
         try:
             temp = asyncio.run(database.databaseTools.get_book_name(id))
             if temp is None:
@@ -49,7 +52,8 @@ class storageSystem:
         except CEH.databaseException as e:
             return e.message + "Error in getBookName"
 
-    def getBookID(self, name):
+    @staticmethod
+    def getBookID(name):
         try:
             temp = asyncio.run(database.databaseTools.get_book_id(name))
             if temp is None:
@@ -58,14 +62,16 @@ class storageSystem:
         except CEH.databaseException as e:
             return e.message + "Error in getBookID"
 
-    def createBookStatus(self, book_id, user_id, status):
+    @staticmethod
+    def createBookStatus(book_id, user_id, status):
         try:
             run_async(database.databaseTools.create_book_status(book_id, user_id, status))
         except CEH.databaseException as e:
             return e.message + "Error in createBookStatus"
         return True
 
-    def getBookStatus(self, book_id, user_id):
+    @staticmethod
+    def getBookStatus(book_id, user_id):
         try:
             temp = asyncio.run(database.databaseTools.get_book_status(book_id, user_id))
             if temp is None:
@@ -74,13 +80,18 @@ class storageSystem:
         except CEH.databaseException as e:
             return e.message + "Error in getBookStatus"
 
-    def removeBookStatus(self, book_id, user_id):
+    @staticmethod
+    def removeBookStatus(book_id, user_id):
         try:
-            return run_async(database.databaseTools.remove_book_status(book_id, user_id))
+            temp = asyncio.run(database.databaseTools.remove_book_status(book_id, user_id))
+            if temp is None:
+                return "Book not found"
+            return temp
         except CEH.databaseException as e:
             return e.message + "Error in removeBookStatus"
 
-    def getAvailableBooks(self, user_id):
+    @staticmethod
+    def getAvailableBooks(user_id):
         try:
             temp = asyncio.run(database.databaseTools.get_all_book("available", user_id))
             if temp is None:
@@ -89,7 +100,8 @@ class storageSystem:
         except CEH.databaseException as e:
             return e.message + "Error in getAvailableBooks"
 
-    def getBorrowedBooks(self, user_id):
+    @staticmethod
+    def getBorrowedBooks(user_id):
         try:
             temp = asyncio.run(database.databaseTools.get_all_book("borrowed", user_id))
             if temp is None:
@@ -98,7 +110,8 @@ class storageSystem:
         except CEH.databaseException as e:
             return e.message + "Error in getBorrowedBooks"
 
-    def getAllBooks(self, user_id):
+    @staticmethod
+    def getAllBooks(user_id):
         try:
             temp = asyncio.run(database.databaseTools.get_all_book("all", user_id))
             if temp is None:
@@ -107,7 +120,8 @@ class storageSystem:
         except CEH.databaseException as e:
             return e.message + "Error in getAllBooks"
 
-    def checkStatusWithLocal(self, book_id, user_id, status):
+    @staticmethod
+    def checkStatusWithLocal(book_id, user_id, status):
         try:
             temp = asyncio.run(database.databaseTools.get_book_status(book_id, user_id))
             if temp is None:
@@ -116,7 +130,8 @@ class storageSystem:
         except CEH.databaseException as e:
             return e.message + "Error in checkStatusWithLocal"
 
-    def editBookName(self, book_id, name):
+    @staticmethod
+    def editBookName(book_id, name):
         try:
             temp = asyncio.run(database.databaseTools.edit_book_name(book_id, name))
             if temp is None:
@@ -124,15 +139,6 @@ class storageSystem:
             return temp
         except CEH.databaseException as e:
             return e.message + "Error in editBookName"
-
-    def removeBookStatus(self, book_id, user_id):
-        try:
-            temp = asyncio.run(database.databaseTools.remove_book_status(book_id, user_id))
-            if temp is None:
-                return "Book not found"
-            return temp
-        except CEH.databaseException as e:
-            return e.message + "Error in removeBookStatus"
 
     @staticmethod
     def getBooksFromLocal():
@@ -158,4 +164,3 @@ class storageSystem:
     def saveToLocal(books):
         Tolocal.save_book_to_resource(books)
         return True
-

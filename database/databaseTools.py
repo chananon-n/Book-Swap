@@ -12,7 +12,7 @@ async def create_id_name(name):
     # loop until id is not in database
     while await ID_NAME.exists(id=rand_id):
         rand_id = random.randint(10, 1000)
-
+        # create id and name
     id_name = ID_NAME(id=rand_id, name=name)
     await id_name.save()
 

@@ -3,6 +3,8 @@ from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, Q
 from PySide6.QtCore import Qt, Signal
 import os
 
+from librarySystem import librarySystem
+
 
 class Sign_in(QWidget):
     signedIn = Signal()  # Custom signal to indicate successful sign-in
@@ -129,7 +131,7 @@ class Sign_in(QWidget):
             }
             ''')
             button.clicked.connect(dialog.close)
-        else:
+        if librarySystem.CheckUserID(int(text)):
             dialog.setWindowTitle("Success")
             dialog.setWindowModality(Qt.ApplicationModal)
             dialog.resize(300, 100)
@@ -151,6 +153,27 @@ class Sign_in(QWidget):
             button.clicked.connect(dialog.close)
             button.clicked.connect(self.back_main_menu)
             self.signedIn.emit()  # Emit the custom signal for successful sign-in(use with main menu
+        if not librarySystem.CheckUserID(int(text)):
+            dialog.setWindowTitle("Your ID does not exist")
+            dialog.setWindowModality(Qt.ApplicationModal)
+            dialog.resize(300, 100)
+            label = QLabel("ID does not exist")
+            label.setFont(QFont("Vesper Libre", 15))
+            label.setStyleSheet('''
+            QLabel {
+            color: rgb(132, 113, 77);
+            }
+            ''')
+            button = QPushButton("OK")
+            button.setFont(QFont("Vesper Libre", 15))
+            button.setStyleSheet('''
+            QPushButton {
+            border: 3px solid rgb(132, 113, 77);
+            color: rgb(249, 246, 236);
+            background-color: rgb(182, 170, 145);
+            }
+            ''')
+            button.clicked.connect(dialog.close)
         v_layout = QVBoxLayout()
         v_layout.addWidget(label)
         v_layout.addWidget(button)

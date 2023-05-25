@@ -1,5 +1,18 @@
+import asyncio
 import random
+
+from tortoise import connections
+
 from database.database_table import ID_NAME, BookID_BName, ID_BookID_Status
+
+
+def run_async(coro):
+    async def runner():
+        try:
+            await coro
+        finally:
+            await connections.close_all(discard=True)
+    asyncio.run(runner())
 
 
 # create user id and name
@@ -120,7 +133,6 @@ async def get_all_book(command, user_id):
             book_status = await ID_BookID_Status.filter(userId_id=user_id)
             return book_status
     return False
-
 
 # run_async(init())
 # a = asyncio.run(check_id(659))

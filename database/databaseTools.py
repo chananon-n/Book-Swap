@@ -130,9 +130,9 @@ async def get_all_book(command, user_id):
     return None
 
 
-run_async(init())
-a = asyncio.run(check_id(659))
-print(a)
+# run_async(init())
+# a = asyncio.run(check_id(659))
+# print(a)
 # run_async(create_id_name("test"))
 # print(asyncio.run(get_name(659)))
 # run_async(create_book_id_name("book1"))

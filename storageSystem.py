@@ -5,6 +5,7 @@ import CustomExeptionalHandler as CEH
 
 from database import databaseTools
 from database import Tolocal
+from database.databaseTools import check_id
 from database.database_connection import init
 from library.Book import Book
 from library.eBook import eBook
@@ -12,7 +13,7 @@ from library.eBook import eBook
 
 class storageSystem:
     def __init__(self):
-        run_async(init())
+        pass
 
     @staticmethod
     def createNewUser(name):
@@ -33,11 +34,9 @@ class storageSystem:
 
     @staticmethod
     def checkUserID(id):
+        run_async(init())
         try:
-            temp = asyncio.run(databaseTools.check_id(id))
-            if temp is None:
-                return "User not found"
-            return temp
+            return asyncio.run(check_id(id))
         except CEH.databaseException as e:
             return e.message + "Error in checkUserID"
 
@@ -171,3 +170,9 @@ class storageSystem:
     def saveToLocal(books):
         Tolocal.save_book_to_resource(books)
         return True
+
+
+# print(storageSystem.checkUserID(6))
+# run_async(init())
+# a = asyncio.run(check_id(659))
+# print(a)

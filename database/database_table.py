@@ -6,6 +6,7 @@ class ID_NAME(Model):
     table = 'ID_NAME'
     id = fields.IntField(pk=True)
     name = fields.CharField(max_length=255)
+
     def __str__(self):
         return self.name
 

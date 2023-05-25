@@ -1,16 +1,11 @@
-import asyncio
 import random
-
-from tortoise import run_async
-
-from database.database_connection import init
 from database.database_table import ID_NAME, BookID_BName, ID_BookID_Status
 
 
 # create user id and name
 async def create_id_name(name):
-    # random id from 10 to 1000
-    rand_id = random.randint(10, 1000)
+    # random id from 10000000 to 99999999
+    rand_id = random.randint(1000000, 99999999)
     # loop until id is not in database
     while await ID_NAME.exists(id=rand_id):
         rand_id = random.randint(10, 1000)

@@ -80,8 +80,8 @@ class librarySystem:
         history = AddBook.AddBook(2, name, author)
         self.history_list.append(history)
         return ebook
-
-    def getBookID(self, name):
+    @staticmethod
+    def getBookID(name):
         return storageSystem.storageSystem.getBookID(name)
 
     def searchBook(self, name):

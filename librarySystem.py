@@ -180,9 +180,10 @@ class librarySystem:
         image_dir = os.path.join(os.path.dirname(__file__), 'BookSwap resources/images')
         if not os.path.exists(image_dir):
             os.makedirs(image_dir)
-        if title_name is not None:
-            image_path = os.path.join(image_dir, title_name + '.jpg')
-            pixmap.save(image_path, 'jpg')
+        if title_name and pixmap:
+            sanitized_title = ''.join(c for c in title_name if c.isalnum() or c in ['-', '_'])
+            image_path = os.path.join(image_dir, sanitized_title + '.png')
+            pixmap.save(image_path, 'PNG')
             return True
         else:
             return False

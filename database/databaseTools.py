@@ -1,18 +1,8 @@
 import asyncio
 import random
 
-from tortoise import connections
-
 from database.database_table import ID_NAME, BookID_BName, ID_BookID_Status
 
-
-def run_async(coro):
-    async def runner():
-        try:
-            await coro
-        finally:
-            await connections.close_all(discard=True)
-    asyncio.run(runner())
 
 
 # create user id and name

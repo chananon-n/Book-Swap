@@ -5,6 +5,7 @@ from PySide6.QtWidgets import (QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QW
 from PySide6.QtCore import Qt, Signal
 
 import librarySystem
+from storageSystem import storageSystem
 
 
 class Sign_up(QWidget):
@@ -121,7 +122,7 @@ class Sign_up(QWidget):
             }
             '''
                                 )
-            user = QLabel("Your ID is " + f"{librarySystem.librarySystem.checkUserID(store_name)}")
+            user = QLabel("Your ID is " + f"{storageSystem.checkUserID(1)}")
             user.setFont(QFont("Vesper Libre", 15))
             user.setStyleSheet('''QLabel {
                         color: rgb(132, 113, 77);

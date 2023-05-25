@@ -1,8 +1,11 @@
 import os
-from PySide6.QtGui import QFont, QPixmap
-import librarySystem
-from PySide6.QtWidgets import QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit, QDialog
+from PySide6.QtGui import (QFont, QPixmap)
+from PySide6.QtWidgets import (QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit, QDialog)
+
 from PySide6.QtCore import Qt, Signal
+
+import librarySystem
+from storageSystem import storageSystem
 
 
 class Sign_up(QWidget):
@@ -59,7 +62,6 @@ class Sign_up(QWidget):
                 background-color: rgb(182, 170, 145);
                 }
                 ''')
-        button1.clicked.connect(self.sign_up)
 
         h_layout4 = QHBoxLayout()
         h_layout4.addSpacing(200)
@@ -79,13 +81,12 @@ class Sign_up(QWidget):
         self.setWindowTitle("Sign Up")
         self.setGeometry(400, 200, 800, 500)
         self.show()
+        button1.clicked.connect(self.sign_up)
 
     def sign_up(self):
         store_name = self.enter1.text()
         dialog = QDialog()
-        user = ""
-        id_create = ""
-        if not librarySystem.librarySystem.checkSignUp(store_name):
+        if store_name == "Enter the store name" or store_name.strip(" ") == "":
             dialog.setWindowTitle("Error")
             dialog.setWindowModality(Qt.ApplicationModal)
             dialog.resize(300, 100)
@@ -120,8 +121,8 @@ class Sign_up(QWidget):
             color: rgb(132, 113, 77);
             }
             '''
-            )
-            user = QLabel("Your ID is " + f"{librarySystem.librarySystem.get_id()}")
+                                )
+            user = QLabel("Your ID is " + f"{storageSystem.createNewUser(store_name)}")
             user.setFont(QFont("Vesper Libre", 15))
             user.setStyleSheet('''QLabel {
                         color: rgb(132, 113, 77);

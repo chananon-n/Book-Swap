@@ -68,33 +68,201 @@ class Main_menu(QMainWindow):
         self.filter_button.setPopupMode(QToolButton.InstantPopup)
 
         self.filter_menu = QMenu(self.filter_button)
-        self.filter_combobox = QComboBox(self.filter_menu)
-        self.filter_combobox.addItems(["Food", "Drink", "Other"])
-        self.filter_combobox.setStyleSheet('''
-                    QComboBox {
-                        color: rgb(249, 246, 236);
-                        background-color: rgb(182, 170, 145);
-                    }
-                    QComboBox QAbstractItemView {
-                        border: 2px solid rgb(132, 113, 77);
-                        color: rgb(249, 246, 236);
-                        background-color: rgb(182, 170, 145);
-                        selection-background-color: rgb(132, 113, 77);
-                    }
-                ''')
+        self.romanceCheck = QCheckBox("Romance")
+        self.romanceCheck.setChecked(False)
+        self.romanceCheck.setFont(QFont("Vesper Libre", 16))
+        self.romanceCheck.setStyleSheet('''
+            QCheckBox {
+                color: rgb(132, 113, 77);
+            }
+        ''')
+        filter_layout1 = QHBoxLayout()
+        filter_layout1.addSpacing(10)
+        filter_layout1.addWidget(self.romanceCheck)
+        self.mysteryCheck = QCheckBox("Mystery")
+        self.mysteryCheck.setChecked(False)
+        self.mysteryCheck.setFont(QFont("Vesper Libre", 16))
+        self.mysteryCheck.setStyleSheet('''
+            QCheckBox {
+                color: rgb(132, 113, 77);
+            }
+        ''')
+        filter_layout1.addSpacing(10)
+        filter_layout1.addWidget(self.mysteryCheck)
+        self.fantasyAndScienceFictionCheck = QCheckBox("Fantasy and Science Fiction")
+        self.fantasyAndScienceFictionCheck.setChecked(False)
+        self.fantasyAndScienceFictionCheck.setFont(QFont("Vesper Libre", 16))
+        self.fantasyAndScienceFictionCheck.setStyleSheet('''
+            QCheckBox {
+                color: rgb(132, 113, 77);
+            }
+        ''')
+        filter_layout2 = QHBoxLayout()
+        filter_layout2.addSpacing(10)
+        filter_layout2.addWidget(self.fantasyAndScienceFictionCheck)
+        self.thrillersHorrorCheck = QCheckBox("Thrillers and Horror")
+        self.thrillersHorrorCheck.setChecked(False)
+        self.thrillersHorrorCheck.setFont(QFont("Vesper Libre", 16))
+        self.thrillersHorrorCheck.setStyleSheet('''
+            QCheckBox {
+                color: rgb(132, 113, 77);
+            }
+        ''')
+        filter_layout3 = QHBoxLayout()
+        filter_layout3.addSpacing(10)
+        filter_layout3.addWidget(self.thrillersHorrorCheck)
+
+        self.youngAdultCheck = QCheckBox("Young Adult")
+        self.youngAdultCheck.setChecked(False)
+        self.youngAdultCheck.setFont(QFont("Vesper Libre", 16))
+        self.youngAdultCheck.setStyleSheet('''
+            QCheckBox {
+                color: rgb(132, 113, 77);
+            }
+        ''')
+        filter_layout1.addSpacing(10)
+        filter_layout1.addWidget(self.youngAdultCheck)
+        self.childrenFictionCheck = QCheckBox("Children Fiction")
+        self.childrenFictionCheck.setChecked(False)
+        self.childrenFictionCheck.setFont(QFont("Vesper Libre", 16))
+        self.childrenFictionCheck.setStyleSheet('''
+            QCheckBox {
+                color: rgb(132, 113, 77);
+            }
+        ''')
+        filter_layout4 = QHBoxLayout()
+        filter_layout3.addSpacing(10)
+        filter_layout3.addWidget(self.childrenFictionCheck)
+
+        self.inspirationalReligiousCheck = QCheckBox("Inspirational and Religious")
+        self.inspirationalReligiousCheck.setChecked(False)
+        self.inspirationalReligiousCheck.setFont(QFont("Vesper Libre", 16))
+        self.inspirationalReligiousCheck.setStyleSheet('''
+            QCheckBox {
+                color: rgb(132, 113, 77);
+            }
+        ''')
+        filter_layout4.addSpacing(10)
+        filter_layout4.addWidget(self.inspirationalReligiousCheck)
+
+        self.biographyAndAutobiographyCheck = QCheckBox("Biography and Autobiography")
+        self.biographyAndAutobiographyCheck.setChecked(False)
+        self.biographyAndAutobiographyCheck.setFont(QFont("Vesper Libre", 16))
+        self.biographyAndAutobiographyCheck.setStyleSheet('''
+            QCheckBox {
+                color: rgb(132, 113, 77);
+            }
+        ''')
+        filter_layout5 = QHBoxLayout()
+        filter_layout5.addSpacing(10)
+        filter_layout5.addWidget(self.biographyAndAutobiographyCheck)
+
+        self.actionAndAdventureCheck = QCheckBox("Action and Adventure")
+        self.actionAndAdventureCheck.setChecked(False)
+        self.actionAndAdventureCheck.setFont(QFont("Vesper Libre", 16))
+        self.actionAndAdventureCheck.setStyleSheet('''
+            QCheckBox {
+                color: rgb(132, 113, 77);
+            }
+        ''')
+        filter_layout6 = QHBoxLayout()
+        filter_layout6.addSpacing(10)
+        filter_layout6.addWidget(self.actionAndAdventureCheck)
+
+        self.classicCheck = QCheckBox("Classic")
+        self.classicCheck.setChecked(False)
+        self.classicCheck.setFont(QFont("Vesper Libre", 16))
+        self.classicCheck.setStyleSheet('''
+            QCheckBox {
+                color: rgb(132, 113, 77);
+            }
+        ''')
+        filter_layout2.addSpacing(10)
+        filter_layout2.addWidget(self.classicCheck)
+
+        self.comicBookCheck = QCheckBox("Comic Book")
+        self.comicBookCheck.setChecked(False)
+        self.comicBookCheck.setFont(QFont("Vesper Libre", 16))
+        self.comicBookCheck.setStyleSheet('''
+            QCheckBox {
+                color: rgb(132, 113, 77);
+            }
+        ''')
+        filter_layout4.addSpacing(10)
+        filter_layout4.addWidget(self.comicBookCheck)
+
+        self.historicalFictionCheck = QCheckBox("Historical Fiction")
+        self.historicalFictionCheck.setChecked(False)
+        self.historicalFictionCheck.setFont(QFont("Vesper Libre", 16))
+        self.historicalFictionCheck.setStyleSheet('''
+            QCheckBox {
+                color: rgb(132, 113, 77);
+            }
+        ''')
+        filter_layout6.addSpacing(10)
+        filter_layout6.addWidget(self.historicalFictionCheck)
+
+        self.literaryCheck = QCheckBox("Literary")
+        self.literaryCheck.setChecked(False)
+        self.literaryCheck.setFont(QFont("Vesper Libre", 16))
+        self.literaryCheck.setStyleSheet('''
+            QCheckBox {
+                color: rgb(132, 113, 77);
+            }
+        ''')
+        filter_layout5.addSpacing(10)
+        filter_layout5.addWidget(self.literaryCheck)
+
+        self.scienceFiction = QCheckBox("Science Fiction")
+        self.scienceFiction.setChecked(False)
+        self.scienceFiction.setFont(QFont("Vesper Libre", 16))
+        self.scienceFiction.setStyleSheet('''
+            QCheckBox {
+                color: rgb(132, 113, 77);
+            }
+        ''')
+        filter_layout7 = QHBoxLayout()
+        filter_layout7.addSpacing(10)
+        filter_layout7.addWidget(self.scienceFiction)
+
+        self.shortStoryCheck = QCheckBox("Short Story")
+        self.shortStoryCheck.setChecked(False)
+        self.shortStoryCheck.setFont(QFont("Vesper Libre", 16))
+        self.shortStoryCheck.setStyleSheet('''
+            QCheckBox {
+                color: rgb(132, 113, 77);
+            }
+        ''')
+        filter_layout7.addSpacing(10)
+        filter_layout7.addWidget(self.shortStoryCheck)
+
+        self.suspenseAndThrillerCheck = QCheckBox("Suspense and Thriller")
+        self.suspenseAndThrillerCheck.setChecked(False)
+        self.suspenseAndThrillerCheck.setFont(QFont("Vesper Libre", 16))
+        self.suspenseAndThrillerCheck.setStyleSheet('''
+            QCheckBox {
+                color: rgb(132, 113, 77);
+            }
+        ''')
+        filter_layout8 = QHBoxLayout()
+        filter_layout8.addSpacing(10)
+        filter_layout8.addWidget(self.suspenseAndThrillerCheck)
+
+
         self.filter_menu.setLayout(QVBoxLayout())
-        self.filter_menu.layout().addWidget(self.filter_combobox)
+        self.filter_menu.layout().addLayout(filter_layout1)
+        self.filter_menu.layout().addLayout(filter_layout2)
+        self.filter_menu.layout().addLayout(filter_layout3)
+        self.filter_menu.layout().addLayout(filter_layout4)
+        self.filter_menu.layout().addLayout(filter_layout5)
+        self.filter_menu.layout().addLayout(filter_layout6)
+        self.filter_menu.layout().addLayout(filter_layout7)
+        self.filter_menu.layout().addLayout(filter_layout8)
 
-        # Calculate the maximum width of the menu based on the combobox items
-        max_width = 0
-        font_metrics = self.filter_combobox.fontMetrics()
-        for index in range(self.filter_combobox.count()):
-            text = self.filter_combobox.itemText(index)
-            width = font_metrics.boundingRect(text).width()
-            max_width = max(max_width, width)
 
-        # Set the width of the menu
-        self.filter_menu.setFixedWidth(max_width + 20)
+        # Connect the combobox currentIndexChanged signal to a slot
+
+
 
         self.filter_button.setMenu(self.filter_menu)
 

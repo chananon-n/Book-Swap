@@ -285,7 +285,6 @@ class Add_book(QMainWindow):
         h_layout12.addWidget(self.comic_button)
         h_layout12.addSpacing(25)
         h_layout12.addWidget(self.historical_button)
-
         self.literary_fiction_button = QCheckBox("Literary fiction")
         self.literary_fiction_button.setChecked(False)
         self.literary_fiction_button.book = "Literary fiction"

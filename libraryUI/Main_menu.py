@@ -248,16 +248,79 @@ class Main_menu(QMainWindow):
         filter_layout8.addSpacing(10)
         filter_layout8.addWidget(self.suspenseAndThrillerCheck)
 
+        self.womensFictionCheck = QCheckBox("Women's Fiction")
+        self.womensFictionCheck.setChecked(False)
+        self.womensFictionCheck.setFont(QFont("Vesper Libre", 16))
+        self.womensFictionCheck.setStyleSheet('''
+            QCheckBox {
+                color: rgb(132, 113, 77);
+            }
+        ''')
+        filter_layout8.addSpacing(10)
+        filter_layout8.addWidget(self.womensFictionCheck)
+
+        self.cookBookCheck = QCheckBox("Cook Book")
+        self.cookBookCheck.setChecked(False)
+        self.cookBookCheck.setFont(QFont("Vesper Libre", 16))
+        self.cookBookCheck.setStyleSheet('''
+            QCheckBox {
+                color: rgb(132, 113, 77);
+            }
+        ''')
+        filter_layout9 = QHBoxLayout()
+        filter_layout9.addSpacing(10)
+        filter_layout9.addWidget(self.cookBookCheck)
+
+        self.essayCheck = QCheckBox("Essay")
+        self.essayCheck.setChecked(False)
+        self.essayCheck.setFont(QFont("Vesper Libre", 16))
+        self.essayCheck.setStyleSheet('''
+            QCheckBox {
+                color: rgb(132, 113, 77);
+            }
+        ''')
+        filter_layout9.addSpacing(10)
+        filter_layout9.addWidget(self.essayCheck)
+
+        self.memoirCheck = QCheckBox("Memoir")
+        self.memoirCheck.setChecked(False)
+        self.memoirCheck.setFont(QFont("Vesper Libre", 16))
+        self.memoirCheck.setStyleSheet('''
+            QCheckBox {
+                color: rgb(132, 113, 77);
+            }
+        ''')
+        filter_layout9.addSpacing(10)
+        filter_layout9.addWidget(self.memoirCheck)
+
+        self.poetryCheck = QCheckBox("Poetry")
+        self.poetryCheck.setChecked(False)
+        self.poetryCheck.setFont(QFont("Vesper Libre", 16))
+        self.poetryCheck.setStyleSheet('''
+            QCheckBox {
+                color: rgb(132, 113, 77);
+            }
+        ''')
+        filter_layout9.addSpacing(10)
+        filter_layout9.addWidget(self.poetryCheck)
+
+        self.trueCrimeCheck = QCheckBox("True Crime")
+        self.trueCrimeCheck.setChecked(False)
+        self.trueCrimeCheck.setFont(QFont("Vesper Libre", 16))
+        self.trueCrimeCheck.setStyleSheet('''
+            QCheckBox {
+                color: rgb(132, 113, 77);
+            }
+        ''')
+        filter_layout10 = QHBoxLayout()
+        filter_layout10.addSpacing(10)
+        filter_layout10.addWidget(self.trueCrimeCheck)
 
         self.filter_menu.setLayout(QVBoxLayout())
-        self.filter_menu.layout().addLayout(filter_layout1)
-        self.filter_menu.layout().addLayout(filter_layout2)
-        self.filter_menu.layout().addLayout(filter_layout3)
-        self.filter_menu.layout().addLayout(filter_layout4)
-        self.filter_menu.layout().addLayout(filter_layout5)
-        self.filter_menu.layout().addLayout(filter_layout6)
-        self.filter_menu.layout().addLayout(filter_layout7)
-        self.filter_menu.layout().addLayout(filter_layout8)
+        filter = [filter_layout1, filter_layout2, filter_layout3, filter_layout4, filter_layout5, filter_layout6, filter_layout7, filter_layout8, filter_layout9, filter_layout10]
+        for i in filter:
+            self.filter_menu.layout().addLayout(i)
+
 
 
         # Connect the combobox currentIndexChanged signal to a slot

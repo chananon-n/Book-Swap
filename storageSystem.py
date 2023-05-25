@@ -19,8 +19,7 @@ class storageSystem:
     def createNewUser(name):
         run_async(init())
         try:
-            asyncio.run(create_id_name(name))
-            return True
+            return asyncio.run(create_id_name(name))
         except CEH.databaseException as e:
             return e.message + "Error in createNewUser"
 

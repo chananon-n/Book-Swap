@@ -17,6 +17,7 @@ async def create_id_name(name):
         # create id and name
     id_name = ID_NAME(id=rand_id, name=name)
     await id_name.save()
+    return rand_id
 
 
 # check id

@@ -5,11 +5,15 @@ import CustomExeptionalHandler as CEH
 
 from database import databaseTools
 from database import Tolocal
+from database.database_connection import init
 from library.Book import Book
 from library.eBook import eBook
 
 
 class storageSystem:
+    def __init__(self):
+        run_async(init())
+
     @staticmethod
     def createNewUser(name):
         try:

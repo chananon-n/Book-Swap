@@ -7,7 +7,7 @@ env.read_env(".env")
 
 async def init():
     await Tortoise.init(
-        db_url=env.str("DATABASE_URL"),
+        db_url=str(env("DATABASE_URL")),
         modules={'models': ['database.database_table']}
     )
 

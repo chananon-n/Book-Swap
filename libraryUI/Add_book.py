@@ -341,7 +341,6 @@ class Add_book(QMainWindow):
         h_layout14.addWidget(self.Short_stories_button)
         h_layout14.addSpacing(25)
         h_layout14.addWidget(self.Suspense_and_thrillers_button)
-
         self.Womens_fiction_button = QCheckBox("Women's Fiction")
         self.Womens_fiction_button.setChecked(False)
         self.Womens_fiction_button.book = "Women's Fiction"

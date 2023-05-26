@@ -36,7 +36,7 @@ class librarySystem:
         if button_name == "Sign_in":
             # Navigate to the Sign_in panel
             sign_in = Sign_in.Sign_in()
-            sign_in.signedIn.connect(self.goToMainMenu)  # Connect to the signedIn signal
+            sign_in.signedIn.connect(self.handleSignUp)  # Connect to the signedIn signal
             self.__current.close()
             self.__current = sign_in
         elif button_name == "Sign_up":
@@ -190,7 +190,7 @@ class librarySystem:
         book = self.getBookListFromDB(self.userID)
         bookLocal = self.getBookListFromLocal()
         if book == bookLocal:
-            return self.s.saveToLocal(self.book)
+            return storageSystem.storageSystem.saveToLocal(self.book)
         return False
 
     @staticmethod

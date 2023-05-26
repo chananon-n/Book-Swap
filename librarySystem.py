@@ -17,15 +17,19 @@ class librarySystem:
     def __init__(self):
         # check if LibrarySystem is already created
         super().__init__()
-        self.userID = None
         if librarySystem.__instance is not None:
             raise Exception("This class is a singleton!")
         else:
             librarySystem.__instance = self
             self.__current = None
+        self.userID = None
         self.book_list = []
         self.ebook_list = []
         self.history_list = []
+
+    @staticmethod
+    def setUserID(id):
+        librarySystem.userID = id
 
     def start(self):
         self.__current = Home()
@@ -36,7 +40,7 @@ class librarySystem:
         if button_name == "Sign_in":
             # Navigate to the Sign_in panel
             sign_in = Sign_in.Sign_in()
-            sign_in.signedIn.connect(self.handleSignUp)  # Connect to the signedIn signal
+            sign_in.signedIn.connect(self.goToMainMenu)  # Connect to the signedIn signal
             self.__current.close()
             self.__current = sign_in
         elif button_name == "Sign_up":
@@ -46,18 +50,20 @@ class librarySystem:
             sign_up.signedUp.connect(self.handleSignUp)  # Connect to the signedUp signal
             self.__current = sign_up
 
+    def handleSignIn(self):
+        pass
+
     def handleSignUp(self):
         self.__current.close()
         self.__current = Home()
         self.__current.buttonClicked.connect(self.handleButtonClicked)
         self.__current.show()
 
-    def goToMainMenu(self, user_id):
+    def goToMainMenu(self):
         self.__current.close()
-        self.userID = user_id
-        main_menu = Main_menu(self.userID)
-        main_menu.show()
+        main_menu = Main_menu.Main_menu()
         self.__current = main_menu
+        self.__current.show()
 
     @staticmethod
     def get_instance():
@@ -68,7 +74,7 @@ class librarySystem:
     @staticmethod
     def CheckUserID(userID):
         if storageSystem.storageSystem.checkUserID(userID):
-            librarySystem.__userID = userID
+            librarySystem.userID = userID
             return True
         return False
 
@@ -92,6 +98,9 @@ class librarySystem:
         self.history_list.append(history)
         return ebook
 
+    @staticmethod
+    def getHistoryList():
+        return librarySystem.__instance.history_list
     @staticmethod
     def getBookID(name):
         return storageSystem.storageSystem.getBookID(name)

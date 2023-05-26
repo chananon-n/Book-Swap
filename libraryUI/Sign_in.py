@@ -1,13 +1,14 @@
 from PySide6.QtGui import (QFont, QPixmap)
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit, QDialog)
+from PySide6.QtWidgets import (QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit, QDialog)
 from PySide6.QtCore import Qt, Signal
 import os
 
+import librarySystem
 from librarySystem import *
 
 
 class Sign_in(QWidget):
-    signedIn = Signal()
+    signedIn = Signal(str)
     def __init__(self):
         super().__init__()
         # Get the absolute path of the current script
@@ -152,8 +153,9 @@ class Sign_in(QWidget):
                 background-color: rgb(182, 170, 145);
                 }
                 ''')
+                librarySystem.setUserID(int(text))
                 button.clicked.connect(dialog.close)
-                button.clicked.connect(self.signedIn.emit)
+                button.clicked.connect(lambda: self.handlesignedIn(librarySystem.userID))
             else:
                 dialog.setWindowTitle("Error")
                 dialog.setWindowModality(Qt.ApplicationModal)
@@ -184,6 +186,13 @@ class Sign_in(QWidget):
     def back_main_menu(self):
         self.close()
 
+    def handleHomeSignal(self):
+        # Handle the signal received from the Home class
+        # ...
+        pass
+
+    def handlesignedIn(self, userID):
+        self.signedIn.emit(userID)
 
 if __name__ == "__main__":
     app = QApplication()

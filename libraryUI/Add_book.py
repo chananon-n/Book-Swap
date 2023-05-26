@@ -421,7 +421,7 @@ class Add_book(QMainWindow):
         h_layout17.addWidget(self.True_crime_button)
 
         self.book_button = QRadioButton("Book")
-        self.book_button.setChecked(True)  # Set one of the radio buttons as checked by default
+        self.book_button.setChecked(False)  # Set one of the radio buttons as checked by default
         self.book_button.book = "Book"
         self.book_button.setFont(QFont("Vesper Libre", 20))
         self.book_button.setStyleSheet('''
@@ -622,10 +622,8 @@ class Add_book(QMainWindow):
             dialog.exec()
         else:
             self.save_and_go_main()
-            print("save image")
 
     def save_and_go_main(self):
-        print("effe")
         if self.book_button.isChecked():
             title_name = self.title_name.text()
             self.pixmap = self.book_image.pixmap()

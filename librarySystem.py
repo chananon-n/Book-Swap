@@ -119,42 +119,49 @@ class librarySystem:
                 bookList.append(book)
         return bookList
 
-    def createBookStatus(self, bookID, userID, status):
+    @staticmethod
+    def createBookStatus(bookID, userID, status):
         storageSystem.storageSystem.createBookStatus(bookID, userID, status)
         return True
 
-    def getBookStatus(self, bookID, userID):
+    @staticmethod
+    def getBookStatus(bookID, userID):
         return storageSystem.storageSystem.getBookStatus(bookID, userID)
 
-    def removeBookStatus(self, bookID, userID):
-        self.s.removeBookStatus(bookID, userID)
+    @staticmethod
+    def removeBookStatus(bookID, userID):
+        storageSystem.storageSystem.removeBookStatus(bookID, userID)
         return True
 
-    def getBookAvailable(self, userID):
+    @staticmethod
+    def getBookAvailable(userID):
         return storageSystem.storageSystem.getAvailableBooks(userID)
 
-    def getBorrowList(self, userID):
+    @staticmethod
+    def getBorrowList(userID):
         return storageSystem.storageSystem.getBorrowedBooks(userID)
 
-    def getBookListFromDB(self, userID):
+    @staticmethod
+    def getBookListFromDB(userID):
         return storageSystem.storageSystem.getAllBooks(userID)
-
-    def getEBookListFromLocal(self):
+    @staticmethod
+    def getEBookListFromLocal():
         return storageSystem.storageSystem.getEBooksFromLocal()
-
-    def getBookListFromLocal(self):
+    @staticmethod
+    def getBookListFromLocal():
         return storageSystem.storageSystem.getBooksFromLocal()
-
-    def getAllBooks(self):
-        return self.book_list
-
+    @staticmethod
+    def getAllBooks():
+        return librarySystem.__instance.book_list
+    @staticmethod
     def getAllEbook(self):
-        return self.ebook_list
-
-    def checkStatus(self, bookID, userID, status):
+        return librarySystem.__instance.Ebook_list
+    @staticmethod
+    def checkStatus(bookID, userID, status):
         return storageSystem.storageSystem.checkStatusWithLocal(bookID, userID, status)
 
-    def editBook(self, b: Book, bookID, name, author, description, category, price):
+    @staticmethod
+    def editBook( b: Book, bookID, name, author, description, category, price):
         storageSystem.storageSystem.editBookName(bookID, name)
         b.setName(name)
         b.setauthor(author)
@@ -162,10 +169,9 @@ class librarySystem:
         b.setcategory(category)
         b.set_price(price)
         return True
-
-    def removeBook(self, b: Book, bookID, userID):
-        storageSystem.storageSystem.removeBookStatus(bookID, userID)
-        del b
+    @staticmethod
+    def removeBook(b: Book):
+        b.deleteBook()
         return True
 
     @staticmethod

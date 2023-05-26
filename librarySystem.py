@@ -1,6 +1,8 @@
 import os
 import sys
 from PySide6.QtWidgets import QApplication
+
+import database.Tolocal
 from library import Book
 from library import eBook
 import storageSystem
@@ -75,37 +77,39 @@ class librarySystem:
     @staticmethod
     def getUserName(user_id):
         return storageSystem.storageSystem.getUserName(user_id)
-
-    def addNewBook(self, picture, name, author, description, category, price):
+    @staticmethod
+    def addNewBook( picture, name, author, description, category, price):
         book = Book.Book(picture, name, author, description, category, price)
         storageSystem.storageSystem.createNewBook(name)
         book.setBookID(storageSystem.storageSystem.getBookID(name))
-        self.book_list.append(book)
+        librarySystem.__instance.book_list.append(book)
         history = AddBook.AddBook(1, name, author)
         librarySystem.__instance.history_list.append(history)
         return book
 
-    def addNewEbook(self, picture, name, author, description, category, price):
+    @staticmethod
+    def addNewEbook(picture, name, author, description, category, price):
         ebook = eBook.eBook(picture, name, author, description, category, price)
-        self.ebook_list.append(ebook)
+        librarySystem.__instance.ebook_list.append(ebook)
         history = AddBook.AddBook(2, name, author)
-        self.history_list.append(history)
+        librarySystem.__instance.history_list.append(history)
         return ebook
 
     @staticmethod
     def getBookID(name):
         return storageSystem.storageSystem.getBookID(name)
-
-    def searchBook(self, name):
+    @staticmethod
+    def searchBook(name):
         search_result = []
-        for book in self.book_list:
+        for book in librarySystem.__instance.book_list:
             if name in book.get_name():
                 search_result.append(book)
         return search_result
 
-    def searchEbook(self, name):
+    @staticmethod
+    def searchEbook(name):
         search_result = []
-        for ebook in self.ebook_list:
+        for ebook in librarySystem.__instance.ebook_list:
             if name in ebook.get_name():
                 search_result.append(ebook)
         return search_result
@@ -113,10 +117,10 @@ class librarySystem:
     @staticmethod
     def createUserID(name):
         return storageSystem.storageSystem.createNewUser(name)
-
-    def filterCategory(self, category):
+    @staticmethod
+    def filterCategory(category):
         bookList = []
-        allBook = storageSystem.storageSystem.getAllBooks(self.userID)
+        allBook = storageSystem.storageSystem.getAllBooks(librarySystem.__instance.userID)
         for book in allBook:
             if (book.get_category() == category) and (book not in bookList):
                 bookList.append(book)
@@ -208,8 +212,8 @@ class librarySystem:
             return False
 
 
-if __name__ == "__main__":
-    app = QApplication([])
-    library_system = librarySystem.get_instance()
-    library_system.start()
-    sys.exit(app.exec())
+book1 = librarySystem.addNewBook("6.png", "name", "author", "description", "category", 10)
+database.Tolocal.save_book_to_resource(book1)
+
+
+

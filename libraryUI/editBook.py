@@ -1,12 +1,17 @@
 from PySide6.QtGui import QPixmap, QFont
-from PySide6.QtWidgets import QMainWindow, QLabel, QHBoxLayout, QWidget, QLineEdit, QTextEdit, QCheckBox
+from PySide6.QtWidgets import QMainWindow, QLabel, QHBoxLayout, QWidget, QLineEdit, QTextEdit, QCheckBox, QPushButton, \
+    QDialog, QVBoxLayout, QScrollArea
 from PySide6.QtCore import *
+
+import BookCategory
+from librarySystem import *
 
 
 class EditEbook(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.price = 0.0
+        self.pixmap = None
+        self.price = 10
         self.type = "ebook"
         self.title = ""
         self.author = ""
@@ -150,7 +155,7 @@ class EditEbook(QMainWindow):
         hLayout7.addSpacing(25)
         hLayout7.addWidget(self.mysteryButton)
 
-        self.fantasyAndScienceFictionButton = QCheckBox("Fantasy and Science Fiction")
+        self.fantasyAndScienceFictionButton = QCheckBox("Fantasy and science fiction")
         self.fantasyAndScienceFictionButton.setChecked(False)
         self.fantasyAndScienceFictionButton.setFont(QFont("Vesper Libre", 20))
         self.fantasyAndScienceFictionButton.setStyleSheet('''
@@ -159,7 +164,7 @@ class EditEbook(QMainWindow):
         }
         ''')
 
-        self.thrillersAndHorrorButton = QCheckBox("Thrillers and Horror")
+        self.thrillersAndHorrorButton = QCheckBox("Thrillers and horror")
         self.thrillersAndHorrorButton.setChecked(False)
         self.thrillersAndHorrorButton.setFont(QFont("Vesper Libre", 20))
         self.thrillersAndHorrorButton.setStyleSheet('''
@@ -174,7 +179,7 @@ class EditEbook(QMainWindow):
         hLayout8.addSpacing(25)
         hLayout8.addWidget(self.thrillersAndHorrorButton)
 
-        self.youngAndAdultButton = QCheckBox("Young and Adult")
+        self.youngAndAdultButton = QCheckBox("Young adult")
         self.youngAndAdultButton.setChecked(False)
         self.youngAndAdultButton.setFont(QFont("Vesper Libre", 20))
         self.youngAndAdultButton.setStyleSheet('''
@@ -183,7 +188,7 @@ class EditEbook(QMainWindow):
         }
         ''')
 
-        self.childrenFictionButton = QCheckBox("Children Fiction")
+        self.childrenFictionButton = QCheckBox("Children’s fiction")
         self.childrenFictionButton.setChecked(False)
         self.childrenFictionButton.setFont(QFont("Vesper Libre", 20))
         self.childrenFictionButton.setStyleSheet('''
@@ -198,7 +203,7 @@ class EditEbook(QMainWindow):
         hLayout9.addSpacing(25)
         hLayout9.addWidget(self.childrenFictionButton)
 
-        self.inspirationalAndReligiousButton = QCheckBox("Inspirational and Religious")
+        self.inspirationalAndReligiousButton = QCheckBox("Inspirational and religious")
         self.inspirationalAndReligiousButton.setChecked(False)
         self.inspirationalAndReligiousButton.setFont(QFont("Vesper Libre", 20))
         self.inspirationalAndReligiousButton.setStyleSheet('''
@@ -207,7 +212,7 @@ class EditEbook(QMainWindow):
         }
         ''')
 
-        self.biographyAndAutobiographyButton = QCheckBox("Biography and Autobiography")
+        self.biographyAndAutobiographyButton = QCheckBox("Biography and autobiography")
         self.biographyAndAutobiographyButton.setChecked(False)
         self.biographyAndAutobiographyButton.setFont(QFont("Vesper Libre", 20))
         self.biographyAndAutobiographyButton.setStyleSheet('''
@@ -231,7 +236,7 @@ class EditEbook(QMainWindow):
         }
         ''')
 
-        self.classicButton = QCheckBox("Classic")
+        self.classicButton = QCheckBox("Classics")
         self.classicButton.setChecked(False)
         self.classicButton.setFont(QFont("Vesper Libre", 20))
         self.classicButton.setStyleSheet('''
@@ -294,7 +299,7 @@ class EditEbook(QMainWindow):
         hLayout13.addSpacing(25)
         hLayout13.addWidget(self.scienceFictionButton)
 
-        self.shortStoriesButton = QCheckBox("Short stories")
+        self.shortStoriesButton = QCheckBox("Short Stories")
         self.shortStoriesButton.setChecked(False)
         self.shortStoriesButton.setFont(QFont("Vesper Libre", 20))
         self.shortStoriesButton.setStyleSheet('''
@@ -318,7 +323,7 @@ class EditEbook(QMainWindow):
         hLayout14.addSpacing(25)
         hLayout14.addWidget(self.suspenseAndThrillersButton)
 
-        self.womenFictionButton = QCheckBox("Women's fiction")
+        self.womenFictionButton = QCheckBox("Women's Fiction")
         self.womenFictionButton.setChecked(False)
         self.womenFictionButton.setFont(QFont("Vesper Libre", 20))
         self.womenFictionButton.setStyleSheet('''
@@ -327,7 +332,7 @@ class EditEbook(QMainWindow):
         }
         ''')
 
-        self.cookBookButton = QCheckBox("Cookbook")
+        self.cookBookButton = QCheckBox("Cookbooks")
         self.cookBookButton.setChecked(False)
         self.cookBookButton.setFont(QFont("Vesper Libre", 20))
         self.cookBookButton.setStyleSheet('''
@@ -342,7 +347,7 @@ class EditEbook(QMainWindow):
         hLayout15.addSpacing(25)
         hLayout15.addWidget(self.cookBookButton)
 
-        self.essayButton = QCheckBox("Essay")
+        self.essayButton = QCheckBox("Essays")
         self.essayButton.setChecked(False)
         self.essayButton.setFont(QFont("Vesper Libre", 20))
         self.essayButton.setStyleSheet('''
@@ -375,7 +380,7 @@ class EditEbook(QMainWindow):
         }
         ''')
 
-        self.trueCrimeButton = QCheckBox("True crime")
+        self.trueCrimeButton = QCheckBox("True Crime")
         self.trueCrimeButton.setChecked(False)
         self.trueCrimeButton.setFont(QFont("Vesper Libre", 20))
         self.trueCrimeButton.setStyleSheet('''
@@ -397,16 +402,158 @@ class EditEbook(QMainWindow):
         color: rgb(132, 113, 77);
         }
         ''')
-        
+
         self.priceCost = QLineEdit(self)
-        self.priceCost.setPlaceholderText(self.price)
-        
+        self.priceCost.setPlaceholderText(str(self.price))
+        self.priceCost.setFont(QFont("Vesper Libre", 20))
+        self.priceCost.setStyleSheet('''
+        QLineEdit {
+        border: 3px solid rgb(132, 113, 77);
+        color: rgb(132, 113, 77);
+        }
+        ''')
+
+        hLayout18 = QHBoxLayout()
+        hLayout18.addSpacing(160)
+        hLayout18.addWidget(price)
+        hLayout18.addSpacing(25)
+        hLayout18.addWidget(self.priceCost)
+        hLayout18.addSpacing(160)
+
+        self.submitButton = QPushButton("Submit")
+        self.submitButton.setFont(QFont("Vesper Libre", 20))
+        self.submitButton.setStyleSheet('''
+        QPushButton {
+        border: 3px solid rgb(132, 113, 77);
+        color: rgb(132, 113, 77);
+        }
+        ''')
+
+        self.submitButton.clicked.connect(self.submit)
+
+        self.cancleButton = QPushButton("Cancle")
+        self.cancleButton.setFont(QFont("Vesper Libre", 20))
+        self.cancleButton.setStyleSheet('''
+        QPushButton {
+        border: 3px solid rgb(132, 113, 77);
+        color: rgb(132, 113, 77);
+        }
+        ''')
+
+        hLayout19 = QHBoxLayout()
+        hLayout19.addSpacing(20)
+        hLayout19.addWidget(self.cancleButton)
+        hLayout19.addSpacing(300)
+        hLayout19.addWidget(self.submitButton)
+        hLayout19.addSpacing(20)
+
+        vLayout = QVBoxLayout()
+        vLayout.addLayout(hLayout1)
+        vLayout.addLayout(hLayout2)
+        vLayout.addLayout(hLayout3)
+        vLayout.addLayout(hLayout4)
+        vLayout.addLayout(hLayout5)
+        vLayout.addLayout(hLayout6)
+        vLayout.addLayout(hLayout7)
+        vLayout.addLayout(hLayout8)
+        vLayout.addLayout(hLayout9)
+        vLayout.addLayout(hLayout10)
+        vLayout.addLayout(hLayout11)
+        vLayout.addLayout(hLayout12)
+        vLayout.addLayout(hLayout13)
+        vLayout.addLayout(hLayout14)
+        vLayout.addLayout(hLayout15)
+        vLayout.addLayout(hLayout16)
+        vLayout.addLayout(hLayout17)
+        vLayout.addLayout(hLayout18)
+        vLayout.addLayout(hLayout19)
+        self.setLayout(vLayout)
+
+        scroll_area = QScrollArea()
+        scroll_area.setWidgetResizable(True)
+
+        scroll_widget = QWidget()
+        scroll_widget.setLayout(vLayout)
+
+        scroll_area.setWidget(scroll_widget)
+
+        self.setCentralWidget(scroll_area)
+        scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.setWindowTitle("Add Book")
+        self.setFixedSize(700, 600)
+        self.setStyleSheet("background-color: #F9F6EC;")
+        self.check_category()
+        self.show()
+
+    # Connect to Home Page not yet.
+    def cancelGoBack(self):
+        self.sign_in = Sign_in()
+        self.close()
+
+    def check_category(self):
+        oldGenre = [self.romanceButton, self.mysteryButton, self.fantasyAndScienceFictionButton,
+                    self.thrillersAndHorrorButton, self.youngAndAdultButton, self.childrenFictionButton,
+                    self.inspirationalAndReligiousButton, self.biographyAndAutobiographyButton,
+                    self.actionAndAdventureButton, self.classicButton, self.comicButton,
+                    self.historicalButton, self.literaryFictionButton, self.scienceFictionButton,
+                    self.shortStoriesButton, self.suspenseAndThrillersButton, self.womenFictionButton,
+                    self.cookBookButton, self.essayButton, self.memoirButton, self.poetryButton,
+                    self.trueCrimeButton]
+        for i in range(0, len(self.category)):
+            if self.category[i] == oldGenre[i].text():
+                oldGenre[i].setChecked(True)
+
+    def save_category(self):
+        newGenre = [self.romanceButton, self.mysteryButton, self.fantasyAndScienceFictionButton,
+                    self.thrillersAndHorrorButton, self.youngAndAdultButton, self.childrenFictionButton,
+                    self.inspirationalAndReligiousButton, self.biographyAndAutobiographyButton,
+                    self.actionAndAdventureButton, self.classicButton, self.comicButton,
+                    self.historicalButton, self.literaryFictionButton, self.scienceFictionButton,
+                    self.shortStoriesButton, self.suspenseAndThrillersButton, self.womenFictionButton,
+                    self.cookBookButton, self.essayButton, self.memoirButton, self.poetryButton,
+                    self.trueCrimeButton]
+        self.category = []
+        for i in range(len(newGenre)):
+            if newGenre[i].isChecked():
+                self.category.append(newGenre[i].text())
+            else:
+                self.category.append("None")
+
+    def submit(self):
+        # Save the dropped image to the project's images folder and create the folder if it doesn't exist
+        title_name = self.title.text()
+        self.pixmap = self.image.pixmap()
+        if not librarySystem.save_images(self.pixmap, title_name):
+            dialog = QDialog()
+            dialog.setWindowTitle("Error")
+            dialog.setWindowModality(Qt.ApplicationModal)
+            dialog.resize(300, 100)
+            label = QLabel("Please check whether you enter a title for the book and image or not")
+            label.setFont(QFont("Vesper Libre", 15))
+            label.setStyleSheet('''QLabel {                                                                             
+                        color: rgb(132, 113, 77);                                                                       
+                        }                                                                                               
+                        ''')
+            button = QPushButton("OK")
+            button.setFont(QFont("Vesper Libre", 15))
+            button.setStyleSheet('''                                                                                    
+                        QPushButton {                                                                                   
+                        border: 3px solid rgb(132, 113, 77);                                                            
+                        color: rgb(249, 246, 236);                                                                      
+                        background-color: rgb(182, 170, 145);                                                           
+                        }                                                                                               
+                        ''')
+            button.clicked.connect(dialog.close)
+            v_layout = QVBoxLayout()
+            v_layout.addWidget(label)
+            v_layout.addWidget(button)
+            dialog.setLayout(v_layout)
+            dialog.exec()
+        else:
+            pass
 
 
-
-
-
-
-
-
-
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    ui = EditEbook()
+    app.exec()

@@ -478,7 +478,7 @@ class Add_book(QMainWindow):
         color: rgb(148, 132, 99);
         }
         ''')
-        self.add_button.clicked.connect(self.save_image)
+        self.add_button.clicked.connect(self.check_category)
         # if self.e_book_button.isChecked():
         #     title_name = self.title_name.text()
         #     self.pixmap = self.book_image.pixmap()
@@ -559,7 +559,10 @@ class Add_book(QMainWindow):
                  self.True_crime_button]
         for i in range(len(genre)):
             if genre[i].isChecked():
-                self.category.append(BookCategory.BookCategory(i + 1))
+                self.category.append(genre[i].text())
+            else:
+                self.category.append("None")
+        print(self.category)
 
     def check_booktype(self):
         if self.book_button.isChecked():

@@ -11,6 +11,8 @@ import libraryUI.Sign_in as Sign_in
 import libraryUI.Main_menu as Main_menu
 import libraryUI.Sign_up as Sign_up
 from library import AddBook
+
+
 class librarySystem:
     # singleton
     book_list = []
@@ -79,6 +81,7 @@ class librarySystem:
     @staticmethod
     def getUserName(user_id):
         return storageSystem.storageSystem.getUserName(user_id)
+
     @staticmethod
     def addNewBook(picture, name, author, description, category, price):
         book = Book.Book(picture, name, author, description, category, price)
@@ -100,6 +103,7 @@ class librarySystem:
     @staticmethod
     def getBookID(name):
         return storageSystem.storageSystem.getBookID(name)
+
     @staticmethod
     def searchBook(name):
         search_result = []
@@ -119,6 +123,7 @@ class librarySystem:
     @staticmethod
     def createUserID(name):
         return storageSystem.storageSystem.createNewUser(name)
+
     @staticmethod
     def filterCategory(category):
         bookList = []
@@ -127,41 +132,53 @@ class librarySystem:
             if (book.get_category() == category) and (book not in bookList):
                 bookList.append(book)
         return bookList
+
     @staticmethod
     def createBookStatus(bookID, userID, status):
         storageSystem.storageSystem.createBookStatus(bookID, userID, status)
         return True
+
     @staticmethod
     def getBookStatus(bookID, userID):
         return storageSystem.storageSystem.getBookStatus(bookID, userID)
+
     @staticmethod
     def removeBookStatus(bookID, userID):
         storageSystem.storageSystem.removeBookStatus(bookID, userID)
         return True
+
     @staticmethod
     def getBookAvailable(userID):
         return storageSystem.storageSystem.getAvailableBooks(userID)
+
     @staticmethod
     def getBorrowList(userID):
         return storageSystem.storageSystem.getBorrowedBooks(userID)
+
     @staticmethod
     def getBookListFromDB(userID):
         return storageSystem.storageSystem.getAllBooks(userID)
+
     @staticmethod
     def getEBookListFromLocal():
         return storageSystem.storageSystem.getEBooksFromLocal()
+
     @staticmethod
     def getBookListFromLocal():
         return storageSystem.storageSystem.getBooksFromLocal()
+
     @staticmethod
     def getAllBooks():
         return librarySystem.__instance.book_list
+
     @staticmethod
     def getAllEbook():
         return librarySystem.__instance.ebook_list
+
     @staticmethod
     def checkStatus(bookID, userID, status):
         return storageSystem.storageSystem.checkStatusWithLocal(bookID, userID, status)
+
     @staticmethod
     def editBook(b: Book, bookID, name, author, description, category, price):
         storageSystem.storageSystem.editBookName(bookID, name)
@@ -171,6 +188,7 @@ class librarySystem:
         b.setcategory(category)
         b.setPrice(price)
         return True
+
     @staticmethod
     def removeBook(b: Book, bookID, userID):
         storageSystem.storageSystem.removeBookStatus(bookID, userID)
@@ -214,9 +232,9 @@ class librarySystem:
             return False
 
 
-book1 = librarySystem.addNewBook("6.png", "name10", "author", "description", "category", 10)
-database.Tolocal.save_book_to_resource(book1)
-#
+# book1 = librarySystem.addNewBook("6.png", "name10", "author", "description", "category", 10)
+# database.Tolocal.save_book_to_resource(book1)
+
 # book2 = librarySystem.addNewBook("6.png", "name11", "author", "description", "category", 10)
 # database.Tolocal.save_book_to_resource(book2)
 
@@ -226,7 +244,6 @@ database.Tolocal.save_book_to_resource(book1)
 # book4 = librarySystem.addNewBook("6.png", "name13", "author", "description", "category", 10)
 # database.Tolocal.save_book_to_resource(book4)
 
-
 # ebook1 = librarySystem.addNewEbook("6.png", "name14", "author", "description", "category", 10)
 # database.Tolocal.save_book_to_resource(ebook1)
 
@@ -234,16 +251,11 @@ database.Tolocal.save_book_to_resource(book1)
 # database.Tolocal.save_book_to_resource(ebook2)
 
 temp = database.Tolocal.load_book_from_resource()
-
-
-
-
+for i in temp:
+    print(i.getBookID())
 
 # if __name__ == "__main__":
 #     app = QApplication([])
 #     library_system = librarySystem.get_instance()
 #     library_system.start()
 #     sys.exit(app.exec())
-
-a = librarySystem.CheckUserID(12345678)
-print(a)

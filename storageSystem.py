@@ -1,3 +1,5 @@
+import asyncio
+
 from tortoise import run_async
 import CustomExeptionalHandler as CEH
 

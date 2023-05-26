@@ -11,12 +11,15 @@ import libraryUI.Sign_in as Sign_in
 import libraryUI.Main_menu as Main_menu
 import libraryUI.Sign_up as Sign_up
 from library import AddBook
+
+
 class librarySystem:
     # singleton
     book_list = []
     history_list = []
     ebook_list = []
     __instance = None
+    state = "Home"
 
     # constructor
     def __init__(self):
@@ -28,8 +31,38 @@ class librarySystem:
         else:
             librarySystem.__instance = self
             self.__current = None
-        # self.book_list = []
-        # self.ebook_list = []
+
+    @staticmethod
+    def setState(state):
+        # Start with Home page
+        # set state for librarySystem
+        librarySystem.state = state
+
+    @staticmethod
+    def checkState():
+        if librarySystem.state == "Sign_In":
+            # Go to Sign In UI Page
+            pass
+        elif librarySystem.state == "Sign_Up":
+            # Go to Sign Up UI Page
+            pass
+        elif librarySystem.state == "Main_Menu":
+            # Go to Main Menu UI Page
+            pass
+        elif librarySystem.state == "Add_Book":
+            # Go to Add Book UI Page
+            pass
+        elif librarySystem.state == "Edit_Book":
+            # Go to Edit Book UI Page
+            pass
+        elif librarySystem.state == "Edit_EBook":
+            # Go to Edit EBook UI Page
+            pass
+        elif librarySystem.state == "Home":
+            # Go to Home page
+            pass
+        else:
+            return "Error for check State"
 
     def start(self):
         self.__current = Home()
@@ -79,6 +112,7 @@ class librarySystem:
     @staticmethod
     def getUserName(user_id):
         return storageSystem.storageSystem.getUserName(user_id)
+
     @staticmethod
     def addNewBook(picture, name, author, description, category, price):
         book = Book.Book(picture, name, author, description, category, price)
@@ -100,6 +134,7 @@ class librarySystem:
     @staticmethod
     def getBookID(name):
         return storageSystem.storageSystem.getBookID(name)
+
     @staticmethod
     def searchBook(name):
         search_result = []
@@ -119,6 +154,7 @@ class librarySystem:
     @staticmethod
     def createUserID(name):
         return storageSystem.storageSystem.createNewUser(name)
+
     @staticmethod
     def filterCategory(category):
         bookList = []
@@ -127,41 +163,53 @@ class librarySystem:
             if (book.get_category() == category) and (book not in bookList):
                 bookList.append(book)
         return bookList
+
     @staticmethod
     def createBookStatus(bookID, userID, status):
         storageSystem.storageSystem.createBookStatus(bookID, userID, status)
         return True
+
     @staticmethod
     def getBookStatus(bookID, userID):
         return storageSystem.storageSystem.getBookStatus(bookID, userID)
+
     @staticmethod
     def removeBookStatus(bookID, userID):
         storageSystem.storageSystem.removeBookStatus(bookID, userID)
         return True
+
     @staticmethod
     def getBookAvailable(userID):
         return storageSystem.storageSystem.getAvailableBooks(userID)
+
     @staticmethod
     def getBorrowList(userID):
         return storageSystem.storageSystem.getBorrowedBooks(userID)
+
     @staticmethod
     def getBookListFromDB(userID):
         return storageSystem.storageSystem.getAllBooks(userID)
+
     @staticmethod
     def getEBookListFromLocal():
         return storageSystem.storageSystem.getEBooksFromLocal()
+
     @staticmethod
     def getBookListFromLocal():
         return storageSystem.storageSystem.getBooksFromLocal()
+
     @staticmethod
     def getAllBooks():
         return librarySystem.__instance.book_list
+
     @staticmethod
     def getAllEbook():
         return librarySystem.__instance.ebook_list
+
     @staticmethod
     def checkStatus(bookID, userID, status):
         return storageSystem.storageSystem.checkStatusWithLocal(bookID, userID, status)
+
     @staticmethod
     def editBook(b: Book, bookID, name, author, description, category, price):
         storageSystem.storageSystem.editBookName(bookID, name)
@@ -171,6 +219,7 @@ class librarySystem:
         b.setcategory(category)
         b.setPrice(price)
         return True
+
     @staticmethod
     def removeBook(b: Book, bookID, userID):
         storageSystem.storageSystem.removeBookStatus(bookID, userID)
@@ -212,30 +261,3 @@ class librarySystem:
             return True
         else:
             return False
-
-
-book1 = librarySystem.addNewBook("6.png", "name10", "author", "description", "category", 10)
-database.Tolocal.save_book_to_resource(book1)
-#
-# book2 = librarySystem.addNewBook("6.png", "name11", "author", "description", "category", 10)
-# database.Tolocal.save_book_to_resource(book2)
-
-# book3 = librarySystem.addNewBook("6.png", "name12", "author", "description", "category", 10)
-# database.Tolocal.save_book_to_resource(book3)
-
-# book4 = librarySystem.addNewBook("6.png", "name13", "author", "description", "category", 10)
-# database.Tolocal.save_book_to_resource(book4)
-
-
-# ebook1 = librarySystem.addNewEbook("6.png", "name14", "author", "description", "category", 10)
-# database.Tolocal.save_book_to_resource(ebook1)
-
-# ebook2 = librarySystem.addNewEbook("6.png", "name15", "author", "description", "category", 10)
-# database.Tolocal.save_book_to_resource(ebook2)
-
-temp = database.Tolocal.load_book_from_resource()
-
-
-
-
-

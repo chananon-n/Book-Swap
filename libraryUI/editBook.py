@@ -10,13 +10,14 @@ from librarySystem import *
 class EditEbook(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.URL = "Test.pdf"
         self.pixmap = None
-        self.price = 10
+        self.price = 0
         self.type = "ebook"
-        self.title = ""
-        self.author = ""
-        self.description = ""
-        self.category = []
+        self.title = "title"
+        self.author = "author"
+        self.description = "description"
+        self.category = ["Romance"]
         self.image = QLabel()
         # replace path of your image at placeholder.png
         self.placeholder_image = QPixmap("placeholder.png")
@@ -413,12 +414,41 @@ class EditEbook(QMainWindow):
         }
         ''')
 
+
         hLayout18 = QHBoxLayout()
         hLayout18.addSpacing(160)
         hLayout18.addWidget(price)
         hLayout18.addSpacing(25)
         hLayout18.addWidget(self.priceCost)
         hLayout18.addSpacing(160)
+
+        url = QLabel("URL")
+        url.setFont(QFont("Vesper Libre", 25))
+        url.setStyleSheet('''
+        QLabel {
+        color: rgb(132, 113, 77);
+        }
+        ''')
+
+
+        self.urlTextEdit = QTextEdit(self)
+        self.urlTextEdit.setPlaceholderText(self.URL)
+        self.urlTextEdit.setFont(QFont("Vesper Libre", 20))
+        self.urlTextEdit.setStyleSheet('''
+        QTextEdit {
+        border: 3px solid rgb(132, 113, 77);
+        color: rgb(132, 113, 77);
+        }
+        ''')
+
+        hLayout19 = QHBoxLayout()
+        hLayout19.addSpacing(20)
+        hLayout19.addWidget(url)
+
+        hLayout20 = QHBoxLayout()
+        hLayout20.addSpacing(20)
+        hLayout20.addWidget(self.urlTextEdit)
+        hLayout20.addSpacing(20)
 
         self.submitButton = QPushButton("Submit")
         self.submitButton.setFont(QFont("Vesper Libre", 20))
@@ -431,21 +461,21 @@ class EditEbook(QMainWindow):
 
         self.submitButton.clicked.connect(self.submit)
 
-        self.cancleButton = QPushButton("Cancle")
-        self.cancleButton.setFont(QFont("Vesper Libre", 20))
-        self.cancleButton.setStyleSheet('''
+        self.cancelButton = QPushButton("Cancel")
+        self.cancelButton.setFont(QFont("Vesper Libre", 20))
+        self.cancelButton.setStyleSheet('''
         QPushButton {
         border: 3px solid rgb(132, 113, 77);
         color: rgb(132, 113, 77);
         }
         ''')
 
-        hLayout19 = QHBoxLayout()
-        hLayout19.addSpacing(20)
-        hLayout19.addWidget(self.cancleButton)
-        hLayout19.addSpacing(300)
-        hLayout19.addWidget(self.submitButton)
-        hLayout19.addSpacing(20)
+        hLayout21 = QHBoxLayout()
+        hLayout21.addSpacing(20)
+        hLayout21.addWidget(self.cancelButton)
+        hLayout21.addSpacing(300)
+        hLayout21.addWidget(self.submitButton)
+        hLayout21.addSpacing(20)
 
         vLayout = QVBoxLayout()
         vLayout.addLayout(hLayout1)
@@ -467,7 +497,11 @@ class EditEbook(QMainWindow):
         vLayout.addLayout(hLayout17)
         vLayout.addLayout(hLayout18)
         vLayout.addLayout(hLayout19)
+        vLayout.addLayout(hLayout20)
+        vLayout.addLayout(hLayout21)
         self.setLayout(vLayout)
+        self.cancelButton.clicked.connect(self.cancelGoBack)
+        self.submitButton.clicked.connect(self.submit)
 
         scroll_area = QScrollArea()
         scroll_area.setWidgetResizable(True)
@@ -487,7 +521,6 @@ class EditEbook(QMainWindow):
 
     # Connect to Home Page not yet.
     def cancelGoBack(self):
-        self.sign_in = Sign_in()
         self.close()
 
     def check_category(self):
@@ -521,7 +554,7 @@ class EditEbook(QMainWindow):
 
     def submit(self):
         # Save the dropped image to the project's images folder and create the folder if it doesn't exist
-        title_name = self.title.text()
+        title_name = self.title
         self.pixmap = self.image.pixmap()
         if not librarySystem.save_images(self.pixmap, title_name):
             dialog = QDialog()
@@ -550,7 +583,11 @@ class EditEbook(QMainWindow):
             dialog.setLayout(v_layout)
             dialog.exec()
         else:
+            # Go back to home page
+            self.save_category()
             pass
+
+
 
 
 if __name__ == '__main__':

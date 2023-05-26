@@ -24,8 +24,6 @@ def save_book_to_resource(book):
     json.dump(json_book, json_file, indent=4)
 
 
-
-
 def load_book_from_resource():
     # get all file .json in BookSwap resources
     json_files = [pos_json for pos_json in os.listdir('BookSwap resources') if pos_json.endswith('.json')]

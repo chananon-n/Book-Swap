@@ -3,7 +3,7 @@ from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, Q
 from PySide6.QtCore import Qt, Signal
 import os
 
-from librarySystem import librarySystem
+from librarySystem import *
 
 
 class Sign_in(QWidget):

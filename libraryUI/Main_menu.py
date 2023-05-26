@@ -1,6 +1,6 @@
 from PySide6.QtGui import *
 from PySide6.QtWidgets import *
-
+from librarySystem import *
 
 class Main_menu(QMainWindow):
     def __init__(self):
@@ -709,7 +709,15 @@ class Main_menu(QMainWindow):
         tab_widget.insertTab(1, scroll_area, "E-Book")
 
         #set the history can scroll after this line
-        # history_count =
+        # history = librarySystem.getHistory()
+        # history_count = len(history)
+        # v_layout_history = QVBoxLayout(history_tab)
+        # for i in range(history_count):
+        #     v_layout_history.addSpacing(10)
+        #     v_layout_history.addWidget(QLabel(history[i]))
+        #     v_layout_history.addSpacing(10)
+        # history_tab.setLayout(v_layout_history)
+
 
         tab_widget.setCurrentIndex(0)
 

@@ -30,5 +30,8 @@ class Book(abstractBook):
     def getBookID(self):
         return self.ID
 
+    def setPrice(self, price):
+        self.price = price
+
     def display(self):
         pass

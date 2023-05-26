@@ -1,3 +1,4 @@
+import os
 
 from PySide6.QtGui import (QFont, QPixmap, QDragEnterEvent)
 from PySide6.QtWidgets import *
@@ -547,7 +548,9 @@ class Add_book(QMainWindow):
                  self.True_crime_button]
         for i in range(len(genre)):
             if genre[i].isChecked():
-                self.category.append(BookCategory.BookCategory(i + 1))
+                self.category.append(genre[i].text())
+            else:
+                self.category.append("None")
 
     def check_booktype(self):
         if self.book_button.isChecked():

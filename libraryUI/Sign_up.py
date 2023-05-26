@@ -7,6 +7,7 @@ from PySide6.QtCore import Qt, Signal
 import librarySystem
 from librarySystem import *
 
+from librarySystem import *
 from storageSystem import storageSystem
 
 

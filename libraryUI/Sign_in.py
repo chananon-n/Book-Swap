@@ -130,48 +130,50 @@ class Sign_in(QWidget):
             }
             ''')
             button.clicked.connect(dialog.close)
-        elif librarySystem.CheckUserID(int(text)):
-            dialog.setWindowTitle("Success")
-            dialog.setWindowModality(Qt.ApplicationModal)
-            dialog.resize(300, 100)
-            label = QLabel("Login successfully")
-            label.setFont(QFont("Vesper Libre", 15))
-            label.setStyleSheet('''QLabel {
-            color: rgb(132, 113, 77);
-            }
-            ''')
-            button = QPushButton("OK")
-            button.setFont(QFont("Vesper Libre", 15))
-            button.setStyleSheet('''
-            QPushButton {
-            border: 3px solid rgb(132, 113, 77);
-            color: rgb(249, 246, 236);
-            background-color: rgb(182, 170, 145);
-            }
-            ''')
-            button.clicked.connect(dialog.close)
-            self.signedIn.emit()
-        if not librarySystem.CheckUserID(int(text)):
-            dialog.setWindowTitle("Your ID does not exist")
-            dialog.setWindowModality(Qt.ApplicationModal)
-            dialog.resize(300, 100)
-            label = QLabel("ID does not exist")
-            label.setFont(QFont("Vesper Libre", 15))
-            label.setStyleSheet('''
-            QLabel {
-            color: rgb(132, 113, 77);
-            }
-            ''')
-            button = QPushButton("OK")
-            button.setFont(QFont("Vesper Libre", 15))
-            button.setStyleSheet('''
-            QPushButton {
-            border: 3px solid rgb(132, 113, 77);
-            color: rgb(249, 246, 236);
-            background-color: rgb(182, 170, 145);
-            }
-            ''')
-            button.clicked.connect(dialog.close)
+        else:
+            checkValidation = librarySystem.CheckUserID(int(text))
+            if checkValidation:
+                dialog.setWindowTitle("Success")
+                dialog.setWindowModality(Qt.ApplicationModal)
+                dialog.resize(300, 100)
+                label = QLabel("Sign in successfully")
+                label.setFont(QFont("Vesper Libre", 15))
+                label.setStyleSheet('''
+                QLabel {
+                color: rgb(132, 113, 77);
+                }
+                ''')
+                button = QPushButton("OK")
+                button.setFont(QFont("Vesper Libre", 15))
+                button.setStyleSheet('''
+                QPushButton {
+                border: 3px solid rgb(132, 113, 77);
+                color: rgb(249, 246, 236);
+                background-color: rgb(182, 170, 145);
+                }
+                ''')
+                button.clicked.connect(dialog.close())
+            else:
+                dialog.setWindowTitle("Error")
+                dialog.setWindowModality(Qt.ApplicationModal)
+                dialog.resize(300, 100)
+                label = QLabel("ID not found")
+                label.setFont(QFont("Vesper Libre", 15))
+                label.setStyleSheet('''
+                QLabel {
+                color: rgb(132, 113, 77);
+                }
+                ''')
+                button = QPushButton("OK")
+                button.setFont(QFont("Vesper Libre", 15))
+                button.setStyleSheet('''
+                QPushButton {
+                border: 3px solid rgb(132, 113, 77);
+                color: rgb(249, 246, 236);
+                background-color: rgb(182, 170, 145);
+                }
+                ''')
+                button.clicked.connect(dialog.close)
         v_layout = QVBoxLayout()
         v_layout.addWidget(label)
         v_layout.addWidget(button)

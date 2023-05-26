@@ -18,7 +18,7 @@ class abstractBook(metaclass=ABCMeta):
     def get_price(self):
         return self.price
 
-    def get_tyoe(self):
+    def get_type(self):
         return self.type
 
     def get_picture(self):

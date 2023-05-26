@@ -10,8 +10,7 @@ class eBook(abstractBook):
         self.pdf = ""
         self.ID = random.randint(10000, 100000)
 
-    def getPdf(self):
-        return self.pdf
+
 
     def get_ID(self):
         return self.ID
@@ -25,8 +24,7 @@ class eBook(abstractBook):
     def set_price(self, price):
         self.price = price
 
-    def setPDF(self, pdf):
-        self.pdf = pdf
+
 
     def get_price(self):
         return self.price

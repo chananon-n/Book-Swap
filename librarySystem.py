@@ -9,8 +9,6 @@ import libraryUI.Sign_in as Sign_in
 import libraryUI.Main_menu as Main_menu
 import libraryUI.Sign_up as Sign_up
 from library import AddBook
-
-
 class librarySystem:
     # singleton
     __instance = None

@@ -15,23 +15,21 @@ class Book(abstractBook):
     def setStatus(self, status):
         self.status = status
 
-    def setBookID(self, ID):
+    def setBookID(self,ID):
         self.ID = ID
 
     def get_day(self):
         return self.day
 
-    def get_price(self):
-        return self.price*self.day.day
-
     def set_day(self, day):
         self.day = day
 
-    def getBookID(self):
-        return self.ID
 
-    def setPrice(self, price):
-        self.price = price
 
     def display(self):
         pass
+
+    @staticmethod
+    def from_json(json):
+        book = Book(json['picture'], json['name'], json['author'], json['description'], json['category'], json['price'])
+        return book

@@ -15,6 +15,7 @@ class librarySystem:
     # singleton
     book_list = []
     history_list = []
+    ebook_list = []
     __instance = None
 
     # constructor
@@ -28,7 +29,7 @@ class librarySystem:
             librarySystem.__instance = self
             self.__current = None
         # self.book_list = []
-        self.ebook_list = []
+        # self.ebook_list = []
 
     def start(self):
         self.__current = Home()
@@ -91,9 +92,9 @@ class librarySystem:
     @staticmethod
     def addNewEbook(picture, name, author, description, category, price):
         ebook = eBook.eBook(picture, name, author, description, category, price)
-        librarySystem.__instance.ebook_list.append(ebook)
+        librarySystem.ebook_list.append(ebook)
         history = AddBook.AddBook(2, name, author)
-        librarySystem.__instance.history_list.append(history)
+        librarySystem.history_list.append(history)
         return ebook
 
     @staticmethod
@@ -213,8 +214,28 @@ class librarySystem:
             return False
 
 
-book1 = librarySystem.addNewBook("6.png", "name3", "author", "description", "category", 10)
+book1 = librarySystem.addNewBook("6.png", "name10", "author", "description", "category", 10)
 database.Tolocal.save_book_to_resource(book1)
+#
+# book2 = librarySystem.addNewBook("6.png", "name11", "author", "description", "category", 10)
+# database.Tolocal.save_book_to_resource(book2)
+
+# book3 = librarySystem.addNewBook("6.png", "name12", "author", "description", "category", 10)
+# database.Tolocal.save_book_to_resource(book3)
+
+# book4 = librarySystem.addNewBook("6.png", "name13", "author", "description", "category", 10)
+# database.Tolocal.save_book_to_resource(book4)
+
+
+# ebook1 = librarySystem.addNewEbook("6.png", "name14", "author", "description", "category", 10)
+# database.Tolocal.save_book_to_resource(ebook1)
+
+# ebook2 = librarySystem.addNewEbook("6.png", "name15", "author", "description", "category", 10)
+# database.Tolocal.save_book_to_resource(ebook2)
+
+temp = database.Tolocal.load_book_from_resource()
+
+
 
 
 

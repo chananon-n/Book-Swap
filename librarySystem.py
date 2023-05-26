@@ -47,6 +47,9 @@ class librarySystem:
             sign_up.signedUp.connect(self.backToHome)  # Connect to the signedIn signal
             self.__current = Sign_up.Sign_up()
 
+    def getHistory(self):
+        return self.history_list
+
     def backToHome(self):
         self.__current.close()
         self.__current = Home()
@@ -101,6 +104,9 @@ class librarySystem:
                 search_result.append(ebook)
         return search_result
 
+    def createUserID(name):
+        return storageSystem.storageSystem.createNewUser(name)
+
     def filterCategory(self, category):
         bookList = []
         allBook = storageSystem.storageSystem.getAllBooks(self.userID)
@@ -134,6 +140,12 @@ class librarySystem:
 
     def getBookListFromLocal(self):
         return storageSystem.storageSystem.getBooksFromLocal()
+
+    def getAllBooks(self):
+        return self.book_list
+
+    def getAllEbook(self):
+        return self.ebook_list
 
     def checkStatus(self, bookID, userID, status):
         return storageSystem.storageSystem.checkStatusWithLocal(bookID, userID, status)

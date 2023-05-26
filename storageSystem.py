@@ -1,3 +1,4 @@
+from tortoise import run_async
 import CustomExeptionalHandler as CEH
 
 from database import databaseTools
@@ -44,7 +45,6 @@ class storageSystem:
             return True
         except CEH.databaseException as e:
             return e.message + "Error in createNewBook"
-        return True
 
     @staticmethod
     def getBookName(id):

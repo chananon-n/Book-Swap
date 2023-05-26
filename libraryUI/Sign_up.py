@@ -4,6 +4,9 @@ from PySide6.QtWidgets import (QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QW
 
 from PySide6.QtCore import Qt, Signal
 
+import librarySystem
+from librarySystem import *
+
 from storageSystem import storageSystem
 
 

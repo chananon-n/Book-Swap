@@ -1,9 +1,6 @@
-import os
 
-from PySide6.QtGui import (QFont, QPixmap, QDragEnterEvent, QPalette, QColor)
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit,
-                               QTextEdit, QCheckBox, QScrollArea, QMainWindow, QMessageBox, QRadioButton, QInputDialog,
-                               QDialog)
+from PySide6.QtGui import (QFont, QPixmap, QDragEnterEvent)
+from PySide6.QtWidgets import *
 from PySide6.QtCore import *
 
 import libraryUI.Sign_in
@@ -480,15 +477,6 @@ class Add_book(QMainWindow):
         }
         ''')
         self.add_button.clicked.connect(self.save_image)
-        # if self.e_book_button.isChecked():
-        #     title_name = self.title_name.text()
-        #     self.pixmap = self.book_image.pixmap()
-        #     if not librarySystem.save_images(self.pixmap, title_name):
-        #         self.add_button.clicked.connect(self.save_and_go_main)
-        #         print("HHHHH")
-
-
-
         self.cancel_button = QPushButton("Cancel")
         self.cancel_button.setFont(QFont("Vesper Libre", 20))
         self.cancel_button.setStyleSheet('''

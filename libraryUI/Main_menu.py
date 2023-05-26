@@ -709,7 +709,7 @@ class Main_menu(QMainWindow):
         tab_widget.insertTab(1, scroll_area, "E-Book")
 
         #set the history can scroll after this line
-        history = librarySystem.getHistory("Input Username")
+        history = librarySystem.getHistory()
         history_count = len(history)
         v_layout_history = QVBoxLayout(history_tab)
         for i in range(history_count):

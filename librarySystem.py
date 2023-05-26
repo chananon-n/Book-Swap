@@ -48,8 +48,10 @@ class librarySystem:
             self.__current = Sign_up.Sign_up()
 
     @staticmethod
-    def getHistory(userID):
-        return librarySystem.__instance.history_list(userID)
+    def getHistory():
+        if librarySystem.__instance is None:
+            return False
+        return librarySystem.__instance.history_list
 
     def backToHome(self):
         self.__current.close()

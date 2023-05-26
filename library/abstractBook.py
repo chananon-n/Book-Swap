@@ -6,14 +6,17 @@ from library import BookType
 class abstractBook(metaclass=ABCMeta):
     __metaclass__ = ABCMeta
 
-    def __init__(self, tp, picture, name, author, description, category, price):
-        self.type = tp
+    def __init__(self, picture, name, author, description, category, price):
         self.picture = picture
         self.name = name
         self.author = author
         self.description = description
         self.category = category
         self.price = price
+        self.ID = 0
+
+    def getBookID(self):
+        return self.ID
 
     def get_price(self):
         return self.price
@@ -36,6 +39,10 @@ class abstractBook(metaclass=ABCMeta):
     def get_category(self):
         return self.category
 
+    @abstractmethod
+    def setBookID(self,ID):
+        self.ID = ID
+
     def set_picture(self, picture):
         self.picture = picture
 
@@ -54,23 +61,16 @@ class abstractBook(metaclass=ABCMeta):
     def set_price(self, price):
         self.price = price
 
-    def __dict__(self):
+    def to_json(self):
+        # return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
         return {
-            'picture': self.picture,
-            'Name': self.name,
-            'author': self.author,
-            'description': self.description,
-            'category': self.category
+            "picture": self.picture,
+            "name": self.name,
+            "author": self.author,
+            "description": self.description,
+            "category": self.category,
+            "price": self.price,
         }
 
-    @abstractmethod
-    def set_price(self, price):
-        pass
 
-    @abstractmethod
-    def get_price(self):
-        pass
 
-    @abstractmethod
-    def display(self):
-        pass

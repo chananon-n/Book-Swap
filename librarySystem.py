@@ -1,6 +1,8 @@
 import os
 import sys
 from PySide6.QtWidgets import QApplication
+
+import database.Tolocal
 from library import Book
 from library import eBook
 import storageSystem
@@ -9,10 +11,11 @@ import libraryUI.Sign_in as Sign_in
 import libraryUI.Main_menu as Main_menu
 import libraryUI.Sign_up as Sign_up
 from library import AddBook
-
-
 class librarySystem:
     # singleton
+    book_list = []
+    history_list = []
+    ebook_list = []
     __instance = None
 
     # constructor
@@ -25,9 +28,8 @@ class librarySystem:
         else:
             librarySystem.__instance = self
             self.__current = None
-        self.book_list = []
-        self.ebook_list = []
-        self.history_list = []
+        # self.book_list = []
+        # self.ebook_list = []
 
     def start(self):
         self.__current = Home()
@@ -38,7 +40,7 @@ class librarySystem:
         if button_name == "Sign_in":
             # Navigate to the Sign_in panel
             sign_in = Sign_in.Sign_in()
-            sign_in.signedIn.connect(self.goToMainMenu)  # Connect to the signedIn signal
+            sign_in.signedIn.connect(self.handleSignUp)  # Connect to the signedIn signal
             self.__current.close()
             self.__current = sign_in
         elif button_name == "Sign_up":
@@ -77,37 +79,39 @@ class librarySystem:
     @staticmethod
     def getUserName(user_id):
         return storageSystem.storageSystem.getUserName(user_id)
-
-    def addNewBook(self, picture, name, author, description, category, price):
+    @staticmethod
+    def addNewBook(picture, name, author, description, category, price):
         book = Book.Book(picture, name, author, description, category, price)
         storageSystem.storageSystem.createNewBook(name)
         book.setBookID(storageSystem.storageSystem.getBookID(name))
-        self.book_list.append(book)
+        librarySystem.book_list.append(book)
         history = AddBook.AddBook(1, name, author)
-        librarySystem.__instance.history_list.append(history)
+        librarySystem.history_list.append(history)
         return book
 
-    def addNewEbook(self, picture, name, author, description, category, price):
+    @staticmethod
+    def addNewEbook(picture, name, author, description, category, price):
         ebook = eBook.eBook(picture, name, author, description, category, price)
-        self.ebook_list.append(ebook)
+        librarySystem.ebook_list.append(ebook)
         history = AddBook.AddBook(2, name, author)
-        self.history_list.append(history)
+        librarySystem.history_list.append(history)
         return ebook
 
     @staticmethod
     def getBookID(name):
         return storageSystem.storageSystem.getBookID(name)
-
-    def searchBook(self, name):
+    @staticmethod
+    def searchBook(name):
         search_result = []
-        for book in self.book_list:
+        for book in librarySystem.__instance.book_list:
             if name in book.get_name():
                 search_result.append(book)
         return search_result
 
-    def searchEbook(self, name):
+    @staticmethod
+    def searchEbook(name):
         search_result = []
-        for ebook in self.ebook_list:
+        for ebook in librarySystem.__instance.ebook_list:
             if name in ebook.get_name():
                 search_result.append(ebook)
         return search_result
@@ -115,10 +119,10 @@ class librarySystem:
     @staticmethod
     def createUserID(name):
         return storageSystem.storageSystem.createNewUser(name)
-
-    def filterCategory(self, category):
+    @staticmethod
+    def filterCategory(category):
         bookList = []
-        allBook = storageSystem.storageSystem.getAllBooks(self.userID)
+        allBook = storageSystem.storageSystem.getAllBooks(librarySystem.__instance.userID)
         for book in allBook:
             if (book.get_category() == category) and (book not in bookList):
                 bookList.append(book)
@@ -165,7 +169,7 @@ class librarySystem:
         b.setauthor(author)
         b.setdescription(description)
         b.setcategory(category)
-        b.set_price(price)
+        b.setPrice(price)
         return True
     @staticmethod
     def removeBook(b: Book, bookID, userID):
@@ -192,7 +196,7 @@ class librarySystem:
         book = self.getBookListFromDB(self.userID)
         bookLocal = self.getBookListFromLocal()
         if book == bookLocal:
-            return self.s.saveToLocal(self.book)
+            return storageSystem.storageSystem.saveToLocal(self.book)
         return False
 
     @staticmethod
@@ -208,6 +212,31 @@ class librarySystem:
             return True
         else:
             return False
+
+
+book1 = librarySystem.addNewBook("6.png", "name10", "author", "description", "category", 10)
+database.Tolocal.save_book_to_resource(book1)
+#
+# book2 = librarySystem.addNewBook("6.png", "name11", "author", "description", "category", 10)
+# database.Tolocal.save_book_to_resource(book2)
+
+# book3 = librarySystem.addNewBook("6.png", "name12", "author", "description", "category", 10)
+# database.Tolocal.save_book_to_resource(book3)
+
+# book4 = librarySystem.addNewBook("6.png", "name13", "author", "description", "category", 10)
+# database.Tolocal.save_book_to_resource(book4)
+
+
+# ebook1 = librarySystem.addNewEbook("6.png", "name14", "author", "description", "category", 10)
+# database.Tolocal.save_book_to_resource(ebook1)
+
+# ebook2 = librarySystem.addNewEbook("6.png", "name15", "author", "description", "category", 10)
+# database.Tolocal.save_book_to_resource(ebook2)
+
+temp = database.Tolocal.load_book_from_resource()
+
+
+
 
 
 # if __name__ == "__main__":

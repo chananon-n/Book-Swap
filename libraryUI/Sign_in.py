@@ -152,7 +152,8 @@ class Sign_in(QWidget):
                 background-color: rgb(182, 170, 145);
                 }
                 ''')
-                button.clicked.connect(dialog.close())
+                button.clicked.connect(dialog.close)
+                button.clicked.connect(self.signedIn.emit)
             else:
                 dialog.setWindowTitle("Error")
                 dialog.setWindowModality(Qt.ApplicationModal)

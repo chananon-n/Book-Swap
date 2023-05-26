@@ -47,8 +47,9 @@ class librarySystem:
             sign_up.signedUp.connect(self.backToHome)  # Connect to the signedIn signal
             self.__current = Sign_up.Sign_up()
 
-    def getHistory(self):
-        return librarySystem.__instance.history_list(self.userID)
+    @staticmethod
+    def getHistory(userID):
+        return librarySystem.__instance.history_list(userID)
 
     def backToHome(self):
         self.__current.close()

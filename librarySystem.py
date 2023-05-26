@@ -47,10 +47,8 @@ class librarySystem:
             sign_up.signedUp.connect(self.backToHome)  # Connect to the signedIn signal
             self.__current = Sign_up.Sign_up()
 
-    @staticmethod
-    def getHistory(username):
-        return librarySystem.__instance.history_list(username)
-
+    def getHistory(self):
+        return librarySystem.__instance.history_list(self.userID)
 
     def backToHome(self):
         self.__current.close()
@@ -70,7 +68,7 @@ class librarySystem:
         return False
 
     @staticmethod
-    def getUserName( user_id):
+    def getUserName(user_id):
         return storageSystem.storageSystem.getUserName(user_id)
 
     def addNewBook(self, picture, name, author, description, category, price):
@@ -88,6 +86,7 @@ class librarySystem:
         history = AddBook.AddBook(2, name, author)
         self.history_list.append(history)
         return ebook
+
     @staticmethod
     def getBookID(name):
         return storageSystem.storageSystem.getBookID(name)

@@ -1,4 +1,9 @@
+import asyncio
 import random
+
+from tortoise import run_async
+
+from database.database_connection import init
 from database.database_table import ID_NAME, BookID_BName, ID_BookID_Status
 
 
@@ -24,7 +29,7 @@ async def check_id(input_id):
 # get name by id
 async def get_name(input_id):
     # check if id is in database, return None if it is not
-    return ID_NAME.exists(id=input_id)
+    return await ID_NAME.exists(id=input_id)
 
 
 # create book id and name
@@ -123,8 +128,7 @@ async def get_all_book(command, user_id):
 
 
 # run_async(init())
-# a = asyncio.run(check_id(659))
-# print(a)
+# print(asyncio.run(check_id(659)))
 # run_async(create_id_name("test"))
 # print(asyncio.run(get_name(659)))
 # run_async(create_book_id_name("book1"))

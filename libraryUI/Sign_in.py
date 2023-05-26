@@ -3,6 +3,9 @@ from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, Q
 from PySide6.QtCore import Qt, Signal
 import os
 
+import librarySystem
+from librarySystem import *
+
 
 class Sign_in(QWidget):
     signedIn = Signal()  # Custom signal to indicate successful sign-in
@@ -129,33 +132,33 @@ class Sign_in(QWidget):
             }
             ''')
             button.clicked.connect(dialog.close)
-        else:
+        if librarySystem.CheckUserID(text):
             dialog.setWindowTitle("Success")
             dialog.setWindowModality(Qt.ApplicationModal)
             dialog.resize(300, 100)
             label = QLabel("Login successfully")
             label.setFont(QFont("Vesper Libre", 15))
             label.setStyleSheet('''QLabel {
-            color: rgb(132, 113, 77);
-            }
-            ''')
+                color: rgb(132, 113, 77);
+                }
+                ''')
             button = QPushButton("OK")
             button.setFont(QFont("Vesper Libre", 15))
             button.setStyleSheet('''
-            QPushButton {
-            border: 3px solid rgb(132, 113, 77);
-            color: rgb(249, 246, 236);
-            background-color: rgb(182, 170, 145);
-            }
-            ''')
+                QPushButton {
+                border: 3px solid rgb(132, 113, 77);
+                color: rgb(249, 246, 236);
+                background-color: rgb(182, 170, 145);
+                }
+                ''')
             button.clicked.connect(dialog.close)
             button.clicked.connect(self.back_main_menu)
             self.signedIn.emit()  # Emit the custom signal for successful sign-in(use with main menu
-        v_layout = QVBoxLayout()
-        v_layout.addWidget(label)
-        v_layout.addWidget(button)
-        dialog.setLayout(v_layout)
-        dialog.exec()
+            v_layout = QVBoxLayout()
+            v_layout.addWidget(label)
+            v_layout.addWidget(button)
+            dialog.setLayout(v_layout)
+            dialog.exec()
 
     def back_main_menu(self):
         self.close()

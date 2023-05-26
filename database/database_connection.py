@@ -1,5 +1,5 @@
 import environs
-from tortoise import Tortoise
+from tortoise import Tortoise, run_async
 
 env = environs.Env()
 env.read_env(".env")
@@ -12,5 +12,7 @@ async def init():
     )
 
     await Tortoise.generate_schemas()
+
+run_async(init())
 
 

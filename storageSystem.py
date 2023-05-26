@@ -47,7 +47,6 @@ class storageSystem:
             return True
         except CEH.databaseException as e:
             return e.message + "Error in createNewBook"
-        return True
 
     @staticmethod
     def getBookName(id):
@@ -157,7 +156,4 @@ class storageSystem:
         return True
 
 
-# print(storageSystem.checkUserID(6))
-# run_async(init())
-# a = asyncio.run(check_id(659))
-# print(a)
+# print(storageSystem.checkUserID(12345678))

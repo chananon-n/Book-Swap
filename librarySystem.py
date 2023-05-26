@@ -1,9 +1,10 @@
+import asyncio
 import os
 import sys
 from PySide6.QtWidgets import QApplication
 from library import Book
 from library import eBook
-import storageSystem
+from storageSystem import storageSystem
 from libraryUI.Home import Home
 import libraryUI.Sign_in as Sign_in
 import libraryUI.Sign_up as Sign_up
@@ -59,9 +60,7 @@ class librarySystem:
 
     @staticmethod
     def CheckUserID(id):
-        if storageSystem.storageSystem.checkUserID(id):
-            librarySystem.__instance.userID = id
-        return librarySystem.__instance.userID
+        return storageSystem.checkUserID(id)
 
     def getUserName(self, user_id):
         return storageSystem.storageSystem.getUserName(user_id)
@@ -186,8 +185,11 @@ class librarySystem:
             return False
 
 
-if __name__ == "__main__":
-    app = QApplication([])
-    library_system = librarySystem.get_instance()
-    library_system.start()
-    sys.exit(app.exec())
+# if __name__ == "__main__":
+#     app = QApplication([])
+#     library_system = librarySystem.get_instance()
+#     library_system.start()
+#     sys.exit(app.exec())
+
+a = librarySystem.CheckUserID(12345678)
+print(a)

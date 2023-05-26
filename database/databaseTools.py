@@ -1,9 +1,4 @@
-import asyncio
 import random
-
-from tortoise import run_async
-
-from database.database_connection import init
 from database.database_table import ID_NAME, BookID_BName, ID_BookID_Status
 
 
@@ -128,7 +123,8 @@ async def get_all_book(command, user_id):
 
 
 # run_async(init())
-# print(asyncio.run(check_id(659)))
+# a = asyncio.run(check_id(659))
+# print(a)
 # run_async(create_id_name("test"))
 # print(asyncio.run(get_name(659)))
 # run_async(create_book_id_name("book1"))

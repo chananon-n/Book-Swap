@@ -3,13 +3,11 @@ from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, Q
 from PySide6.QtCore import Qt, Signal
 import os
 
-import librarySystem
 from librarySystem import *
 
 
 class Sign_in(QWidget):
-    signedIn = Signal()  # Custom signal to indicate successful sign-in
-
+    signedIn = Signal()
     def __init__(self):
         super().__init__()
         # Get the absolute path of the current script
@@ -111,7 +109,7 @@ class Sign_in(QWidget):
             }
             ''')
             button.clicked.connect(dialog.close)
-        if len(text) != 8 or not text.isdigit():
+        elif len(text) != 8 or not text.isdigit():
             dialog.setWindowTitle("Error")
             dialog.setWindowModality(Qt.ApplicationModal)
             dialog.resize(300, 100)
@@ -132,33 +130,55 @@ class Sign_in(QWidget):
             }
             ''')
             button.clicked.connect(dialog.close)
-        if librarySystem.CheckUserID(text):
-            dialog.setWindowTitle("Success")
-            dialog.setWindowModality(Qt.ApplicationModal)
-            dialog.resize(300, 100)
-            label = QLabel("Login successfully")
-            label.setFont(QFont("Vesper Libre", 15))
-            label.setStyleSheet('''QLabel {
+        else:
+            checkValidation = librarySystem.CheckUserID(int(text))
+            if checkValidation:
+                dialog.setWindowTitle("Success")
+                dialog.setWindowModality(Qt.ApplicationModal)
+                dialog.resize(300, 100)
+                label = QLabel("Sign in successfully")
+                label.setFont(QFont("Vesper Libre", 15))
+                label.setStyleSheet('''
+                QLabel {
                 color: rgb(132, 113, 77);
                 }
                 ''')
-            button = QPushButton("OK")
-            button.setFont(QFont("Vesper Libre", 15))
-            button.setStyleSheet('''
+                button = QPushButton("OK")
+                button.setFont(QFont("Vesper Libre", 15))
+                button.setStyleSheet('''
                 QPushButton {
                 border: 3px solid rgb(132, 113, 77);
                 color: rgb(249, 246, 236);
                 background-color: rgb(182, 170, 145);
                 }
                 ''')
-            button.clicked.connect(dialog.close)
-            button.clicked.connect(self.back_main_menu)
-            self.signedIn.emit()  # Emit the custom signal for successful sign-in(use with main menu
-            v_layout = QVBoxLayout()
-            v_layout.addWidget(label)
-            v_layout.addWidget(button)
-            dialog.setLayout(v_layout)
-            dialog.exec()
+                button.clicked.connect(dialog.close())
+            else:
+                dialog.setWindowTitle("Error")
+                dialog.setWindowModality(Qt.ApplicationModal)
+                dialog.resize(300, 100)
+                label = QLabel("ID not found")
+                label.setFont(QFont("Vesper Libre", 15))
+                label.setStyleSheet('''
+                QLabel {
+                color: rgb(132, 113, 77);
+                }
+                ''')
+                button = QPushButton("OK")
+                button.setFont(QFont("Vesper Libre", 15))
+                button.setStyleSheet('''
+                QPushButton {
+                border: 3px solid rgb(132, 113, 77);
+                color: rgb(249, 246, 236);
+                background-color: rgb(182, 170, 145);
+                }
+                ''')
+                button.clicked.connect(dialog.close)
+        v_layout = QVBoxLayout()
+        v_layout.addWidget(label)
+        v_layout.addWidget(button)
+        dialog.setLayout(v_layout)
+        dialog.exec()
 
     def back_main_menu(self):
         self.close()

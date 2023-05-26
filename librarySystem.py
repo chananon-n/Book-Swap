@@ -1,12 +1,12 @@
-import asyncio
 import os
 import sys
 from PySide6.QtWidgets import QApplication
 from library import Book
 from library import eBook
-from storageSystem import storageSystem
+import storageSystem
 from libraryUI.Home import Home
 import libraryUI.Sign_in as Sign_in
+import libraryUI.Main_menu as Main_menu
 import libraryUI.Sign_up as Sign_up
 from library import AddBook
 
@@ -37,20 +37,29 @@ class librarySystem:
     def handleButtonClicked(self, button_name):
         if button_name == "Sign_in":
             # Navigate to the Sign_in panel
-            self.__current.close()
             sign_in = Sign_in.Sign_in()
-            sign_in.signedIn.connect(self.backToHome)  # Main Menu
+            sign_in.signedIn.connect(self.goToMainMenu)  # Connect to the signedIn signal
+            self.__current.close()
             self.__current = sign_in
         elif button_name == "Sign_up":
             # Navigate to the Sign_up panel
             self.__current.close()
             sign_up = Sign_up.Sign_up()
-            sign_up.signedUp.connect(self.backToHome)  # Connect to the signedIn signal
-            self.__current = Sign_up.Sign_up()
+            sign_up.signedUp.connect(self.handleSignUp)  # Connect to the signedUp signal
+            self.__current = sign_up
 
-    def backToHome(self):
+    def handleSignUp(self):
         self.__current.close()
         self.__current = Home()
+        self.__current.buttonClicked.connect(self.handleButtonClicked)
+        self.__current.show()
+
+    def goToMainMenu(self, user_id):
+        self.__current.close()
+        self.userID = user_id
+        main_menu = Main_menu(self.userID)
+        main_menu.show()
+        self.__current = main_menu
 
     @staticmethod
     def get_instance():
@@ -59,10 +68,14 @@ class librarySystem:
         return librarySystem.__instance
 
     @staticmethod
-    def CheckUserID(id):
-        return storageSystem.checkUserID(id)
+    def CheckUserID(userID):
+        if storageSystem.storageSystem.checkUserID(userID):
+            librarySystem.__userID = userID
+            return True
+        return False
 
-    def getUserName(self, user_id):
+    @staticmethod
+    def getUserName(user_id):
         return storageSystem.storageSystem.getUserName(user_id)
 
     def addNewBook(self, picture, name, author, description, category, price):
@@ -71,7 +84,7 @@ class librarySystem:
         book.setBookID(storageSystem.storageSystem.getBookID(name))
         self.book_list.append(book)
         history = AddBook.AddBook(1, name, author)
-        self.history_list.append(history)
+        librarySystem.__instance.history_list.append(history)
         return book
 
     def addNewEbook(self, picture, name, author, description, category, price):
@@ -81,7 +94,8 @@ class librarySystem:
         self.history_list.append(history)
         return ebook
 
-    def getBookID(self, name):
+    @staticmethod
+    def getBookID(name):
         return storageSystem.storageSystem.getBookID(name)
 
     def searchBook(self, name):
@@ -98,6 +112,10 @@ class librarySystem:
                 search_result.append(ebook)
         return search_result
 
+    @staticmethod
+    def createUserID(name):
+        return storageSystem.storageSystem.createNewUser(name)
+
     def filterCategory(self, category):
         bookList = []
         allBook = storageSystem.storageSystem.getAllBooks(self.userID)
@@ -105,37 +123,43 @@ class librarySystem:
             if (book.get_category() == category) and (book not in bookList):
                 bookList.append(book)
         return bookList
-
-    def createBookStatus(self, bookID, userID, status):
+    @staticmethod
+    def createBookStatus(bookID, userID, status):
         storageSystem.storageSystem.createBookStatus(bookID, userID, status)
         return True
-
-    def getBookStatus(self, bookID, userID):
+    @staticmethod
+    def getBookStatus(bookID, userID):
         return storageSystem.storageSystem.getBookStatus(bookID, userID)
-
-    def removeBookStatus(self, bookID, userID):
-        self.s.removeBookStatus(bookID, userID)
+    @staticmethod
+    def removeBookStatus(bookID, userID):
+        storageSystem.storageSystem.removeBookStatus(bookID, userID)
         return True
-
-    def getBookAvailable(self, userID):
+    @staticmethod
+    def getBookAvailable(userID):
         return storageSystem.storageSystem.getAvailableBooks(userID)
-
-    def getBorrowList(self, userID):
+    @staticmethod
+    def getBorrowList(userID):
         return storageSystem.storageSystem.getBorrowedBooks(userID)
-
-    def getBookListFromDB(self, userID):
+    @staticmethod
+    def getBookListFromDB(userID):
         return storageSystem.storageSystem.getAllBooks(userID)
-
-    def getEBookListFromLocal(self):
+    @staticmethod
+    def getEBookListFromLocal():
         return storageSystem.storageSystem.getEBooksFromLocal()
-
-    def getBookListFromLocal(self):
+    @staticmethod
+    def getBookListFromLocal():
         return storageSystem.storageSystem.getBooksFromLocal()
-
-    def checkStatus(self, bookID, userID, status):
+    @staticmethod
+    def getAllBooks():
+        return librarySystem.__instance.book_list
+    @staticmethod
+    def getAllEbook():
+        return librarySystem.__instance.ebook_list
+    @staticmethod
+    def checkStatus(bookID, userID, status):
         return storageSystem.storageSystem.checkStatusWithLocal(bookID, userID, status)
-
-    def editBook(self, b: Book, bookID, name, author, description, category, price):
+    @staticmethod
+    def editBook(b: Book, bookID, name, author, description, category, price):
         storageSystem.storageSystem.editBookName(bookID, name)
         b.setName(name)
         b.setauthor(author)
@@ -143,10 +167,10 @@ class librarySystem:
         b.setcategory(category)
         b.set_price(price)
         return True
-
-    def removeBook(self, b: Book, bookID, userID):
+    @staticmethod
+    def removeBook(b: Book, bookID, userID):
         storageSystem.storageSystem.removeBookStatus(bookID, userID)
-        del b
+        b.deleteBook()
         return True
 
     @staticmethod
@@ -177,9 +201,10 @@ class librarySystem:
         image_dir = os.path.join(os.path.dirname(__file__), 'BookSwap resources/images')
         if not os.path.exists(image_dir):
             os.makedirs(image_dir)
-        if title_name is not None:
-            image_path = os.path.join(image_dir, title_name + '.jpg')
-            pixmap.save(image_path, 'jpg')
+        if title_name and pixmap:
+            sanitized_title = ''.join(c for c in title_name if c.isalnum() or c in ['-', '_'])
+            image_path = os.path.join(image_dir, sanitized_title + '.png')
+            pixmap.save(image_path, 'PNG')
             return True
         else:
             return False

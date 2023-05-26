@@ -2,7 +2,6 @@ from PySide6.QtGui import *
 from PySide6.QtWidgets import *
 from librarySystem import *
 
-
 class Main_menu(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -351,6 +350,10 @@ class Main_menu(QMainWindow):
         # Book Tab: we need to create the place for putting the label for the coming book
         # my book here is to put the image after the user add their book
 
+
+
+
+
         h_layout1_book = QHBoxLayout()
         h_layout1_book.addWidget(search_place_book)
         h_layout1_book.addSpacing(20)
@@ -687,7 +690,7 @@ class Main_menu(QMainWindow):
         v_layout_e_book = QVBoxLayout(e_book_tab)
         v_layout_e_book.addLayout(h_layout1_e_book)
 
-        # scroll of e-book is after this line
+        #scroll of e-book is after this line
         tab_widget.removeTab(tab_widget.indexOf(e_book_tab))
         e_book_tab.setLayout(v_layout_e_book)
 
@@ -702,7 +705,7 @@ class Main_menu(QMainWindow):
         # Add the scroll area to the tab_widget
         tab_widget.insertTab(1, scroll_area, "E-Book")
 
-        # set the history can scroll after this line
+        #set the history can scroll after this line
         # history = librarySystem.getHistory(12345678)
         # history_count = len(history)
         # v_layout_history = QVBoxLayout(history_tab)
@@ -712,7 +715,9 @@ class Main_menu(QMainWindow):
         #     v_layout_history.addSpacing(10)
         # history_tab.setLayout(v_layout_history)
 
+
         tab_widget.setCurrentIndex(0)
+
 
         self.add_button = QPushButton("Add")
         self.add_button.setFont(QFont("Vesper Libre", 20))

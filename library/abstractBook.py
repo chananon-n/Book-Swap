@@ -6,7 +6,7 @@ from library import BookType
 class abstractBook(metaclass=ABCMeta):
     __metaclass__ = ABCMeta
 
-    def __init__(self, tp, picture, name, author, description, category,price):
+    def __init__(self, tp, picture, name, author, description, category, price):
         self.type = tp
         self.picture = picture
         self.name = name
@@ -17,6 +17,7 @@ class abstractBook(metaclass=ABCMeta):
 
     def get_price(self):
         return self.price
+
     def get_tyoe(self):
         return self.type
 

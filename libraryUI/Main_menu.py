@@ -365,15 +365,12 @@ class Main_menu(QMainWindow):
         tab_widget.removeTab(tab_widget.indexOf(book_tab))
         book_tab.setLayout(v_layout_book)
 
-        # Create the scroll area
         scroll_area = QScrollArea()
         scroll_area.setWidgetResizable(True)
 
-        # Set e_book_tab as the widget for the scroll area
         scroll_area.setWidget(book_tab)
         scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
 
-        # Add the scroll area to the tab_widget
         tab_widget.insertTab(0, scroll_area, "Book")
         self.filter_button_book.setMenu(self.filter_menu_book)
 
@@ -709,14 +706,14 @@ class Main_menu(QMainWindow):
         tab_widget.insertTab(1, scroll_area, "E-Book")
 
         #set the history can scroll after this line
-        history = librarySystem.getHistory("Input Username")
-        history_count = len(history)
-        v_layout_history = QVBoxLayout(history_tab)
-        for i in range(history_count):
-            v_layout_history.addSpacing(10)
-            v_layout_history.addWidget(QLabel(history[i]))
-            v_layout_history.addSpacing(10)
-        history_tab.setLayout(v_layout_history)
+        # history = librarySystem.getHistory(12345678)
+        # history_count = len(history)
+        # v_layout_history = QVBoxLayout(history_tab)
+        # for i in range(history_count):
+        #     v_layout_history.addSpacing(10)
+        #     v_layout_history.addWidget(QLabel(history[i]))
+        #     v_layout_history.addSpacing(10)
+        # history_tab.setLayout(v_layout_history)
 
 
         tab_widget.setCurrentIndex(0)

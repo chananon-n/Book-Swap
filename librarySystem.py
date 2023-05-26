@@ -6,6 +6,7 @@ from library import eBook
 import storageSystem
 from libraryUI.Home import Home
 import libraryUI.Sign_in as Sign_in
+import libraryUI.Main_menu as Main_menu
 import libraryUI.Sign_up as Sign_up
 from library import AddBook
 
@@ -36,23 +37,29 @@ class librarySystem:
     def handleButtonClicked(self, button_name):
         if button_name == "Sign_in":
             # Navigate to the Sign_in panel
-            self.__current.close()
             sign_in = Sign_in.Sign_in()
-            sign_in.signedIn.connect(self.backToHome)  # Main Menu
+            sign_in.signedIn.connect(self.goToMainMenu)  # Connect to the signedIn signal
+            self.__current.close()
             self.__current = sign_in
         elif button_name == "Sign_up":
             # Navigate to the Sign_up panel
             self.__current.close()
             sign_up = Sign_up.Sign_up()
-            sign_up.signedUp.connect(self.backToHome)  # Connect to the signedIn signal
-            self.__current = Sign_up.Sign_up()
+            sign_up.signedUp.connect(self.handleSignUp)  # Connect to the signedUp signal
+            self.__current = sign_up
 
-    def getHistory(self):
-        return librarySystem.__instance.history_list(self.userID)
-
-    def backToHome(self):
+    def handleSignUp(self):
         self.__current.close()
         self.__current = Home()
+        self.__current.buttonClicked.connect(self.handleButtonClicked)
+        self.__current.show()
+
+    def goToMainMenu(self, user_id):
+        self.__current.close()
+        self.userID = user_id
+        main_menu = Main_menu(self.userID)
+        main_menu.show()
+        self.__current = main_menu
 
     @staticmethod
     def get_instance():
@@ -105,6 +112,7 @@ class librarySystem:
                 search_result.append(ebook)
         return search_result
 
+    @staticmethod
     def createUserID(name):
         return storageSystem.storageSystem.createNewUser(name)
 

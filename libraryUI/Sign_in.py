@@ -7,8 +7,7 @@ from librarySystem import *
 
 
 class Sign_in(QWidget):
-    signedIn = Signal()  # Custom signal to indicate successful sign-in
-
+    signedIn = Signal()
     def __init__(self):
         super().__init__()
         # Get the absolute path of the current script
@@ -110,7 +109,7 @@ class Sign_in(QWidget):
             }
             ''')
             button.clicked.connect(dialog.close)
-        if len(text) != 8 or not text.isdigit():
+        elif len(text) != 8 or not text.isdigit():
             dialog.setWindowTitle("Error")
             dialog.setWindowModality(Qt.ApplicationModal)
             dialog.resize(300, 100)
@@ -131,7 +130,7 @@ class Sign_in(QWidget):
             }
             ''')
             button.clicked.connect(dialog.close)
-        if librarySystem.CheckUserID(int(text)):
+        elif librarySystem.CheckUserID(int(text)):
             dialog.setWindowTitle("Success")
             dialog.setWindowModality(Qt.ApplicationModal)
             dialog.resize(300, 100)
@@ -151,8 +150,7 @@ class Sign_in(QWidget):
             }
             ''')
             button.clicked.connect(dialog.close)
-            button.clicked.connect(self.back_main_menu)
-            self.signedIn.emit()  # Emit the custom signal for successful sign-in(use with main menu
+            self.signedIn.emit()
         if not librarySystem.CheckUserID(int(text)):
             dialog.setWindowTitle("Your ID does not exist")
             dialog.setWindowModality(Qt.ApplicationModal)

@@ -13,6 +13,8 @@ import libraryUI.Sign_up as Sign_up
 from library import AddBook
 class librarySystem:
     # singleton
+    book_list = []
+    history_list = []
     __instance = None
 
     # constructor
@@ -25,9 +27,8 @@ class librarySystem:
         else:
             librarySystem.__instance = self
             self.__current = None
-        self.book_list = []
+        # self.book_list = []
         self.ebook_list = []
-        self.history_list = []
 
     def start(self):
         self.__current = Home()
@@ -78,13 +79,13 @@ class librarySystem:
     def getUserName(user_id):
         return storageSystem.storageSystem.getUserName(user_id)
     @staticmethod
-    def addNewBook( picture, name, author, description, category, price):
+    def addNewBook(picture, name, author, description, category, price):
         book = Book.Book(picture, name, author, description, category, price)
         storageSystem.storageSystem.createNewBook(name)
         book.setBookID(storageSystem.storageSystem.getBookID(name))
-        librarySystem.__instance.book_list.append(book)
+        librarySystem.book_list.append(book)
         history = AddBook.AddBook(1, name, author)
-        librarySystem.__instance.history_list.append(history)
+        librarySystem.history_list.append(history)
         return book
 
     @staticmethod
@@ -167,7 +168,7 @@ class librarySystem:
         b.setauthor(author)
         b.setdescription(description)
         b.setcategory(category)
-        b.set_price(price)
+        b.setPrice(price)
         return True
     @staticmethod
     def removeBook(b: Book, bookID, userID):
@@ -212,7 +213,7 @@ class librarySystem:
             return False
 
 
-book1 = librarySystem.addNewBook("6.png", "name", "author", "description", "category", 10)
+book1 = librarySystem.addNewBook("6.png", "name3", "author", "description", "category", 10)
 database.Tolocal.save_book_to_resource(book1)
 
 

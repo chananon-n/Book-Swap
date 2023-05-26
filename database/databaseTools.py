@@ -1,6 +1,9 @@
 import asyncio
 import random
 
+from tortoise import run_async
+
+from database.database_connection import init
 from database.database_table import ID_NAME, BookID_BName, ID_BookID_Status
 
 

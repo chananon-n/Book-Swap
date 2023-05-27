@@ -169,7 +169,6 @@ class storageSystem:
     @staticmethod
     def saveToLocal(books):
         Tolocal.save_book_to_resource(books)
-        return True
 
 # print(storageSystem.checkUserID(12345678))
 # print(Tolocal.load_book_from_resource())

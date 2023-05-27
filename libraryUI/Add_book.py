@@ -748,32 +748,29 @@ class Add_book(QMainWindow):
         #     v_layout.addWidget(button)
         #     dialog.setLayout(v_layout)
         #     dialog.exec()
+
         # receive category from user
         categoryInput = self.genre
-        count_category = 0
+        countCategory = 0
         # If user don't choose any category
         for i in range(len(self.genre)):
             if categoryInput[i].isChecked():
                 break
             else:
-                count_category += 1
-        if count_category == len(self.genre):
+                countCategory += 1
+        if countCategory == len(self.genre):
             countError = 2
             print("category error")
 
         # receive price from user
         priceInput = self.price_cost.text()
         # If user don't input price
-        if not priceInput.isdigit():
-            if self.checkInputError(priceInput, "Enter the price"):
-                countError = 3
-                print("price error")
-            else:
-                countError = 3
-                print("price error digit")
+        if self.checkInputError(priceInput, "Enter the price"):
+            countError =3
+            print("price error")
 
-        if self.check_booktype() == "None":
-            countError = 4
+        if self.check_booktype()=="None":
+            countError =4
             print("booktype error")
 
         if countError > 0:
@@ -782,7 +779,7 @@ class Add_book(QMainWindow):
             dialog.setWindowTitle("Error")
             dialog.setWindowModality(Qt.ApplicationModal)
             dialog.resize(300, 100)
-            label = QLabel("Please enter all the information or check your price")
+            label = QLabel("Please enter all the information")
             label.setFont(QFont("Vesper Libre", 15))
             label.setStyleSheet('''QLabel {
                         color: rgb(132, 113, 77);

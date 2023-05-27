@@ -75,17 +75,13 @@ class librarySystem:
 
     @staticmethod
     def addNewBook(picture, name, author, description, category, price):
-        temp = storageSystem.getBookID(name)
-        if not temp:
-            book = Book.Book(picture, name, author, description, category, price)
-            storageSystem.createNewBook(name)
-            book.setBookID(storageSystem.getBookID(name))
-            librarySystem.book_list.append(book)
-            history = AddBook.AddBook(1, name, author)
-            librarySystem.history_list.append(history)
-            return book
-        else:
-            return False
+        book = Book.Book(picture, name, author, description, category, price)
+        storageSystem.createNewBook(name)
+        book.setBookID(storageSystem.getBookID(name))
+        librarySystem.book_list.append(book)
+        history = AddBook.AddBook(1, name, author)
+        librarySystem.history_list.append(history)
+        return book
 
     @staticmethod
     def addNewEbook(picture, name, author, description, category, price):
@@ -205,12 +201,12 @@ class librarySystem:
         e.eBook.set_price(price)
         return True
 
-    def finishAndSave(self):
-        book = self.getBookListFromDB(self.userID)
-        bookLocal = self.getBookListFromLocal()
-        if book == bookLocal:
-            return storageSystem.saveToLocal(self.book)
-        return False
+    @staticmethod
+    def finishAndSave():
+        for i in librarySystem.book_list:
+            storageSystem.saveToLocal(i)
+        for i in librarySystem.ebook_list:
+            storageSystem.saveToLocal(i)
 
     @staticmethod
     def save_images(pixmap, title_name):

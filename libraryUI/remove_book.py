@@ -2,8 +2,6 @@ from PySide6.QtGui import QPixmap, QFont
 from PySide6.QtWidgets import QMainWindow, QLabel, QHBoxLayout, QWidget, QLineEdit, QTextEdit, QCheckBox, QPushButton, \
     QDialog, QVBoxLayout, QScrollArea, QRadioButton
 from PySide6.QtCore import *
-
-import BookCategory
 from librarySystem import *
 
 
@@ -28,7 +26,7 @@ class Remove_Book(QMainWindow):
         self.image.setMinimumSize(250, 250)
         self.image.setAlignment(Qt.AlignCenter)
         self.image.setStyleSheet("border: 2px dashed gray; color: gray;")
-        self.image.setText("Please drag and droup a book image here")
+        self.image.setText("Please drag and drop a book image here")
 
         layout = QHBoxLayout()
         layout.addWidget(self.image)

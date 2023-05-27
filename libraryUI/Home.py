@@ -29,7 +29,6 @@ class Home(QWidget):
         }
         ''')
         signin_button.setFont(QFont("Vesper Libre", 25))
-        from librarySystem import librarySystem
         signin_button.clicked.connect(self.signin)
 
         h_layout3 = QHBoxLayout()
@@ -46,7 +45,6 @@ class Home(QWidget):
                 background-color: rgb(182, 170, 145);
                 }
                 ''')
-        from librarySystem import librarySystem
         signup_button.clicked.connect(self.signup)
 
         h_layout4 = QHBoxLayout()

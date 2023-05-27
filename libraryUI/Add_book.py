@@ -1,15 +1,10 @@
-import os
-
-from PySide6.QtGui import (QFont, QPixmap, QDragEnterEvent, QPalette, QColor)
+from PySide6.QtGui import (QFont, QPixmap, QDragEnterEvent, )
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit,
-                               QTextEdit, QCheckBox, QScrollArea, QMainWindow, QMessageBox, QRadioButton, QInputDialog,
+                               QTextEdit, QCheckBox, QScrollArea, QMainWindow, QRadioButton,
                                QDialog)
 from PySide6.QtCore import *
-
-import libraryUI.Sign_in
-from libraryUI.Sign_in import Sign_in  # change to main menu by your self na non , left only import sign in and from and import
-import BookCategory
-from librarySystem import *
+from librarySystem import librarySystem
+from libraryUI.Sign_in import Sign_in
 
 
 # use in main menu instead
@@ -486,8 +481,6 @@ class Add_book(QMainWindow):
         #         self.add_button.clicked.connect(self.save_and_go_main)
         #         print("HHHHH")
 
-
-
         self.cancel_button = QPushButton("Cancel")
         self.cancel_button.setFont(QFont("Vesper Libre", 20))
         self.cancel_button.setStyleSheet('''
@@ -630,7 +623,7 @@ class Add_book(QMainWindow):
             self.pixmap = self.book_image.pixmap()
             if librarySystem.save_images(self.pixmap, title_name):
                 self.check_category()
-                self.close()      #main menu
+                self.close()  # main menu
 
         if self.e_book_button.isChecked():
             dialog = QDialog()
@@ -685,7 +678,6 @@ class Add_book(QMainWindow):
             dialog.setLayout(v_layout)
             dialog.exec()
 
-
     def process_url(self):
         if self.Url.text():
             dialog = QDialog()
@@ -720,7 +712,7 @@ class Add_book(QMainWindow):
                 self.pixmap = self.book_image.pixmap()
                 if librarySystem.save_images(self.pixmap, title_name):
                     self.check_category()
-                    self.close()        #menu
+                    self.close()  # menu
         else:
             dialog = QDialog()
             dialog.setWindowTitle("Error")

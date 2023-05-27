@@ -763,15 +763,14 @@ class Add_book(QMainWindow):
 
         # receive price from user
         priceInput = self.price_cost.text()
-        if priceInput.isdigit():
-            # If user don't input price
+        # If user don't input price
+        if not priceInput.isdigit():
             if self.checkInputError(priceInput, "Enter the price"):
                 countError = 3
                 print("price error")
-
-        if not priceInput.isdigit():
-            countError = 3
-            print("price error")
+            else:
+                countError = 3
+                print("price error digit")
 
         if self.check_booktype() == "None":
             countError = 4

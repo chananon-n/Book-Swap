@@ -703,28 +703,7 @@ class Main_menu(QMainWindow):
 
         from librarySystem import librarySystem
         # set the history can scroll after this line
-        history = librarySystem.getHistory()
-
-        v_layout_history = QVBoxLayout(history_tab)
-
-        for item in history:
-            if item.type == 1:
-                item.type = "Book"
-            elif item.type == 2:
-                item.type = "E-Book"
-            k = str(item.type) + " " + str(item.name) + " " + str(item.author) + " " + str(item.date)
-            label = QLabel()
-            label.setText(k)
-            label.setFont(QFont("Vesper Libre", 18))
-            label.setStyleSheet('''
-                                        QLabel {
-                                            color: black;
-                                        }
-                                    ''')
-            v_layout_history.addWidget(label)
-        v_layout_history.addSpacing(400)
-
-        history_tab.setLayout(v_layout_history)
+        self.refresh_history_tab(history_tab)
 
         scroll_area = QScrollArea()
         scroll_area.setWidgetResizable(True)
@@ -780,6 +759,9 @@ class Main_menu(QMainWindow):
 
     def on_tab_changed(self, index):
         if index == 2:  # History tab index is 2
+            history_tab = self.centralWidget().layout().itemAt(0).widget().widget(2)
+            # Refresh the history tab contents
+            self.refresh_history_tab(history_tab)
             self.add_button.hide()
             self.exit_button.hide()
         else:
@@ -795,6 +777,43 @@ class Main_menu(QMainWindow):
         from librarySystem import librarySystem
         librarySystem.finishAndSave()
         self.close()
+
+    def refresh_history_tab(self, history_tab):
+        # Clear the existing layout
+        layout = history_tab.layout()
+        if layout:
+            while layout.count():
+                item = layout.takeAt(0)
+                widget = item.widget()
+                if widget:
+                    widget.deleteLater()
+
+        # Create a new layout if it doesn't exist
+        if not layout:
+            layout = QVBoxLayout(history_tab)
+
+        from librarySystem import librarySystem
+        # Retrieve the updated history data
+        history = librarySystem.getHistory()
+
+        for item in history:
+            if item.type == 1:
+                item.type = "Book"
+            elif item.type == 2:
+                item.type = "E-Book"
+            k = str(item.type) + " " + str(item.name) + " " + str(item.author) + " " + str(item.date)
+            label = QLabel()
+            label.setText(k)
+            label.setFont(QFont("Vesper Libre", 18))
+            label.setStyleSheet('''
+                QLabel {
+                    color: black;
+                }
+            ''')
+            layout.addWidget(label)
+
+        layout.addSpacing(400)
+        history_tab.setLayout(layout)
 
 
 if __name__ == "__main__":

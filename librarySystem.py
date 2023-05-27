@@ -83,6 +83,10 @@ class librarySystem:
         librarySystem.history_list.append(history)
         return book
 
+    # @staticmethod
+    # def checkDuplicated(name):
+    #     return storageSystem.getBookID(name)
+
     @staticmethod
     def addNewEbook(picture, name, author, description, category, price):
         ebook = eBook.eBook(picture, name, author, description, category, price)

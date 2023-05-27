@@ -7,4 +7,3 @@ class databaseException(Exception):
 
     def __str__(self):
         return self.message
-

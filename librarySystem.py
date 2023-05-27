@@ -36,7 +36,6 @@ class librarySystem:
         librarySystem.state = "Home"
         librarySystem.__current = Home()
 
-
     @staticmethod
     def setState(state):
         librarySystem.state = state

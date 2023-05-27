@@ -1,5 +1,4 @@
 # create class Book inherits from class abstractBook
-import library
 from datetime import datetime
 
 from library.abstractBook import abstractBook
@@ -15,7 +14,7 @@ class Book(abstractBook):
     def setStatus(self, status):
         self.status = status
 
-    def setBookID(self,ID):
+    def setBookID(self, ID):
         self.ID = ID
 
     def get_day(self):

@@ -469,7 +469,7 @@ class Add_book(QMainWindow):
         color: rgb(148, 132, 99);
         }
         ''')
-        self.add_button.clicked.connect(self.save_image)
+        self.add_button.clicked.connect(self.save_and_go_main)
         # if self.e_book_button.isChecked():
         #     title_name = self.title_name.text()
         #     self.pixmap = self.book_image.pixmap()
@@ -619,8 +619,6 @@ class Add_book(QMainWindow):
             v_layout.addWidget(button)
             dialog.setLayout(v_layout)
             dialog.exec()
-        else:
-            self.save_and_go_main()
 
     def save_and_go_main(self):
         countError = 0
@@ -792,6 +790,7 @@ class Add_book(QMainWindow):
 
         else:
             self.suscessAddBook()
+            self.save_image()
 
     def error(self):
         dialog = QDialog()
@@ -842,6 +841,7 @@ class Add_book(QMainWindow):
                     }
                     ''')
         button.clicked.connect(dialog.close)
+        button.clicked.connect(self.back_to_main)
         v_layout = QVBoxLayout()
         v_layout.addWidget(label)
         v_layout.addWidget(button)

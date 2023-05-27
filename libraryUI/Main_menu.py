@@ -781,8 +781,10 @@ class Main_menu(QMainWindow):
     def on_tab_changed(self, index):
         if index == 2:  # History tab index is 2
             self.add_button.hide()
+            self.exit_button.hide()
         else:
             self.add_button.show()
+            self.exit_button.show()
 
     def add(self):
         from librarySystem import librarySystem

@@ -78,12 +78,17 @@ class librarySystem:
     @staticmethod
     def addNewBook(picture, name, author, description, category, price):
         book = Book.Book(picture, name, author, description, category, price)
-        storageSystem.createNewBook(name)
-        book.setBookID(storageSystem.getBookID(name))
+        bookId = storageSystem.createNewBook(name)
+        # book.setBookID(storageSystem.getBookID(name))
+        book.setBookID(bookId)
         librarySystem.book_list.append(book)
         history = AddBook.AddBook(1, name, author)
         librarySystem.history_list.append(history)
         return book
+
+    # @staticmethod
+    # def checkDuplicated(name):
+    #     return storageSystem.getBookID(name)
 
     @staticmethod
     def addNewEbook(picture, name, author, description, category, price,pdf):
@@ -92,10 +97,6 @@ class librarySystem:
         history = AddBook.AddBook(2, name, author)
         librarySystem.history_list.append(history)
         return ebook
-
-    @staticmethod
-    def getBookID(name):
-        return storageSystem.getBookID(name)
 
     @staticmethod
     def searchBook(name):
@@ -224,6 +225,13 @@ class librarySystem:
         else:
             return False
 
+
+# librarySystem.book_list = librarySystem.getBookListFromLocal()
+# librarySystem.ebook_list = librarySystem.getEBookListFromLocal()
+# print(librarySystem.book_list)
+# print(librarySystem.ebook_list)
+# print(storageSystem.getBookID("test"))
+# storageSystem.createNewBook("test2")
 
 if __name__ == "__main__":
     app = QApplication([])

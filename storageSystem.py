@@ -51,8 +51,7 @@ class storageSystem:
     def createNewBook(name):
         run_async(init())
         try:
-            run_async(create_book_id_name(name))
-            return True
+            return asyncio.run(create_book_id_name(name))
         except CEH.databaseException as e:
             return e.message + "Error in createNewBook"
 
@@ -63,22 +62,6 @@ class storageSystem:
             return asyncio.run(get_book_name(id))
         except CEH.databaseException as e:
             return e.message + "Error in getBookName"
-
-    @staticmethod
-    def checkName(input_name):
-        run_async(init())
-        try:
-            return asyncio.run(check_duplicate_book_name(input_name))
-        except CEH.databaseException as e:
-            return e.message + "Error in checkBookID"
-
-    @staticmethod
-    def getBookID(name):
-        run_async(init())
-        try:
-            return asyncio.run(get_book_id(name))
-        except CEH.databaseException as e:
-            return e.message + "Error in getBookID"
 
     @staticmethod
     def createBookStatus(book_id, user_id, status):
@@ -173,3 +156,4 @@ class storageSystem:
 # print(storageSystem.checkUserID(12345678))
 # print(Tolocal.load_book_from_resource())
 # print(storageSystem.getBooksFromLocal())
+# print(storageSystem.getBookID("book1"))

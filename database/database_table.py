@@ -14,8 +14,7 @@ class ID_NAME(Model):
 class BookID_BName(Model):
     table = 'BookID_BName'
     bookId = fields.IntField(pk=True)
-    # candidate key
-    bookName = fields.CharField(max_length=255, unique=True)
+    bookName = fields.CharField(max_length=255)
 
     def __str__(self):
         return self.bookName

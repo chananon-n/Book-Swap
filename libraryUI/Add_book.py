@@ -8,7 +8,6 @@ from PySide6.QtCore import Qt
 class Add_book(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.sign_in = None
         self.category = []
         self.book_type = []
         self.book_image = QLabel()

@@ -180,12 +180,11 @@ class Sign_in(QWidget):
         dialog.setLayout(v_layout)
         dialog.exec()
 
-
-
     def mainMenu(self):
         from librarySystem import librarySystem
         librarySystem.setState("Main_menu")
         self.close()
+
 
 if __name__ == "__main__":
     app = QApplication()

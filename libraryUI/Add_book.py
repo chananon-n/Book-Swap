@@ -562,7 +562,7 @@ class Add_book(QMainWindow):
                 self.category.append(genre[i].text())
             else:
                 self.category.append("None")
-        print(self.category)
+
 
     def check_booktype(self):
         if self.book_button.isChecked():
@@ -576,7 +576,6 @@ class Add_book(QMainWindow):
         return self.book_type
 
     def get_category(self):
-        print(self.category)
         return self.category
 
     def dragEnterEvent(self, event: QDragEnterEvent):
@@ -596,7 +595,7 @@ class Add_book(QMainWindow):
         # Save the dropped image to the project's images folder and create the folder if it doesn't exist
         title_name = self.title_name.text()
         self.pixmap = self.book_image.pixmap()
-        if not librarySystem.save_images(self.pixmap, title_name):
+        if not librarySystem.save_images(self.pixmap,title_name):
             dialog = QDialog()
             dialog.setWindowTitle("Error")
             dialog.setWindowModality(Qt.ApplicationModal)

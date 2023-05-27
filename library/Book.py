@@ -10,7 +10,7 @@ class Book(abstractBook):
         super(Book, self).__init__(picture, name, author, description, category, price)
         self.day = datetime.now()
         self.ID = 0
-        self.status = True
+        self.status = "Available"
 
     def setStatus(self, status):
         self.status = status
@@ -24,7 +24,8 @@ class Book(abstractBook):
     def set_day(self, day):
         self.day = day
 
-
+    def getStatus(self):
+        return self.status
 
     def display(self):
         pass

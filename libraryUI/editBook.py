@@ -1,4 +1,4 @@
-from PySide6.QtGui import QPixmap, QFont
+from PySide6.QtGui import QPixmap, QFont, QDragEnterEvent
 from PySide6.QtWidgets import QMainWindow, QLabel, QHBoxLayout, QWidget, QLineEdit, QTextEdit, QCheckBox, QPushButton, \
     QDialog, QVBoxLayout, QScrollArea
 from PySide6.QtCore import *
@@ -501,7 +501,6 @@ class EditEbook(QMainWindow):
         vLayout.addLayout(hLayout21)
         self.setLayout(vLayout)
         self.cancelButton.clicked.connect(self.cancelGoBack)
-        self.submitButton.clicked.connect(self.submit)
 
         scroll_area = QScrollArea()
         scroll_area.setWidgetResizable(True)
@@ -513,7 +512,7 @@ class EditEbook(QMainWindow):
 
         self.setCentralWidget(scroll_area)
         scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
-        self.setWindowTitle("Add Book")
+        self.setWindowTitle("Edit Book")
         self.setFixedSize(700, 600)
         self.setStyleSheet("background-color: #F9F6EC;")
         self.check_category()
@@ -586,6 +585,24 @@ class EditEbook(QMainWindow):
             # Go back to home page
             self.save_category()
             pass
+
+    def getCategory(self):
+        return self.category
+
+    def dragEnterEvent(self, event: QDragEnterEvent):
+        if event.mimeData().hasUrls() and event.mimeData().urls()[0].toString().endswith(".png"):
+            event.acceptProposedAction()
+
+    def dropEvent(self, event):
+        url = event.mimeData().urls()[0]
+        file_path = url.toLocalFile()
+        if file_path.endswith('.png'):
+            self.pixmap = QPixmap(file_path)
+            self.image.setPixmap(self.pixmap)
+            self.image.setScaledContents(True)
+            self.image.setStyleSheet("border: #F9F6EC;")
+
+    # I don't understand about save URL or save and go next page
 
 
 

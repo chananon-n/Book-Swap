@@ -1,12 +1,10 @@
 from PySide6.QtGui import (QFont, QPixmap)
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit, QDialog)
-from PySide6.QtCore import Qt, Signal
+from PySide6.QtCore import Qt
 import os
 
 
-
 class Sign_in(QWidget):
-    signedIn = Signal()
 
     def __init__(self):
         super().__init__()
@@ -154,7 +152,7 @@ class Sign_in(QWidget):
                 }
                 ''')
                 button.clicked.connect(dialog.close)
-                button.clicked.connect(self.signedIn.emit)
+                button.clicked.connect(librarySystem.setState("Main_menu"))
             else:
                 dialog.setWindowTitle("Error")
                 dialog.setWindowModality(Qt.ApplicationModal)

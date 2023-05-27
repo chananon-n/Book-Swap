@@ -17,6 +17,7 @@ class librarySystem:
     history_list = []
     ebook_list = []
     __instance = None
+    state = "Home"
 
     # constructor
     def __init__(self):
@@ -28,25 +29,96 @@ class librarySystem:
         else:
             librarySystem.__instance = self
             self.__current = None
+            self.__state = None
 
     def start(self):
         self.__current = Home()
+        self.__state = "Home"
+        self.__current.show()
         # Connect to the buttonClicked signal from the Home panel
         self.__current.buttonClicked.connect(self.handleButtonClicked)
+
+    @staticmethod
+    def setState(state):
+        librarySystem.state = state
+        librarySystem.checkState()
+
+    @staticmethod
+    def checkState():
+        if librarySystem.state == "Home":
+            librarySystem.__current = Home()
+        if librarySystem.state == "Sign_in":
+            librarySystem.__current = Sign_in.Sign_in()
+        if librarySystem.state == "Sign_up":
+            librarySystem.__current = Sign_up.Sign_up()
+        if librarySystem.state == "Main_menu":
+            librarySystem.__current = Main_menu.Main_menu()
+        if librarySystem.state == "Add_book":
+            librarySystem.__current = Add_Book.Add_Book()
 
     def handleButtonClicked(self, button_name):
         if button_name == "Sign_in":
             # Navigate to the Sign_in panel
             sign_in = Sign_in.Sign_in()
-            sign_in.signedIn.connect(self.handleSignUp)  # Connect to the signedIn signal
+            sign_in.signedIn.connect(self.handleSignUp)
             self.__current.close()
             self.__current = sign_in
         elif button_name == "Sign_up":
             # Navigate to the Sign_up panel
             self.__current.close()
             sign_up = Sign_up.Sign_up()
-            sign_up.signedUp.connect(self.handleSignUp)  # Connect to the signedUp signal
+            sign_up.signedUp.connect(self.handleSignUp)
             self.__current = sign_up
+
+    def handleSignUp(self):
+        self.__current.close()
+        self.__current = Main_menu.Main_menu()
+        self.__current.buttonClicked.connect(self.handleButtonClicked)
+        self.__current.show()
+
+    def goToMainMenu(self, user_id):
+        self.userID = user_id
+        self.__current.close()
+        self.__current = Main_menu.Main_menu()
+        self.__current.buttonClicked.connect(self.handleButtonClicked)
+        self.__current.show()
+
+    def goToHome(self):
+        self.__current.close()
+        self.__current = Home()
+        self.__current.buttonClicked.connect(self.handleButtonClicked)
+        self.__current.show()
+
+    def goToSign_in(self):
+        self.__current.close()
+        self.__current = Sign_in.Sign_in()
+        self.__current.signedIn.connect(self.handleSignUp)
+        self.__current.show()
+
+    def goToSign_up(self):
+        self.__current.close()
+        self.__current = Sign_up.Sign_up()
+        self.__current.signedUp.connect(self.handleSignUp)
+        self.__current.show()
+
+    def goToAddBook(self):
+        self.__current.close()
+        self.__current = AddBook.AddBook()
+        self.__current.show()
+
+    # def handleButtonClicked(self, button_name):
+    #     if button_name == "Sign_in":
+    #         # Navigate to the Sign_in panel
+    #         sign_in = Sign_in.Sign_in()
+    #         sign_in.signedIn.connect(self.handleSignUp)  # Connect to the signedIn signal
+    #         self.__current.close()
+    #         self.__current = sign_in
+    #     elif button_name == "Sign_up":
+    #         # Navigate to the Sign_up panel
+    #         self.__current.close()
+    #         sign_up = Sign_up.Sign_up()
+    #         sign_up.signedUp.connect(self.handleSignUp)  # Connect to the signedUp signal
+    #         self.__current = sign_up
 
     def handleSignUp(self):
         self.__current.close()

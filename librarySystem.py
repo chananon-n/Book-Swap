@@ -19,7 +19,7 @@ class librarySystem:
     history_list = []
     ebook_list = []
     __instance = None
-    state = "Home"
+    state = None
 
     # constructor
     def __init__(self):
@@ -31,9 +31,9 @@ class librarySystem:
         else:
             librarySystem.__instance = self
             self.__current = None
-            self.__state = None
 
     def start(self):
+        librarySystem.state = "Home"
         librarySystem.__current = Home()
 
 
@@ -54,8 +54,8 @@ class librarySystem:
             librarySystem.__current = Main_menu.Main_menu()
         if librarySystem.state == "Add_book":
             window = libraryUI.Add_book.Add_book()
-            window.show()
             librarySystem.__current = window
+            window.show()
 
     # def handleButtonClicked(self, button_name):
     #     if button_name == "Sign_in":

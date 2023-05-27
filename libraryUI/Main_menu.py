@@ -745,12 +745,17 @@ class Main_menu(QMainWindow):
         self.show()
 
         tab_widget.currentChanged.connect(self.on_tab_changed)
+        self.add_button.clicked.connect(self.add)
 
     def on_tab_changed(self, index):
         if index == 2:  # History tab index is 2
             self.add_button.hide()
         else:
             self.add_button.show()
+
+    def add(self):
+        from librarySystem import librarySystem
+        librarySystem.setState("Add_book")
 
 
 if __name__ == "__main__":

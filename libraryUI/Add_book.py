@@ -468,7 +468,7 @@ class Add_book(QMainWindow):
         color: rgb(148, 132, 99);
         }
         ''')
-        self.add_button.clicked.connect(self.check_category)
+        self.add_button.clicked.connect(self.save_image)
         # if self.e_book_button.isChecked():
         #     title_name = self.title_name.text()
         #     self.pixmap = self.book_image.pixmap()

@@ -624,6 +624,7 @@ class Add_book(QMainWindow):
 
     def save_and_go_main(self):
         countError = 0
+        self.check_category()
         # if self.book_button.isChecked():
         #     title_name = self.title_name.text()
         #     self.pixmap = self.book_image.pixmap()
@@ -747,27 +748,33 @@ class Add_book(QMainWindow):
         #     v_layout.addWidget(button)
         #     dialog.setLayout(v_layout)
         #     dialog.exec()
-        self.check_category()
         # receive category from user
         categoryInput = self.genre
+        count_category = 0
         # If user don't choose any category
         for i in range(len(self.genre)):
             if categoryInput[i].isChecked():
                 break
             else:
-                countError = 2
-                print("category error")
-                break
+                count_category += 1
+        if count_category == len(self.genre):
+            countError = 2
+            print("category error")
 
         # receive price from user
         priceInput = self.price_cost.text()
-        # If user don't input price
-        if self.checkInputError(priceInput, "Enter the price"):
-            countError =3
+        if priceInput.isdigit():
+            # If user don't input price
+            if self.checkInputError(priceInput, "Enter the price"):
+                countError = 3
+                print("price error")
+
+        if not priceInput.isdigit():
+            countError = 3
             print("price error")
 
-        if self.check_booktype()=="None":
-            countError =4
+        if self.check_booktype() == "None":
+            countError = 4
             print("booktype error")
 
         if countError > 0:
@@ -776,7 +783,7 @@ class Add_book(QMainWindow):
             dialog.setWindowTitle("Error")
             dialog.setWindowModality(Qt.ApplicationModal)
             dialog.resize(300, 100)
-            label = QLabel("Please enter all the information")
+            label = QLabel("Please enter all the information or check your price")
             label.setFont(QFont("Vesper Libre", 15))
             label.setStyleSheet('''QLabel {
                         color: rgb(132, 113, 77);

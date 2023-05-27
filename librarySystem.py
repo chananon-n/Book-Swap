@@ -76,8 +76,9 @@ class librarySystem:
     @staticmethod
     def addNewBook(picture, name, author, description, category, price):
         book = Book.Book(picture, name, author, description, category, price)
-        storageSystem.createNewBook(name)
+        bookId = storageSystem.createNewBook(name)
         # book.setBookID(storageSystem.getBookID(name))
+        book.setBookID(bookId)
         librarySystem.book_list.append(book)
         history = AddBook.AddBook(1, name, author)
         librarySystem.history_list.append(history)

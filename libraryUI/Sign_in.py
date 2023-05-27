@@ -68,11 +68,40 @@ class Sign_in(QWidget):
         h_layout3.addWidget(button1)
         h_layout3.addSpacing(200)
 
+        dont_ac = QLabel("Don't have an account?")
+        dont_ac.setFont(QFont("Vesper Libre", 13))
+        dont_ac.setStyleSheet('''QLabel {
+                        color: rgb(182, 170, 145);
+                    }''')
+
+        button2 = QPushButton("Sign up")
+        button2.setFont(QFont("Vesper Libre", 13))
+        button2.setStyleSheet('''
+                QPushButton {
+                        border: none;
+                        color: rgb(132, 113, 77);
+                        background-color: #F9F6EC;
+                        text-decoration: underline;
+                    }
+
+                    QPushButton:hover {
+                        background-color: transparent;
+                    }
+                ''')
+        button2.clicked.connect(self.sign_up)
+
+        h_layout4 = QHBoxLayout()
+        h_layout4.addSpacing(330)
+        h_layout4.addWidget(dont_ac)
+        h_layout4.addWidget(button2)
+        h_layout4.addSpacing(330)
+
         v_layout = QVBoxLayout()
         v_layout.addSpacing(30)
         v_layout.addLayout(h_layout1)
         v_layout.addLayout(h_layout2)
         v_layout.addLayout(h_layout3)
+        v_layout.addLayout(h_layout4)
         v_layout.addSpacing(50)
 
         self.setLayout(v_layout)
@@ -183,6 +212,11 @@ class Sign_in(QWidget):
     def mainMenu(self):
         from librarySystem import librarySystem
         librarySystem.setState("Main_menu")
+        self.close()
+
+    def sign_up(self):
+        from librarySystem import librarySystem
+        librarySystem.setState("Sign_up")
         self.close()
 
 

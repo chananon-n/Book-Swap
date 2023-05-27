@@ -143,8 +143,7 @@ class Sign_up(QWidget):
             label.setStyleSheet('''QLabel {
             color: rgb(132, 113, 77);
             }
-            '''
-                                )
+            ''')
             from librarySystem import librarySystem
             user = QLabel("Your ID is " + f"{librarySystem.createUserID(store_name)}")
             user.setFont(QFont("Vesper Libre", 15))

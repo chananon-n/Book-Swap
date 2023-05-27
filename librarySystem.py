@@ -1,22 +1,25 @@
 import os
 import sys
 from PySide6.QtWidgets import QApplication
-
-import database.Tolocal
 from library import Book
 from library import eBook
 import storageSystem
 from library.AddBook import AddBook
-from libraryUI.Home import Home
+import libraryUI.Home as Home
 import libraryUI.Add_book as Add_book
 import libraryUI.Sign_in as Sign_in
 import libraryUI.Main_menu as Main_menu
 import libraryUI.Sign_up as Sign_up
+import libraryUI.remove_book as Remove_book
+
+
 class librarySystem:
     # singleton
+    state = "Home"
     book_list = []
     history_list = []
     __instance = None
+    __current = Home.Home()
 
     # constructor
     def __init__(self):
@@ -27,7 +30,7 @@ class librarySystem:
             raise Exception("This class is a singleton!")
         else:
             librarySystem.__instance = self
-            self.__current = None
+            self.__current = Home.Home()
         # self.book_list = []
         self.ebook_list = []
 
@@ -36,54 +39,8 @@ class librarySystem:
         librarySystem.userID = id
 
     def start(self):
-        self.__current = Home()
-        # Connect to the buttonClicked signal from the Home panel
-        self.__current.buttonClicked.connect(self.handleButtonClicked)
-
-    def handleButtonClicked(self, button_name):
-        if button_name == "Sign_in":
-            # Navigate to the Sign_in panel
-            sign_in = Sign_in.Sign_in()
-            sign_in.signedIn.connect(self.goToMainMenu)  # Connect to the signedIn signal
-            self.__current.close()
-            self.__current = sign_in
-        elif button_name == "Sign_up":
-            # Navigate to the Sign_up panel
-            self.__current.close()
-            sign_up = Sign_up.Sign_up()
-            sign_up.signedUp.connect(self.handleSignUp)  # Connect to the signedUp signal
-            self.__current = sign_up
-
-    def handle_addBookClicked(self, button_name):
-        print("vinvtntvhnvutnvutnvtuinvt")
-        if button_name == "Add_book":
-            addBook = Add_book.Add_book()
-            addBook.addBooK.connect(self.gobackmainmenu)
-            self.__current.close()
-            self.__current = addBook
-            self.__current.show()
-
-    def handleSignIn(self):
-        pass
-
-    def handleSignUp(self):
-        self.__current.close()
-        self.__current = Home()
-        self.__current.buttonClicked.connect(self.handleButtonClicked)
-        self.__current.show()
-
-    def goToMainMenu(self):
-        self.__current.close()
-        main_menu = Main_menu.Main_menu()
-        self.__current = main_menu
-        self.__current.show()
-
-    def gobackmainmenu(self):
-        self.__current.close()
-        main_menu = Main_menu.Main_menu()
-        main_menu.addBookClicked.connect(self.handle_addBookClicked)
-        self.__current = main_menu
-        self.__current.show()
+        librarySystem.setState("Home")
+        librarySystem.checkState()
 
     @staticmethod
     def get_instance():
@@ -101,6 +58,7 @@ class librarySystem:
     @staticmethod
     def getUserName(user_id):
         return storageSystem.storageSystem.getUserName(user_id)
+
     @staticmethod
     def addNewBook(picture, name, author, description, category, price):
         book = Book.Book(picture, name, author, description, category, price)
@@ -112,34 +70,36 @@ class librarySystem:
         return book
 
     @staticmethod
-    def setState(state):
+    def setState(s):
         # Start with Home page
         # set state for librarySystem
-        librarySystem.state = state
+        librarySystem.state = s
 
     @staticmethod
     def checkState():
-        if librarySystem.state == "Sign_In":
-            # Go to Sign In UI Page
-            pass
-        elif librarySystem.state == "Sign_Up":
-            # Go to Sign Up UI Page
-            pass
+        if librarySystem.__current is not Home.Home:
+            librarySystem.__current.close()
+        if librarySystem.state == "Sign_in":
+            librarySystem.__current = Sign_in.Sign_in()
+            librarySystem.__current.show()
+        elif librarySystem.state == "Sign_up":
+            librarySystem.__current = Sign_up.Sign_up()
+            librarySystem.__current.show()
         elif librarySystem.state == "Main_Menu":
-            # Go to Main Menu UI Page
-            pass
+            librarySystem.__current = Main_menu.Main_menu()
+            librarySystem.__current.show()
         elif librarySystem.state == "Add_Book":
-            # Go to Add Book UI Page
-            pass
+            librarySystem.__current = Add_book.Add_book()
+            librarySystem.__current.show()
         elif librarySystem.state == "Edit_Book":
-            # Go to Edit Book UI Page
-            pass
+            librarySystem.__current = Remove_book.Remove_book()
+            librarySystem.__current.show()
         elif librarySystem.state == "Edit_EBook":
             # Go to Edit EBook UI Page
             pass
         elif librarySystem.state == "Home":
-            # Go to Home page
-            pass
+            librarySystem.__current = Home.Home()
+            librarySystem.__current.show()
         else:
             return "Error for check State"
 
@@ -154,9 +114,11 @@ class librarySystem:
     @staticmethod
     def getHistoryList():
         return librarySystem.history_list
+
     @staticmethod
     def getBookID(name):
         return storageSystem.storageSystem.getBookID(name)
+
     @staticmethod
     def searchBook(name):
         search_result = []
@@ -176,6 +138,7 @@ class librarySystem:
     @staticmethod
     def createUserID(name):
         return storageSystem.storageSystem.createNewUser(name)
+
     @staticmethod
     def filterCategory(category):
         bookList = []
@@ -184,41 +147,53 @@ class librarySystem:
             if (book.get_category() == category) and (book not in bookList):
                 bookList.append(book)
         return bookList
+
     @staticmethod
     def createBookStatus(bookID, userID, status):
         storageSystem.storageSystem.createBookStatus(bookID, userID, status)
         return True
+
     @staticmethod
     def getBookStatus(bookID, userID):
         return storageSystem.storageSystem.getBookStatus(bookID, userID)
+
     @staticmethod
     def removeBookStatus(bookID, userID):
         storageSystem.storageSystem.removeBookStatus(bookID, userID)
         return True
+
     @staticmethod
     def getBookAvailable(userID):
         return storageSystem.storageSystem.getAvailableBooks(userID)
+
     @staticmethod
     def getBorrowList(userID):
         return storageSystem.storageSystem.getBorrowedBooks(userID)
+
     @staticmethod
     def getBookListFromDB(userID):
         return storageSystem.storageSystem.getAllBooks(userID)
+
     @staticmethod
     def getEBookListFromLocal():
         return storageSystem.storageSystem.getEBooksFromLocal()
+
     @staticmethod
     def getBookListFromLocal():
         return storageSystem.storageSystem.getBooksFromLocal()
+
     @staticmethod
     def getAllBooks():
         return librarySystem.__instance.book_list
+
     @staticmethod
     def getAllEbook():
         return librarySystem.__instance.ebook_list
+
     @staticmethod
     def checkStatus(bookID, userID, status):
         return storageSystem.storageSystem.checkStatusWithLocal(bookID, userID, status)
+
     @staticmethod
     def editBook(b: Book, bookID, name, author, description, category, price):
         storageSystem.storageSystem.editBookName(bookID, name)
@@ -228,6 +203,7 @@ class librarySystem:
         b.setcategory(category)
         b.setPrice(price)
         return True
+
     @staticmethod
     def removeBook(b: Book, bookID, userID):
         storageSystem.storageSystem.removeBookStatus(bookID, userID)

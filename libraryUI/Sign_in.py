@@ -8,7 +8,6 @@ from librarySystem import *
 
 
 class Sign_in(QWidget):
-    signedIn = Signal(str)
     def __init__(self):
         super().__init__()
         # Get the absolute path of the current script
@@ -155,7 +154,7 @@ class Sign_in(QWidget):
                 ''')
                 librarySystem.setUserID(int(text))
                 button.clicked.connect(dialog.close)
-                button.clicked.connect(lambda: self.handlesignedIn(librarySystem.userID))
+                button.clicked.connect(go_to_main)
             else:
                 dialog.setWindowTitle("Error")
                 dialog.setWindowModality(Qt.ApplicationModal)
@@ -183,16 +182,10 @@ class Sign_in(QWidget):
         dialog.setLayout(v_layout)
         dialog.exec()
 
-    def back_main_menu(self):
-        self.close()
+def go_to_main():
+    librarySystem.librarySystem.setState("Main_Menu")
+    librarySystem.librarySystem.checkState()
 
-    def handleHomeSignal(self):
-        # Handle the signal received from the Home class
-        # ...
-        pass
-
-    def handlesignedIn(self, userID):
-        self.signedIn.emit(userID)
 
 if __name__ == "__main__":
     app = QApplication()

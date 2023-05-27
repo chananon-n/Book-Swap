@@ -5,7 +5,6 @@ import librarySystem
 from librarySystem import *
 
 class Main_menu(QMainWindow):
-    addBookClicked = Signal(str)
     def __init__(self):
         super().__init__()
 
@@ -863,7 +862,7 @@ class Main_menu(QMainWindow):
                 background-color: rgb(182, 170, 145);
             }
         ''')
-        self.add_button.clicked.connect(lambda: self.handle_addBookClicked("Add_book"))
+        self.add_button.clicked.connect(go_to_add_book)
 
         h_layout_add = QHBoxLayout()
         h_layout_add.addSpacing(700)
@@ -888,11 +887,9 @@ class Main_menu(QMainWindow):
             self.add_button.hide()
         else:
             self.add_button.show()
-
-    def handle_addBookClicked(self, button_name):
-        print(button_name)
-        self.addBookClicked.emit(button_name)
-
+def go_to_add_book():
+    librarySystem.librarySystem.setState("Add_Book")
+    librarySystem.librarySystem.checkState()
 
 if __name__ == "__main__":
     app = QApplication([])

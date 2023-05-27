@@ -14,7 +14,6 @@ from librarySystem import *
 
 
 class Add_book(QMainWindow):
-    addBooK = Signal()
 
     def __init__(self):
         super().__init__()

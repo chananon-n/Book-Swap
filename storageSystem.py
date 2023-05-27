@@ -1,9 +1,6 @@
 import asyncio
-
 from tortoise import run_async
 import CustomExeptionalHandler as CEH
-
-from database import databaseTools
 from database import Tolocal
 from database.databaseTools import *
 from database.database_connection import init
@@ -68,6 +65,14 @@ class storageSystem:
             return e.message + "Error in getBookName"
 
     @staticmethod
+    def checkName(input_name):
+        run_async(init())
+        try:
+            return asyncio.run(check_duplicate_book_name(input_name))
+        except CEH.databaseException as e:
+            return e.message + "Error in checkBookID"
+
+    @staticmethod
     def getBookID(name):
         run_async(init())
         try:
@@ -79,7 +84,7 @@ class storageSystem:
     def createBookStatus(book_id, user_id, status):
         run_async(init())
         try:
-            run_async(databaseTools.create_book_status(book_id, user_id, status))
+            run_async(create_book_status(book_id, user_id, status))
             return True
         except CEH.databaseException as e:
             return e.message + "Error in createBookStatus"
@@ -112,7 +117,7 @@ class storageSystem:
     def getBorrowedBooks(user_id):
         run_async(init())
         try:
-            return asyncio.run(databaseTools.get_all_book("borrowed", user_id))
+            return asyncio.run(get_all_book("borrowed", user_id))
         except CEH.databaseException as e:
             return e.message + "Error in getBorrowedBooks"
 
@@ -128,7 +133,7 @@ class storageSystem:
     def checkStatusWithLocal(book_id, user_id, status):
         run_async(init())
         try:
-            temp = asyncio.run(databaseTools.get_book_status(book_id, user_id))
+            temp = asyncio.run(get_book_status(book_id, user_id))
             return temp == status
         except CEH.databaseException as e:
             return e.message + "Error in checkStatusWithLocal"
@@ -137,7 +142,7 @@ class storageSystem:
     def editBookName(book_id, name):
         run_async(init())
         try:
-            return asyncio.run(databaseTools.edit_book_name(book_id, name))
+            return asyncio.run(edit_book_name(book_id, name))
         except CEH.databaseException as e:
             return e.message + "Error in editBookName"
 
@@ -164,7 +169,6 @@ class storageSystem:
     @staticmethod
     def saveToLocal(books):
         Tolocal.save_book_to_resource(books)
-        return True
 
 # print(storageSystem.checkUserID(12345678))
 # print(Tolocal.load_book_from_resource())

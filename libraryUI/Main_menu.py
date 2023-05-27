@@ -747,8 +747,19 @@ class Main_menu(QMainWindow):
                 background-color: rgb(182, 170, 145);
             }
         ''')
+
+        self.exit_button = QPushButton("Exit")
+        self.exit_button.setFont(QFont("Vesper Libre", 20))
+        self.exit_button.setStyleSheet('''
+            QPushButton {
+                border: 3px solid rgb(132, 113, 77);
+                color: rgb(249, 246, 236);
+                background-color: rgb(182, 170, 145);
+            }
+        ''')
         h_layout_add = QHBoxLayout()
-        h_layout_add.addSpacing(700)
+        h_layout_add.addWidget(self.exit_button)
+        h_layout_add.addSpacing(600)
         h_layout_add.addWidget(self.add_button)
 
         v_layout_add = QVBoxLayout()
@@ -765,6 +776,7 @@ class Main_menu(QMainWindow):
 
         tab_widget.currentChanged.connect(self.on_tab_changed)
         self.add_button.clicked.connect(self.add)
+        self.exit_button.clicked.connect(self.exit)
 
     def on_tab_changed(self, index):
         if index == 2:  # History tab index is 2
@@ -775,6 +787,11 @@ class Main_menu(QMainWindow):
     def add(self):
         from librarySystem import librarySystem
         librarySystem.setState("Add_book")
+        self.close()
+
+    def exit(self):
+        from librarySystem import librarySystem
+        librarySystem.finishAndSave()
         self.close()
 
 

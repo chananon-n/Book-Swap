@@ -4,8 +4,6 @@ from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, Q
                                QDialog)
 from PySide6.QtCore import Qt
 
-import librarySystem
-
 
 class Add_book(QMainWindow):
     def __init__(self):
@@ -554,9 +552,15 @@ class Add_book(QMainWindow):
     def check_booktype(self):
         from librarySystem import librarySystem
         if self.book_button.isChecked():
-            return "Book"
+            librarySystem.addNewBook(self.pixmap, self.title_name.text(), self.author_name.text(),
+                                     self.description_name.toPlainText(), self.get_category(),
+                                     self.price_cost)
+            return self.book_type
         if self.e_book_button.isChecked():
-            return "EBook"
+            librarySystem.addNewEbook(self.pixmap, self.title_name.text(), self.author_name.text(),
+                                      self.description_name.toPlainText(), self.get_category(),
+                                      self.price_cost)
+            return self.book_type
         if not self.book_button.isChecked() and not self.e_book_button.isChecked():
             return "None"
 
@@ -621,11 +625,11 @@ class Add_book(QMainWindow):
     def save_and_go_main(self):
         countError = 0
         self.check_category()
-        title = self.title_name.text()
-        from storageSystem import storageSystem
-        temp = storageSystem.getBookID(title)
-        if temp:
-            self.displayError()
+        # title = self.title_name.text()
+        # from storageSystem import storageSystem
+        # temp = storageSystem.checkName(title)
+        # if temp:
+        #     self.error()
 
         # if self.book_button.isChecked():
         #     title_name = self.title_name.text()
@@ -730,14 +734,14 @@ class Add_book(QMainWindow):
             print("description error")
 
         categoryInput = self.genre
-        count_category = 0
+        countCategory = 0
         # If user don't choose any category
         for i in range(len(self.genre)):
             if categoryInput[i].isChecked():
                 break
             else:
-                count_category += 1
-        if count_category == len(self.genre):
+                countCategory += 1
+        if countCategory == len(self.genre):
             countError = 2
             print("category error")
 
@@ -752,9 +756,7 @@ class Add_book(QMainWindow):
                 countError = 3
                 print("price error digit")
 
-        if not priceInput.isdigit():
-            countError = 3
-            print("price error")
+
 
         if self.check_booktype() == "None":
             countError = 4
@@ -791,12 +793,12 @@ class Add_book(QMainWindow):
         else:
             self.suscessAddBook()
 
-    def displayError(self):
+    def error(self):
         dialog = QDialog()
         dialog.setWindowTitle("Error")
         dialog.setWindowModality(Qt.ApplicationModal)
         dialog.resize(300, 100)
-        label = QLabel("This book has already existed")
+        label = QLabel("This book is already in the library")
         label.setFont(QFont("Vesper Libre", 15))
         label.setStyleSheet('''QLabel {
                     color: rgb(132, 113, 77);
@@ -820,12 +822,6 @@ class Add_book(QMainWindow):
 
 
     def suscessAddBook(self):
-        #create object
-        from librarySystem import librarySystem
-        if self.check_booktype() == "Book":
-            librarySystem.addNewBook(self.book_image,self.title_name.text(), self.author_name.text(), self.description_name.toPlainText(), self.genre, self.price_cost.text())
-        # if self.check_booktype() == "EBook":
-        #     librarySystem.addNewEBook()
         dialog = QDialog()
         dialog.setWindowTitle("Success")
         dialog.setWindowModality(Qt.ApplicationModal)

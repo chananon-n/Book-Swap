@@ -51,14 +51,6 @@ async def edit_book_name(input_id, input_name):
     return False
 
 
-# check duplicate book name
-async def check_duplicate_book_name(input_name):
-    # check if name is in database, return None if it is not
-    if await BookID_BName.exists(bookName=input_name):
-        return True
-    return False
-
-
 # get book name by id
 async def get_book_name(input_id):
     # check if id is in database, return None if it is not
@@ -130,6 +122,7 @@ async def get_all_book(command, user_id):
     return False
 
 # run_async(init())
+# print(asyncio.run(get_book_id("test")))
 # a = asyncio.run(check_id(659))
 # print(a)
 # run_async(create_id_name("test"))

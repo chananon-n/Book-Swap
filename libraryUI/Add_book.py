@@ -467,7 +467,7 @@ class Add_book(QMainWindow):
         color: rgb(148, 132, 99);
         }
         ''')
-        self.add_button.clicked.connect(self.check_category)
+        self.add_button.clicked.connect(self.save_image)
         # if self.e_book_button.isChecked():
         #     title_name = self.title_name.text()
         #     self.pixmap = self.book_image.pixmap()
@@ -483,7 +483,7 @@ class Add_book(QMainWindow):
         color: rgb(148, 132, 99);   
         }
         ''')
-        self.cancel_button.clicked.connect(self.cancel__goback)
+        self.cancel_button.clicked.connect(self.back_to_main)
 
         h_layout20 = QHBoxLayout()
         h_layout20.addSpacing(20)
@@ -531,9 +531,6 @@ class Add_book(QMainWindow):
         self.setStyleSheet("background-color: #F9F6EC;")
         self.show()
 
-    def cancel__goback(self):  # wait for main menu done then just import main menu page na
-        self.close()
-
     def check_category(self):
         genre = [self.Romance_button, self.Mystery_button, self.Fantasy_and_science_fiction_button,
                  self.Thrillers_horror_button, self.Young_adult_button, self.Children_fiction_button,
@@ -554,11 +551,11 @@ class Add_book(QMainWindow):
         if self.book_button.isChecked():
             librarySystem.addNewBook(self.pixmap, self.title_name.text(), self.author_name.text(),
                                      self.description_name.toPlainText(), self.get_category(),
-                                     self.price_cost.text())
+                                     self.price_cost)
         if self.e_book_button.isChecked():
             librarySystem.addNewEbook(self.pixmap, self.title_name.text(), self.author_name.text(),
                                       self.description_name.toPlainText(), self.get_category(),
-                                      self.price_cost.text())
+                                      self.price_cost)
         return self.book_type
 
     def get_category(self):
@@ -697,6 +694,7 @@ class Add_book(QMainWindow):
                         }
                         ''')
             button.clicked.connect(dialog.close)
+            button.clicked.connect(self.back_to_main)
             v_layout = QVBoxLayout()
             v_layout.addWidget(label)
             v_layout.addWidget(button)
@@ -735,6 +733,11 @@ class Add_book(QMainWindow):
             v_layout.addWidget(button)
             dialog.setLayout(v_layout)
             dialog.exec()
+
+    def back_to_main(self):
+        from librarySystem import librarySystem
+        librarySystem.setState("Main_menu")
+        self.close()
 
 
 if __name__ == "__main__":

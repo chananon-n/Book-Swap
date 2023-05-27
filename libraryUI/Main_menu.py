@@ -750,6 +750,7 @@ class Main_menu(QMainWindow):
     def add(self):
         from librarySystem import librarySystem
         librarySystem.setState("Add_book")
+        self.close()
 
 
 if __name__ == "__main__":

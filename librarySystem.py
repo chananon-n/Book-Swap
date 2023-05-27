@@ -11,6 +11,7 @@ from libraryUI.Home import Home
 import libraryUI.Sign_in as Sign_in
 import libraryUI.Main_menu as Main_menu
 import libraryUI.Sign_up as Sign_up
+import libraryUI.Add_book as Add_book
 
 
 class librarySystem:
@@ -52,9 +53,8 @@ class librarySystem:
         if librarySystem.state == "Main_menu":
             librarySystem.__current = Main_menu.Main_menu()
         if librarySystem.state == "Add_book":
-            window = libraryUI.Add_book.Add_book()
-            librarySystem.__current = window
-            window.show()
+            librarySystem.__current = Add_book.Add_book()
+
 
     @staticmethod
     def get_instance():
@@ -222,11 +222,6 @@ class librarySystem:
         else:
             return False
 
-
-# librarySystem.book_list = librarySystem.getBookListFromLocal()
-# librarySystem.ebook_list = librarySystem.getEBookListFromLocal()
-# print(librarySystem.book_list)
-# print(librarySystem.ebook_list)
 
 if __name__ == "__main__":
     app = QApplication([])

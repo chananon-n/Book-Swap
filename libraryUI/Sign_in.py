@@ -3,11 +3,11 @@ from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, Q
 from PySide6.QtCore import Qt, Signal
 import os
 
-from librarySystem import *
 
 
 class Sign_in(QWidget):
     signedIn = Signal()
+
     def __init__(self):
         super().__init__()
         # Get the absolute path of the current script
@@ -131,6 +131,7 @@ class Sign_in(QWidget):
             ''')
             button.clicked.connect(dialog.close)
         else:
+            from librarySystem import librarySystem
             checkValidation = librarySystem.CheckUserID(int(text))
             if checkValidation:
                 dialog.setWindowTitle("Success")

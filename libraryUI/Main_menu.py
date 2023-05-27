@@ -1,6 +1,6 @@
 from PySide6.QtGui import *
 from PySide6.QtWidgets import *
-from librarySystem import *
+
 
 class Main_menu(QMainWindow):
     def __init__(self):

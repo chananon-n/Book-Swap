@@ -1,10 +1,12 @@
+import sys
+
 from PySide6.QtGui import QPixmap, QFont
 from PySide6.QtWidgets import QMainWindow, QLabel, QHBoxLayout, QWidget, QLineEdit, QTextEdit, QCheckBox, QPushButton, \
-    QDialog, QVBoxLayout, QScrollArea
+    QDialog, QVBoxLayout, QScrollArea, QApplication
 from PySide6.QtCore import *
 
-import BookCategory
-from librarySystem import *
+from librarySystem import librarySystem
+from libraryUI.Sign_in import Sign_in
 
 
 class EditEbook(QMainWindow):

@@ -75,13 +75,16 @@ class librarySystem:
 
     @staticmethod
     def addNewBook(picture, name, author, description, category, price):
-        book = Book.Book(picture, name, author, description, category, price)
-        storageSystem.createNewBook(name)
-        book.setBookID(storageSystem.getBookID(name))
-        librarySystem.book_list.append(book)
-        history = AddBook.AddBook(1, name, author)
-        librarySystem.history_list.append(history)
-        return book
+        if not storageSystem.getBookID(name):
+            book = Book.Book(picture, name, author, description, category, price)
+            storageSystem.createNewBook(name)
+            book.setBookID(storageSystem.getBookID(name))
+            librarySystem.book_list.append(book)
+            history = AddBook.AddBook(1, name, author)
+            librarySystem.history_list.append(history)
+            return book
+        else:
+            return False
 
     @staticmethod
     def addNewEbook(picture, name, author, description, category, price):

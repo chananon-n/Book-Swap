@@ -625,6 +625,12 @@ class Add_book(QMainWindow):
     def save_and_go_main(self):
         countError = 0
         self.check_category()
+        # title = self.title_name.text()
+        # from storageSystem import storageSystem
+        # temp = storageSystem.checkName(title)
+        # if temp:
+        #     self.error()
+
         # if self.book_button.isChecked():
         #     title_name = self.title_name.text()
         #     self.pixmap = self.book_image.pixmap()
@@ -803,6 +809,34 @@ class Add_book(QMainWindow):
 
         else:
             self.suscessAddBook()
+
+    def error(self):
+        dialog = QDialog()
+        dialog.setWindowTitle("Error")
+        dialog.setWindowModality(Qt.ApplicationModal)
+        dialog.resize(300, 100)
+        label = QLabel("This book is already in the library")
+        label.setFont(QFont("Vesper Libre", 15))
+        label.setStyleSheet('''QLabel {
+                    color: rgb(132, 113, 77);
+                    }
+                    ''')
+        button = QPushButton("OK")
+        button.setFont(QFont("Vesper Libre", 15))
+        button.setStyleSheet('''
+                    QPushButton {
+                    border: 3px solid rgb(132, 113, 77);
+                    color: rgb(249, 246, 236);
+                    background-color: rgb(182, 170, 145);
+                    }
+                    ''')
+        button.clicked.connect(dialog.close)
+        v_layout = QVBoxLayout()
+        v_layout.addWidget(label)
+        v_layout.addWidget(button)
+        dialog.setLayout(v_layout)
+        dialog.exec()
+
 
     def suscessAddBook(self):
         dialog = QDialog()

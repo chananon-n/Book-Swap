@@ -75,7 +75,8 @@ class librarySystem:
 
     @staticmethod
     def addNewBook(picture, name, author, description, category, price):
-        if not storageSystem.getBookID(name):
+        temp = storageSystem.getBookID(name)
+        if not temp:
             book = Book.Book(picture, name, author, description, category, price)
             storageSystem.createNewBook(name)
             book.setBookID(storageSystem.getBookID(name))

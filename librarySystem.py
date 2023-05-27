@@ -20,12 +20,12 @@ class librarySystem:
     book_list = []
     __instance = None
     state = None
+    userID = None
 
     # constructor
     def __init__(self):
         # check if LibrarySystem is already created
         super().__init__()
-        self.userID = None
         if librarySystem.__instance is not None:
             raise Exception("This class is a singleton!")
         else:
@@ -68,6 +68,14 @@ class librarySystem:
         return False
 
     @staticmethod
+    def setUserID(userID):
+        librarySystem.userID = userID
+
+    @staticmethod
+    def getUserID():
+        return librarySystem.userID
+
+    @staticmethod
     def getUserName(user_id):
         from storageSystem import storageSystem
         return storageSystem.getUserName(user_id)
@@ -80,6 +88,10 @@ class librarySystem:
             bookId = storageSystem.createNewBook(name)
         except RuntimeError:
             bookId = storageSystem.createNewBook(name)
+        try:
+            storageSystem.createBookStatus(bookId, librarySystem.getUserID(), 1)
+        except RuntimeError:
+            storageSystem.createBookStatus(bookId, librarySystem.getUserID(), 1)
         book.setBookID(bookId)
         librarySystem.book_list.append(book)
         history = AddBook.AddBook(1, name, author)
@@ -209,12 +221,13 @@ class librarySystem:
         return True
 
     @staticmethod
-    def editEbook(e: eBook, name, author, description, category, price):
+    def editEbook(e: eBook, name, author, description, category, price, pdf):
         e.setName(name)
         e.setauthor(author)
         e.setdescription(description)
         e.eBook.setcategory(category)
         e.eBook.set_price(price)
+        e.eBook.set_pdf(pdf)
         return True
 
     @staticmethod

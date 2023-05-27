@@ -180,6 +180,7 @@ class Sign_in(QWidget):
                 background-color: rgb(182, 170, 145);
                 }
                 ''')
+                librarySystem.setUserID(int(text))
                 button.clicked.connect(dialog.close)
                 button.clicked.connect(self.mainMenu)
             else:

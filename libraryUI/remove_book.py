@@ -6,8 +6,9 @@ from librarySystem import *
 
 
 class Remove_Book(QMainWindow):
-    def __init__(self):
+    def __init__(self,b):
         super().__init__()
+        self.book = b
         self.URL = "Test.pdf"
         self.pixmap = None
         self.price = 0
@@ -519,6 +520,15 @@ class Remove_Book(QMainWindow):
     # Connect to Home Page not yet.
     def cancelGoBack(self):
         self.close()
+
+    def remove(self):
+        from librarySystem import librarySystem
+        librarySystem.book_list.remove(self.book)
+        try:
+            librarySystem.removeBookStatus(self.book.getBookID(),librarySystem.getUserID())
+        except RuntimeError:
+            librarySystem.removeBookStatus(self.book.getBookID(),librarySystem.getUserID())
+
 
     def check_category(self):
         oldGenre = [self.romanceButton, self.mysteryButton, self.fantasyAndScienceFictionButton,

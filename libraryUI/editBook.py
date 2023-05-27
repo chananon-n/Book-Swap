@@ -8,13 +8,14 @@ from PySide6.QtWidgets import QMainWindow, QLabel, QHBoxLayout, QWidget, QLineEd
     QDialog, QVBoxLayout, QScrollArea, QApplication
 from PySide6.QtCore import *
 
-from librarySystem import librarySystem
+
 from libraryUI.Sign_in import Sign_in
 
 
 class EditEbook(QMainWindow):
-    def __init__(self):
+    def __init__(self, e):
         super().__init__()
+        self.ebook = e
         self.URL = "Test.pdf"
         self.pixmap = None
         self.price = 0
@@ -464,7 +465,7 @@ class EditEbook(QMainWindow):
 
         self.submitButton.clicked.connect(self.submit)
 
-        self.cancelButton = QPushButton("Cancel")
+        self.cancelButton = QPushButton("Remove")
         self.cancelButton.setFont(QFont("Vesper Libre", 20))
         self.cancelButton.setStyleSheet('''
         QPushButton {
@@ -503,7 +504,7 @@ class EditEbook(QMainWindow):
         vLayout.addLayout(hLayout20)
         vLayout.addLayout(hLayout21)
         self.setLayout(vLayout)
-        self.cancelButton.clicked.connect(self.cancelGoBack)
+        self.cancelButton.clicked.connect(self.remove)
 
         scroll_area = QScrollArea()
         scroll_area.setWidgetResizable(True)
@@ -522,7 +523,10 @@ class EditEbook(QMainWindow):
         self.show()
 
     # Connect to Home Page not yet.
-    def cancelGoBack(self):
+    def remove(self):
+        from librarySystem import librarySystem
+        #remove ebook from ebook list
+        librarySystem.ebook_list.remove(self.ebook)
         self.close()
 
     def check_category(self):
@@ -558,6 +562,7 @@ class EditEbook(QMainWindow):
         # Save the dropped image to the project's images folder and create the folder if it doesn't exist
         title_name = self.title
         self.pixmap = self.image.pixmap()
+        from librarySystem import librarySystem
         if not librarySystem.save_images(self.pixmap, title_name):
             dialog = QDialog()
             dialog.setWindowTitle("Error")

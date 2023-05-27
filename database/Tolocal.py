@@ -59,4 +59,3 @@ def load_book_from_resource():
             # add ebook to book list
             book_list.append(ebook)
     return book_list
-

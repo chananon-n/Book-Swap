@@ -5,7 +5,6 @@ from PySide6.QtCore import Qt
 
 
 class Sign_up(QWidget):
-
     def __init__(self):
         super().__init__()
         # Get the absolute path of the current script
@@ -63,12 +62,41 @@ class Sign_up(QWidget):
         h_layout4.addWidget(button1)
         h_layout4.addSpacing(200)
 
+        al_ac = QLabel("Already have an account?")
+        al_ac.setFont(QFont("Vesper Libre", 13))
+        al_ac.setStyleSheet('''QLabel {
+                color: rgb(182, 170, 145);
+            }''')
+
+        button2 = QPushButton("Sign in")
+        button2.setFont(QFont("Vesper Libre", 13))
+        button2.setStyleSheet('''
+        QPushButton {
+                border: none;
+                color: rgb(132, 113, 77);
+                background-color: #F9F6EC;
+                text-decoration: underline;
+            }
+
+            QPushButton:hover {
+                background-color: transparent;
+            }
+        ''')
+        button2.clicked.connect(self.sign_in)
+
+        h_layout5 = QHBoxLayout()
+        h_layout5.addSpacing(330)
+        h_layout5.addWidget(al_ac)
+        h_layout5.addWidget(button2)
+        h_layout5.addSpacing(330)
+
         v_layout = QVBoxLayout()
         v_layout.addSpacing(30)
         v_layout.addLayout(h_layout1)
         v_layout.addLayout(h_layout2)
         v_layout.addLayout(h_layout3)
         v_layout.addLayout(h_layout4)
+        v_layout.addLayout(h_layout5)
         v_layout.addSpacing(50)
 
         self.setLayout(v_layout)
@@ -115,8 +143,7 @@ class Sign_up(QWidget):
             label.setStyleSheet('''QLabel {
             color: rgb(132, 113, 77);
             }
-            '''
-                                )
+            ''')
             from librarySystem import librarySystem
             user = QLabel("Your ID is " + f"{librarySystem.createUserID(store_name)}")
             user.setFont(QFont("Vesper Libre", 15))
@@ -152,4 +179,9 @@ class Sign_up(QWidget):
     def home(self):
         from librarySystem import librarySystem
         librarySystem.setState("Home")
+        self.close()
+
+    def sign_in(self):
+        from librarySystem import librarySystem
+        librarySystem.setState("Sign_in")
         self.close()

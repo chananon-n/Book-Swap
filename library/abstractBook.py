@@ -1,6 +1,5 @@
 # create an abstract class Book
 from abc import ABCMeta, abstractmethod
-from library import BookType
 
 
 class abstractBook(metaclass=ABCMeta):
@@ -37,7 +36,7 @@ class abstractBook(metaclass=ABCMeta):
         return self.category
 
     @abstractmethod
-    def setBookID(self,ID):
+    def setBookID(self, ID):
         self.ID = ID
 
     def set_picture(self, picture):
@@ -68,6 +67,3 @@ class abstractBook(metaclass=ABCMeta):
             "category": self.category,
             "price": self.price,
         }
-
-
-

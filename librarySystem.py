@@ -11,6 +11,7 @@ from libraryUI.Home import Home
 import libraryUI.Sign_in as Sign_in
 import libraryUI.Main_menu as Main_menu
 import libraryUI.Sign_up as Sign_up
+import libraryUI.Add_book as Add_book
 
 
 class librarySystem:
@@ -36,7 +37,6 @@ class librarySystem:
         librarySystem.state = "Home"
         librarySystem.__current = Home()
 
-
     @staticmethod
     def setState(state):
         librarySystem.state = state
@@ -53,86 +53,8 @@ class librarySystem:
         if librarySystem.state == "Main_menu":
             librarySystem.__current = Main_menu.Main_menu()
         if librarySystem.state == "Add_book":
-            window = libraryUI.Add_book.Add_book()
-            librarySystem.__current = window
-            window.show()
+            librarySystem.__current = Add_book.Add_book()
 
-    # def handleButtonClicked(self, button_name):
-    #     if button_name == "Sign_in":
-    #         # Navigate to the Sign_in panel
-    #         sign_in = Sign_in.Sign_in()
-    #         sign_in.signedIn.connect(self.handleSignUp)
-    #         self.__current.close()
-    #         self.__current = sign_in
-    #     elif button_name == "Sign_up":
-    #         # Navigate to the Sign_up panel
-    #         self.__current.close()
-    #         sign_up = Sign_up.Sign_up()
-    #         sign_up.signedUp.connect(self.handleSignUp)
-    #         self.__current = sign_up
-    #
-    # def handleSignUp(self):
-    #     self.__current.close()
-    #     self.__current = Main_menu.Main_menu()
-    #     self.__current.buttonClicked.connect(self.handleButtonClicked)
-    #     self.__current.show()
-    #
-    # def goToMainMenu(self, user_id):
-    #     self.userID = user_id
-    #     self.__current.close()
-    #     self.__current = Main_menu.Main_menu()
-    #     self.__current.buttonClicked.connect(self.handleButtonClicked)
-    #     self.__current.show()
-    #
-    # def goToHome(self):
-    #     self.__current.close()
-    #     self.__current = Home()
-    #     self.__current.buttonClicked.connect(self.handleButtonClicked)
-    #     self.__current.show()
-    #
-    # def goToSign_in(self):
-    #     self.__current.close()
-    #     self.__current = Sign_in.Sign_in()
-    #     self.__current.signedIn.connect(self.handleSignUp)
-    #     self.__current.show()
-    #
-    # def goToSign_up(self):
-    #     self.__current.close()
-    #     self.__current = Sign_up.Sign_up()
-    #     self.__current.signedUp.connect(self.handleSignUp)
-    #     self.__current.show()
-    #
-    # def goToAddBook(self):
-    #     self.__current.close()
-    #     self.__current = AddBook.AddBook()
-    #     self.__current.show()
-
-    # def handleButtonClicked(self, button_name):
-    #     if button_name == "Sign_in":
-    #         # Navigate to the Sign_in panel
-    #         sign_in = Sign_in.Sign_in()
-    #         sign_in.signedIn.connect(self.handleSignUp)  # Connect to the signedIn signal
-    #         self.__current.close()
-    #         self.__current = sign_in
-    #     elif button_name == "Sign_up":
-    #         # Navigate to the Sign_up panel
-    #         self.__current.close()
-    #         sign_up = Sign_up.Sign_up()
-    #         sign_up.signedUp.connect(self.handleSignUp)  # Connect to the signedUp signal
-    #         self.__current = sign_up
-
-    def handleSignUp(self):
-        self.__current.close()
-        self.__current = Home()
-        self.__current.buttonClicked.connect(self.handleButtonClicked)
-        self.__current.show()
-
-    def goToMainMenu(self, user_id):
-        self.__current.close()
-        self.userID = user_id
-        main_menu = Main_menu(self.userID)
-        main_menu.show()
-        self.__current = main_menu
 
     @staticmethod
     def get_instance():
@@ -300,11 +222,6 @@ class librarySystem:
         else:
             return False
 
-
-# librarySystem.book_list = librarySystem.getBookListFromLocal()
-# librarySystem.ebook_list = librarySystem.getEBookListFromLocal()
-# print(librarySystem.book_list)
-# print(librarySystem.ebook_list)
 
 if __name__ == "__main__":
     app = QApplication([])

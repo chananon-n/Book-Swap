@@ -1,4 +1,3 @@
-
 from PySide6.QtGui import QPixmap, QFont, QDragEnterEvent
 
 import sys
@@ -33,7 +32,7 @@ class EditEbook(QMainWindow):
         self.image.setMinimumSize(250, 250)
         self.image.setAlignment(Qt.AlignCenter)
         self.image.setStyleSheet("border: 2px dashed gray; color: gray;")
-        self.image.setText("Please drag and droup a book image here")
+        self.image.setText("Please drag and drop a book image here")
 
         layout = QHBoxLayout()
         layout.addWidget(self.image)
@@ -420,7 +419,6 @@ class EditEbook(QMainWindow):
         }
         ''')
 
-
         hLayout18 = QHBoxLayout()
         hLayout18.addSpacing(160)
         hLayout18.addWidget(price)
@@ -435,7 +433,6 @@ class EditEbook(QMainWindow):
         color: rgb(132, 113, 77);
         }
         ''')
-
 
         self.urlTextEdit = QTextEdit(self)
         self.urlTextEdit.setPlaceholderText(self.URL)
@@ -609,8 +606,6 @@ class EditEbook(QMainWindow):
             self.image.setStyleSheet("border: #F9F6EC;")
 
     # I don't understand about save URL or save and go next page
-
-
 
 
 if __name__ == '__main__':

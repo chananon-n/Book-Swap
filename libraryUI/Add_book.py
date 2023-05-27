@@ -2,12 +2,7 @@ from PySide6.QtGui import (QFont, QPixmap, QDragEnterEvent, )
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit,
                                QTextEdit, QCheckBox, QScrollArea, QMainWindow, QRadioButton,
                                QDialog)
-from PySide6.QtCore import *
-from librarySystem import librarySystem
-from libraryUI.Sign_in import Sign_in
-
-
-# use in main menu instead
+from PySide6.QtCore import Qt
 
 
 class Add_book(QMainWindow):
@@ -555,8 +550,8 @@ class Add_book(QMainWindow):
             else:
                 self.category.append("None")
 
-
     def check_booktype(self):
+        from librarySystem import librarySystem
         if self.book_button.isChecked():
             librarySystem.addNewBook(self.pixmap, self.title_name.text(), self.author_name.text(),
                                      self.description_name.toPlainText(), self.get_category(),
@@ -587,7 +582,8 @@ class Add_book(QMainWindow):
         # Save the dropped image to the project's images folder and create the folder if it doesn't exist
         title_name = self.title_name.text()
         self.pixmap = self.book_image.pixmap()
-        if not librarySystem.save_images(self.pixmap,title_name):
+        from librarySystem import librarySystem
+        if not librarySystem.save_images(self.pixmap, title_name):
             dialog = QDialog()
             dialog.setWindowTitle("Error")
             dialog.setWindowModality(Qt.ApplicationModal)
@@ -620,6 +616,7 @@ class Add_book(QMainWindow):
         if self.book_button.isChecked():
             title_name = self.title_name.text()
             self.pixmap = self.book_image.pixmap()
+            from librarySystem import librarySystem
             if librarySystem.save_images(self.pixmap, title_name):
                 self.check_category()
                 self.close()  # main menu
@@ -709,6 +706,7 @@ class Add_book(QMainWindow):
             if self.e_book_button.isChecked():
                 title_name = self.title_name.text()
                 self.pixmap = self.book_image.pixmap()
+                from librarySystem import librarySystem
                 if librarySystem.save_images(self.pixmap, title_name):
                     self.check_category()
                     self.close()  # menu

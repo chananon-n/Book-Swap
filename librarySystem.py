@@ -1,6 +1,8 @@
 import os
 import sys
 from PySide6.QtWidgets import QApplication
+
+import libraryUI.Add_book
 from storageSystem import storageSystem
 from library import Book
 from library import eBook
@@ -50,8 +52,10 @@ class librarySystem:
             librarySystem.__current = Sign_up.Sign_up()
         if librarySystem.state == "Main_menu":
             librarySystem.__current = Main_menu.Main_menu()
-        # if librarySystem.state == "Add_book":
-        #     librarySystem.__current = Add_Book.Add_Book()
+        if librarySystem.state == "Add_book":
+            window = libraryUI.Add_book.Add_book()
+            window.show()
+            librarySystem.__current = window
 
     # def handleButtonClicked(self, button_name):
     #     if button_name == "Sign_in":

@@ -1,12 +1,10 @@
 import os
 from PySide6.QtGui import (QFont, QPixmap)
 from PySide6.QtWidgets import (QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit, QDialog)
-
-from PySide6.QtCore import Qt, Signal
+from PySide6.QtCore import Qt
 
 
 class Sign_up(QWidget):
-
 
     def __init__(self):
         super().__init__()

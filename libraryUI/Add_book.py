@@ -1,20 +1,11 @@
-import os
-
-from PySide6.QtGui import (QFont, QPixmap, QDragEnterEvent)
-from PySide6.QtWidgets import *
-from PySide6.QtCore import *
-
-import libraryUI.Sign_in
-from libraryUI.Sign_in import \
-    Sign_in  # change to main menu by your self na non , left only import sign in and from and import
-from librarySystem import *
-
-
-# use in main menu instead
+from PySide6.QtGui import (QFont, QPixmap, QDragEnterEvent, )
+from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit,
+                               QTextEdit, QCheckBox, QScrollArea, QMainWindow, QRadioButton,
+                               QDialog)
+from PySide6.QtCore import Qt
 
 
 class Add_book(QMainWindow):
-
     def __init__(self):
         super().__init__()
         self.sign_in = None
@@ -477,7 +468,14 @@ class Add_book(QMainWindow):
         color: rgb(148, 132, 99);
         }
         ''')
-        self.add_button.clicked.connect(self.save_image)
+        self.add_button.clicked.connect(self.check_category)
+        # if self.e_book_button.isChecked():
+        #     title_name = self.title_name.text()
+        #     self.pixmap = self.book_image.pixmap()
+        #     if not librarySystem.save_images(self.pixmap, title_name):
+        #         self.add_button.clicked.connect(self.save_and_go_main)
+        #         print("HHHHH")
+
         self.cancel_button = QPushButton("Cancel")
         self.cancel_button.setFont(QFont("Vesper Libre", 20))
         self.cancel_button.setStyleSheet('''
@@ -535,7 +533,6 @@ class Add_book(QMainWindow):
         self.show()
 
     def cancel__goback(self):  # wait for main menu done then just import main menu page na
-        self.sign_in = Sign_in()
         self.close()
 
     def check_category(self):
@@ -554,6 +551,7 @@ class Add_book(QMainWindow):
                 self.category.append("None")
 
     def check_booktype(self):
+        from librarySystem import librarySystem
         if self.book_button.isChecked():
             librarySystem.addNewBook(self.pixmap, self.title_name.text(), self.author_name.text(),
                                      self.description_name.toPlainText(), self.get_category(),
@@ -565,7 +563,6 @@ class Add_book(QMainWindow):
         return self.book_type
 
     def get_category(self):
-        print(self.category)
         return self.category
 
     def dragEnterEvent(self, event: QDragEnterEvent):
@@ -585,6 +582,7 @@ class Add_book(QMainWindow):
         # Save the dropped image to the project's images folder and create the folder if it doesn't exist
         title_name = self.title_name.text()
         self.pixmap = self.book_image.pixmap()
+        from librarySystem import librarySystem
         if not librarySystem.save_images(self.pixmap, title_name):
             dialog = QDialog()
             dialog.setWindowTitle("Error")
@@ -618,6 +616,7 @@ class Add_book(QMainWindow):
         if self.book_button.isChecked():
             title_name = self.title_name.text()
             self.pixmap = self.book_image.pixmap()
+            from librarySystem import librarySystem
             if librarySystem.save_images(self.pixmap, title_name):
                 self.check_category()
                 self.close()  # main menu
@@ -699,7 +698,6 @@ class Add_book(QMainWindow):
                         }
                         ''')
             button.clicked.connect(dialog.close)
-            button.clicked.connect(self.addBooK.emit)
             v_layout = QVBoxLayout()
             v_layout.addWidget(label)
             v_layout.addWidget(button)
@@ -708,6 +706,7 @@ class Add_book(QMainWindow):
             if self.e_book_button.isChecked():
                 title_name = self.title_name.text()
                 self.pixmap = self.book_image.pixmap()
+                from librarySystem import librarySystem
                 if librarySystem.save_images(self.pixmap, title_name):
                     self.check_category()
                     self.close()  # menu

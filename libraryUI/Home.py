@@ -3,9 +3,11 @@ from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, Q
 from PySide6.QtCore import Signal
 import os
 
-import librarySystem
+
+
 
 class Home(QWidget):
+    buttonClicked = Signal(str)  # Custom signal for button clicks
 
     def __init__(self):
         super().__init__()
@@ -31,7 +33,8 @@ class Home(QWidget):
         }
         ''')
         signin_button.setFont(QFont("Vesper Libre", 25))
-        signin_button.clicked.connect(go_to_sign_in)
+        from librarySystem import librarySystem
+        signin_button.clicked.connect(self.signin)
 
         h_layout3 = QHBoxLayout()
         h_layout3.addSpacing(200)
@@ -47,8 +50,9 @@ class Home(QWidget):
                 background-color: rgb(182, 170, 145);
                 }
                 ''')
-        # sign up button connect to go_to_home function
-        signup_button.clicked.connect(go_to_sign_up)
+        from librarySystem import librarySystem
+        signup_button.clicked.connect(self.signup)
+
 
         h_layout4 = QHBoxLayout()
         h_layout4.addSpacing(200)
@@ -67,13 +71,19 @@ class Home(QWidget):
         self.setWindowTitle("Home")
         self.setGeometry(400, 200, 800, 500)
         self.show()
-def go_to_sign_up():
-    librarySystem.librarySystem.setState("Sign_up")
-    librarySystem.librarySystem.checkState()
 
-def go_to_sign_in():
-    librarySystem.librarySystem.setState("Sign_in")
-    librarySystem.librarySystem.checkState()
+
+
+    def signup(self):
+        from librarySystem import librarySystem
+        librarySystem.setState("Sign_up")
+        self.close()
+
+    def signin(self):
+        from librarySystem import librarySystem
+        librarySystem.setState("Sign_in")
+        self.close()
+
 
 if __name__ == "__main__":
     app = QApplication()

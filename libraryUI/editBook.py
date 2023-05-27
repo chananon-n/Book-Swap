@@ -1,13 +1,19 @@
+
+from PySide6.QtGui import QPixmap, QFont, QDragEnterEvent
+
+import sys
+
 from PySide6.QtGui import QPixmap, QFont
+
 from PySide6.QtWidgets import QMainWindow, QLabel, QHBoxLayout, QWidget, QLineEdit, QTextEdit, QCheckBox, QPushButton, \
-    QDialog, QVBoxLayout, QScrollArea, QRadioButton
+    QDialog, QVBoxLayout, QScrollArea, QApplication
 from PySide6.QtCore import *
 
-import BookCategory
-from librarySystem import *
+from librarySystem import librarySystem
+from libraryUI.Sign_in import Sign_in
 
 
-class Remove_Book(QMainWindow):
+class EditEbook(QMainWindow):
     def __init__(self):
         super().__init__()
         self.URL = "Test.pdf"
@@ -18,7 +24,6 @@ class Remove_Book(QMainWindow):
         self.author = "author"
         self.description = "description"
         self.category = ["Romance"]
-        self.status = "Available"
         self.image = QLabel()
         # replace path of your image at placeholder.png
         self.placeholder_image = QPixmap("placeholder.png")
@@ -415,6 +420,7 @@ class Remove_Book(QMainWindow):
         }
         ''')
 
+
         hLayout18 = QHBoxLayout()
         hLayout18.addSpacing(160)
         hLayout18.addWidget(price)
@@ -422,34 +428,33 @@ class Remove_Book(QMainWindow):
         hLayout18.addWidget(self.priceCost)
         hLayout18.addSpacing(160)
 
-        self.borrowButton = QRadioButton("Borrow")
-        self.borrowButton.setChecked(False)
-        self.borrowButton.setFont(QFont("Vesper Libre", 20))
-        self.borrowButton.setStyleSheet('''
-        QRadioButton {
+        url = QLabel("URL")
+        url.setFont(QFont("Vesper Libre", 25))
+        url.setStyleSheet('''
+        QLabel {
         color: rgb(132, 113, 77);
         }
         ''')
 
-        self.availableButton = QRadioButton("Available")
-        self.availableButton.setChecked(False)
-        self.availableButton.setFont(QFont("Vesper Libre", 20))
-        self.availableButton.setStyleSheet('''
-        QRadioButton {
+
+        self.urlTextEdit = QTextEdit(self)
+        self.urlTextEdit.setPlaceholderText(self.URL)
+        self.urlTextEdit.setFont(QFont("Vesper Libre", 20))
+        self.urlTextEdit.setStyleSheet('''
+        QTextEdit {
+        border: 3px solid rgb(132, 113, 77);
         color: rgb(132, 113, 77);
         }
         ''')
 
         hLayout19 = QHBoxLayout()
-        hLayout19.addSpacing(50)
-        hLayout19.addWidget(self.borrowButton)
-        hLayout19.addSpacing(25)
-        hLayout19.addWidget(self.availableButton)
+        hLayout19.addSpacing(20)
+        hLayout19.addWidget(url)
 
-        # hLayout20 = QHBoxLayout()
-        # hLayout20.addSpacing(20)
-        # hLayout20.addWidget(self.urlTextEdit)
-        # hLayout20.addSpacing(20)
+        hLayout20 = QHBoxLayout()
+        hLayout20.addSpacing(20)
+        hLayout20.addWidget(self.urlTextEdit)
+        hLayout20.addSpacing(20)
 
         self.submitButton = QPushButton("Submit")
         self.submitButton.setFont(QFont("Vesper Libre", 20))
@@ -471,12 +476,12 @@ class Remove_Book(QMainWindow):
         }
         ''')
 
-        hLayout20 = QHBoxLayout()
-        hLayout20.addSpacing(20)
-        hLayout20.addWidget(self.cancelButton)
-        hLayout20.addSpacing(300)
-        hLayout20.addWidget(self.submitButton)
-        hLayout20.addSpacing(20)
+        hLayout21 = QHBoxLayout()
+        hLayout21.addSpacing(20)
+        hLayout21.addWidget(self.cancelButton)
+        hLayout21.addSpacing(300)
+        hLayout21.addWidget(self.submitButton)
+        hLayout21.addSpacing(20)
 
         vLayout = QVBoxLayout()
         vLayout.addLayout(hLayout1)
@@ -499,6 +504,7 @@ class Remove_Book(QMainWindow):
         vLayout.addLayout(hLayout18)
         vLayout.addLayout(hLayout19)
         vLayout.addLayout(hLayout20)
+        vLayout.addLayout(hLayout21)
         self.setLayout(vLayout)
         self.cancelButton.clicked.connect(self.cancelGoBack)
 
@@ -586,20 +592,28 @@ class Remove_Book(QMainWindow):
             self.save_category()
             pass
 
-    def checkStatus(self):
-        if self.borrowButton.isChecked():
-            self.status = "Borrowed"
-        if self.availableButton.isChecked():
-            self.status = "Available"
-        return self.status
-
     def getCategory(self):
         return self.category
+
+    def dragEnterEvent(self, event: QDragEnterEvent):
+        if event.mimeData().hasUrls() and event.mimeData().urls()[0].toString().endswith(".png"):
+            event.acceptProposedAction()
+
+    def dropEvent(self, event):
+        url = event.mimeData().urls()[0]
+        file_path = url.toLocalFile()
+        if file_path.endswith('.png'):
+            self.pixmap = QPixmap(file_path)
+            self.image.setPixmap(self.pixmap)
+            self.image.setScaledContents(True)
+            self.image.setStyleSheet("border: #F9F6EC;")
+
+    # I don't understand about save URL or save and go next page
 
 
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ui = Remove_Book()
+    ui = EditEbook()
     app.exec()

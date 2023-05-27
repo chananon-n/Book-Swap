@@ -1,14 +1,7 @@
 import os
 from PySide6.QtGui import (QFont, QPixmap)
 from PySide6.QtWidgets import (QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit, QDialog)
-
-from PySide6.QtCore import Qt, Signal
-
-import librarySystem
-from librarySystem import *
-
-from librarySystem import *
-from storageSystem import storageSystem
+from PySide6.QtCore import Qt
 
 
 class Sign_up(QWidget):
@@ -124,7 +117,8 @@ class Sign_up(QWidget):
             }
             '''
                                 )
-            user = QLabel("Your ID is " + f"{librarySystem.librarySystem.createUserID(store_name)}")
+            from librarySystem import librarySystem
+            user = QLabel("Your ID is " + f"{librarySystem.createUserID(store_name)}")
             user.setFont(QFont("Vesper Libre", 15))
             user.setStyleSheet('''QLabel {
                         color: rgb(132, 113, 77);
@@ -146,7 +140,7 @@ class Sign_up(QWidget):
             }
             ''')
             button.clicked.connect(dialog.close)
-            button.clicked.connect(go_to_home)
+            button.clicked.connect(self.home)
             v_layout = QVBoxLayout()
             v_layout.addWidget(label)
             v_layout.addWidget(user)
@@ -155,6 +149,7 @@ class Sign_up(QWidget):
             dialog.setLayout(v_layout)
         dialog.exec()
 
-def go_to_home():
-    librarySystem.librarySystem.setState("Home")
-    librarySystem.librarySystem.checkState()
+    def home(self):
+        from librarySystem import librarySystem
+        librarySystem.setState("Home")
+        self.close()

@@ -1,3 +1,5 @@
+import asyncio
+
 from tortoise import run_async
 import CustomExeptionalHandler as CEH
 
@@ -10,8 +12,19 @@ from library.eBook import eBook
 
 
 class storageSystem:
+    # singleton
+    __instance = None
+
+    # constructor
     def __init__(self):
-        pass
+        # check if LibrarySystem is already created
+        super().__init__()
+        self.userID = None
+        if storageSystem.__instance is not None:
+            raise Exception("This class is a singleton!")
+        else:
+            storageSystem.__instance = self
+            self.__current = None
 
     @staticmethod
     def createNewUser(name):
@@ -153,8 +166,6 @@ class storageSystem:
         Tolocal.save_book_to_resource(books)
         return True
 
-
-# print(storageSystem.checkUserID(6))
-# run_async(init())
-# a = asyncio.run(check_id(659))
-# print(a)
+# print(storageSystem.checkUserID(12345678))
+# print(Tolocal.load_book_from_resource())
+# print(storageSystem.getBooksFromLocal())

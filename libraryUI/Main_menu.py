@@ -1,8 +1,6 @@
-from PySide6.QtCore import Signal
 from PySide6.QtGui import *
 from PySide6.QtWidgets import *
-import librarySystem
-from librarySystem import *
+
 
 class Main_menu(QMainWindow):
     def __init__(self):
@@ -77,9 +75,6 @@ class Main_menu(QMainWindow):
             QCheckBox {
                 color: rgb(132, 113, 77);
             }
-            QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
         ''')
 
         self.mysteryCheck_book = QCheckBox("Mystery")
@@ -89,9 +84,6 @@ class Main_menu(QMainWindow):
             QCheckBox {
                 color: rgb(132, 113, 77);
                 }
-                QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
             ''')
 
         self.fantasyAndScienceFictionCheck_book = QCheckBox("Fantasy and Science Fiction")
@@ -101,9 +93,6 @@ class Main_menu(QMainWindow):
             QCheckBox {
                 color: rgb(132, 113, 77);
                 }
-                QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
             ''')
 
         self.thrillersHorrorCheck_book = QCheckBox("Thrillers and Horror")
@@ -113,9 +102,6 @@ class Main_menu(QMainWindow):
             QCheckBox {
                 color: rgb(132, 113, 77);
                 }
-                QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
             ''')
 
         self.youngAdultCheck_book = QCheckBox("Young Adult")
@@ -125,9 +111,6 @@ class Main_menu(QMainWindow):
             QCheckBox {
                 color: rgb(132, 113, 77);
                 }
-                QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
             ''')
 
         self.childrenFictionCheck_book = QCheckBox("Children Fiction")
@@ -137,9 +120,6 @@ class Main_menu(QMainWindow):
             QCheckBox {
                 color: rgb(132, 113, 77);
                 }
-                QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
             ''')
 
         self.inspirationalReligiousCheck_book = QCheckBox("Inspirational and Religious")
@@ -148,9 +128,6 @@ class Main_menu(QMainWindow):
         self.inspirationalReligiousCheck_book.setStyleSheet('''
                     QCheckBox {
                         color: rgb(132, 113, 77);
-                    }
-                    QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
                     }
                 ''')
 
@@ -161,9 +138,6 @@ class Main_menu(QMainWindow):
                     QCheckBox {
                         color: rgb(132, 113, 77);
                     }
-                    QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
                 ''')
         self.actionAndAdventureCheck_book = QCheckBox("Action and Adventure")
         self.actionAndAdventureCheck_book.setChecked(False)
@@ -171,9 +145,6 @@ class Main_menu(QMainWindow):
         self.actionAndAdventureCheck_book.setStyleSheet('''
                     QCheckBox {
                         color: rgb(132, 113, 77);
-                    }
-                    QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
                     }
                 ''')
 
@@ -184,9 +155,6 @@ class Main_menu(QMainWindow):
                     QCheckBox {
                         color: rgb(132, 113, 77);
                     }
-                    QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
                 ''')
 
         self.comicBookCheck_book = QCheckBox("Comic Book")
@@ -195,9 +163,6 @@ class Main_menu(QMainWindow):
         self.comicBookCheck_book.setStyleSheet('''
                     QCheckBox {
                         color: rgb(132, 113, 77);
-                    }
-                    QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
                     }
                 ''')
 
@@ -208,9 +173,6 @@ class Main_menu(QMainWindow):
                     QCheckBox {
                         color: rgb(132, 113, 77);
                     }
-                    QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
                 ''')
 
         self.literaryCheck_book = QCheckBox("Literary")
@@ -219,9 +181,6 @@ class Main_menu(QMainWindow):
         self.literaryCheck_book.setStyleSheet('''
                     QCheckBox {
                         color: rgb(132, 113, 77);
-                    }
-                    QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
                     }
                 ''')
 
@@ -232,9 +191,6 @@ class Main_menu(QMainWindow):
                     QCheckBox {
                         color: rgb(132, 113, 77);
                     }
-                    QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
                 ''')
 
         self.shortStoryCheck_book = QCheckBox("Short Story")
@@ -243,9 +199,6 @@ class Main_menu(QMainWindow):
         self.shortStoryCheck_book.setStyleSheet('''
                     QCheckBox {
                         color: rgb(132, 113, 77);
-                    }
-                    QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
                     }
                 ''')
 
@@ -256,9 +209,6 @@ class Main_menu(QMainWindow):
                     QCheckBox {
                         color: rgb(132, 113, 77);
                     }
-                    QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
                 ''')
 
         self.womensFictionCheck_book = QCheckBox("Women's Fiction")
@@ -268,9 +218,6 @@ class Main_menu(QMainWindow):
                     QCheckBox {
                         color: rgb(132, 113, 77);
                     }
-                    QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
                 ''')
         self.cookBookCheck_book = QCheckBox("Cook Book")
         self.cookBookCheck_book.setChecked(False)
@@ -278,9 +225,6 @@ class Main_menu(QMainWindow):
         self.cookBookCheck_book.setStyleSheet('''
                     QCheckBox {
                         color: rgb(132, 113, 77);
-                    }
-                    QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
                     }
                 ''')
 
@@ -291,9 +235,6 @@ class Main_menu(QMainWindow):
                     QCheckBox {
                         color: rgb(132, 113, 77);
                     }
-                    QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
                 ''')
 
         self.memoirCheck_book = QCheckBox("Memoir")
@@ -302,9 +243,6 @@ class Main_menu(QMainWindow):
         self.memoirCheck_book.setStyleSheet('''
                     QCheckBox {
                         color: rgb(132, 113, 77);
-                    }
-                    QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
                     }
                 ''')
 
@@ -315,9 +253,6 @@ class Main_menu(QMainWindow):
                     QCheckBox {
                         color: rgb(132, 113, 77);
                     }
-                    QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
                 ''')
 
         self.trueCrimeCheck_book = QCheckBox("True Crime")
@@ -326,9 +261,6 @@ class Main_menu(QMainWindow):
         self.trueCrimeCheck_book.setStyleSheet('''
                     QCheckBox {
                         color: rgb(132, 113, 77);
-                    }
-                    QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
                     }
                 ''')
 
@@ -477,10 +409,8 @@ class Main_menu(QMainWindow):
                     QCheckBox {
                         color: rgb(132, 113, 77);
                     }
-                    QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
                 ''')
+
         self.mysteryCheck_e_book = QCheckBox("Mystery")
         self.mysteryCheck_e_book.setChecked(False)
         self.mysteryCheck_e_book.setFont(QFont("Vesper Libre", 16))
@@ -488,9 +418,6 @@ class Main_menu(QMainWindow):
                     QCheckBox {
                         color: rgb(132, 113, 77);
                         }
-                    QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
                     ''')
 
         self.fantasyAndScienceFictionCheck_e_book = QCheckBox("Fantasy and Science Fiction")
@@ -500,9 +427,6 @@ class Main_menu(QMainWindow):
                     QCheckBox {
                         color: rgb(132, 113, 77);
                         }
-                    QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
                     ''')
 
         self.thrillersHorrorCheck_e_book = QCheckBox("Thrillers and Horror")
@@ -512,9 +436,6 @@ class Main_menu(QMainWindow):
                     QCheckBox {
                         color: rgb(132, 113, 77);
                         }
-                    QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
                     ''')
 
         self.youngAdultCheck_e_book = QCheckBox("Young Adult")
@@ -524,9 +445,6 @@ class Main_menu(QMainWindow):
                     QCheckBox {
                         color: rgb(132, 113, 77);
                         }
-                    QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
                     ''')
 
         self.childrenFictionCheck_e_book = QCheckBox("Children Fiction")
@@ -536,9 +454,6 @@ class Main_menu(QMainWindow):
                     QCheckBox {
                         color: rgb(132, 113, 77);
                         }
-                    QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
                     ''')
 
         self.inspirationalReligiousCheck_e_book = QCheckBox("Inspirational and Religious")
@@ -548,9 +463,6 @@ class Main_menu(QMainWindow):
                             QCheckBox {
                                 color: rgb(132, 113, 77);
                             }
-                        QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
                         ''')
 
         self.biographyAndAutobiographyCheck_e_book = QCheckBox("Biography and Autobiography")
@@ -560,9 +472,6 @@ class Main_menu(QMainWindow):
                             QCheckBox {
                                 color: rgb(132, 113, 77);
                             }
-                        QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
                         ''')
         self.actionAndAdventureCheck_e_book = QCheckBox("Action and Adventure")
         self.actionAndAdventureCheck_e_book.setChecked(False)
@@ -571,9 +480,6 @@ class Main_menu(QMainWindow):
                             QCheckBox {
                                 color: rgb(132, 113, 77);
                             }
-                        QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
                         ''')
 
         self.classicCheck_e_book = QCheckBox("Classic")
@@ -583,9 +489,6 @@ class Main_menu(QMainWindow):
                             QCheckBox {
                                 color: rgb(132, 113, 77);
                             }
-                            QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
                         ''')
 
         self.comicBookCheck_e_book = QCheckBox("Comic Book")
@@ -595,9 +498,6 @@ class Main_menu(QMainWindow):
                             QCheckBox {
                                 color: rgb(132, 113, 77);
                             }
-                            QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
                         ''')
 
         self.historicalFictionCheck_e_book = QCheckBox("Historical Fiction")
@@ -607,9 +507,6 @@ class Main_menu(QMainWindow):
                             QCheckBox {
                                 color: rgb(132, 113, 77);
                             }
-                            QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
                         ''')
 
         self.literaryCheck_e_book = QCheckBox("Literary")
@@ -619,9 +516,6 @@ class Main_menu(QMainWindow):
                             QCheckBox {
                                 color: rgb(132, 113, 77);
                             }
-                            QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
                         ''')
 
         self.scienceFiction_e_book = QCheckBox("Science Fiction")
@@ -631,9 +525,6 @@ class Main_menu(QMainWindow):
                             QCheckBox {
                                 color: rgb(132, 113, 77);
                             }
-                            QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
                         ''')
 
         self.shortStoryCheck_e_book = QCheckBox("Short Story")
@@ -643,9 +534,6 @@ class Main_menu(QMainWindow):
                             QCheckBox {
                                 color: rgb(132, 113, 77);
                             }
-                            QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
                         ''')
 
         self.suspenseAndThrillerCheck_e_book = QCheckBox("Suspense and Thriller")
@@ -655,9 +543,6 @@ class Main_menu(QMainWindow):
                             QCheckBox {
                                 color: rgb(132, 113, 77);
                             }
-                            QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
                         ''')
 
         self.womensFictionCheck_e_book = QCheckBox("Women's Fiction")
@@ -667,9 +552,6 @@ class Main_menu(QMainWindow):
                             QCheckBox {
                                 color: rgb(132, 113, 77);
                             }
-                            QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
                         ''')
         self.cookBookCheck_e_book = QCheckBox("Cook Book")
         self.cookBookCheck_e_book.setChecked(False)
@@ -678,9 +560,6 @@ class Main_menu(QMainWindow):
                             QCheckBox {
                                 color: rgb(132, 113, 77);
                             }
-                            QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
                         ''')
 
         self.essayCheck_e_book = QCheckBox("Essay")
@@ -690,9 +569,6 @@ class Main_menu(QMainWindow):
                             QCheckBox {
                                 color: rgb(132, 113, 77);
                             }
-                            QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
                         ''')
 
         self.memoirCheck_e_book = QCheckBox("Memoir")
@@ -702,9 +578,6 @@ class Main_menu(QMainWindow):
                             QCheckBox {
                                 color: rgb(132, 113, 77);
                             }
-                            QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
                         ''')
 
         self.poetryCheck_e_book = QCheckBox("Poetry")
@@ -714,9 +587,6 @@ class Main_menu(QMainWindow):
                             QCheckBox {
                                 color: rgb(132, 113, 77);
                             }
-                            QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
                         ''')
 
         self.trueCrimeCheck_e_book = QCheckBox("True Crime")
@@ -726,9 +596,6 @@ class Main_menu(QMainWindow):
                             QCheckBox {
                                 color: rgb(132, 113, 77);
                             }
-                            QCheckBox::indicator:checked {
-                        border: 2px solid blue;  /* Replace "blue" with your desired color */
-                    }
                         ''')
 
         self.e_bookFilterLayout1 = QHBoxLayout()
@@ -838,17 +705,16 @@ class Main_menu(QMainWindow):
         # Add the scroll area to the tab_widget
         tab_widget.insertTab(1, scroll_area, "E-Book")
 
-        #set the history can scroll after this line (seems to be done)
-        history = librarySystem.librarySystem.getHistoryList()
-        # i=0
-        # for j in
-        history_count = len(history)
-        v_layout_history = QVBoxLayout(history_tab)
-        for i in range(history_count):
-            v_layout_history.addSpacing(10)
-            v_layout_history.addWidget(QLabel(history[i]))
-            v_layout_history.addSpacing(10)
-        history_tab.setLayout(v_layout_history)
+        #set the history can scroll after this line
+        # history = librarySystem.getHistory(12345678)
+        # history_count = len(history)
+        # v_layout_history = QVBoxLayout(history_tab)
+        # for i in range(history_count):
+        #     v_layout_history.addSpacing(10)
+        #     v_layout_history.addWidget(QLabel(history[i]))
+        #     v_layout_history.addSpacing(10)
+        # history_tab.setLayout(v_layout_history)
+
 
         tab_widget.setCurrentIndex(0)
 
@@ -862,8 +728,6 @@ class Main_menu(QMainWindow):
                 background-color: rgb(182, 170, 145);
             }
         ''')
-        self.add_button.clicked.connect(go_to_add_book)
-
         h_layout_add = QHBoxLayout()
         h_layout_add.addSpacing(700)
         h_layout_add.addWidget(self.add_button)
@@ -881,15 +745,18 @@ class Main_menu(QMainWindow):
         self.show()
 
         tab_widget.currentChanged.connect(self.on_tab_changed)
+        self.add_button.clicked.connect(self.add)
 
     def on_tab_changed(self, index):
         if index == 2:  # History tab index is 2
             self.add_button.hide()
         else:
             self.add_button.show()
-def go_to_add_book():
-    librarySystem.librarySystem.setState("Add_Book")
-    librarySystem.librarySystem.checkState()
+
+    def add(self):
+        from librarySystem import librarySystem
+        librarySystem.setState("Add_book")
+
 
 if __name__ == "__main__":
     app = QApplication([])

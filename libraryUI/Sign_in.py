@@ -1,13 +1,11 @@
 from PySide6.QtGui import (QFont, QPixmap)
-from PySide6.QtWidgets import (QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit, QDialog)
-from PySide6.QtCore import Qt, Signal
+from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit, QDialog)
+from PySide6.QtCore import Qt
 import os
-
-import librarySystem
-from librarySystem import *
 
 
 class Sign_in(QWidget):
+
     def __init__(self):
         super().__init__()
         # Get the absolute path of the current script
@@ -131,6 +129,7 @@ class Sign_in(QWidget):
             ''')
             button.clicked.connect(dialog.close)
         else:
+            from librarySystem import librarySystem
             checkValidation = librarySystem.CheckUserID(int(text))
             if checkValidation:
                 dialog.setWindowTitle("Success")
@@ -152,9 +151,8 @@ class Sign_in(QWidget):
                 background-color: rgb(182, 170, 145);
                 }
                 ''')
-                librarySystem.setUserID(int(text))
                 button.clicked.connect(dialog.close)
-                button.clicked.connect(go_to_main)
+                button.clicked.connect(self.mainMenu)
             else:
                 dialog.setWindowTitle("Error")
                 dialog.setWindowModality(Qt.ApplicationModal)
@@ -182,10 +180,12 @@ class Sign_in(QWidget):
         dialog.setLayout(v_layout)
         dialog.exec()
 
-def go_to_main():
-    librarySystem.librarySystem.setState("Main_Menu")
-    librarySystem.librarySystem.checkState()
 
+
+    def mainMenu(self):
+        from librarySystem import librarySystem
+        librarySystem.setState("Main_menu")
+        self.close()
 
 if __name__ == "__main__":
     app = QApplication()

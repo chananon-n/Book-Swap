@@ -3,7 +3,6 @@ import sys
 from PySide6.QtWidgets import QApplication
 
 import libraryUI.Add_book
-from storageSystem import storageSystem
 from library import Book
 from library import eBook
 from library import AddBook
@@ -16,9 +15,9 @@ import libraryUI.Add_book as Add_book
 
 class librarySystem:
     # singleton
-    book_list = []
     history_list = []
     ebook_list = []
+    book_list = []
     __instance = None
     state = None
 
@@ -62,6 +61,7 @@ class librarySystem:
 
     @staticmethod
     def CheckUserID(userID):
+        from storageSystem import storageSystem
         if storageSystem.checkUserID(userID):
             librarySystem.__userID = userID
             return True
@@ -69,11 +69,13 @@ class librarySystem:
 
     @staticmethod
     def getUserName(user_id):
+        from storageSystem import storageSystem
         return storageSystem.getUserName(user_id)
 
     @staticmethod
     def addNewBook(picture, name, author, description, category, price):
         book = Book.Book(picture, name, author, description, category, price)
+        from storageSystem import storageSystem
         print("1")
         try:
             bookId = storageSystem.createNewBook(name)
@@ -120,11 +122,13 @@ class librarySystem:
 
     @staticmethod
     def createUserID(name):
+        from storageSystem import storageSystem
         return storageSystem.createNewUser(name)
 
     @staticmethod
     def filterCategory(category):
         bookList = []
+        from storageSystem import storageSystem
         allBook = storageSystem.getAllBooks(librarySystem.__instance.userID)
         for book in allBook:
             if (book.get_category() == category) and (book not in bookList):
@@ -133,36 +137,44 @@ class librarySystem:
 
     @staticmethod
     def createBookStatus(bookID, userID, status):
+        from storageSystem import storageSystem
         storageSystem.createBookStatus(bookID, userID, status)
         return True
 
     @staticmethod
     def getBookStatus(bookID, userID):
+        from storageSystem import storageSystem
         return storageSystem.getBookStatus(bookID, userID)
 
     @staticmethod
     def removeBookStatus(bookID, userID):
+        from storageSystem import storageSystem
         storageSystem.removeBookStatus(bookID, userID)
         return True
 
     @staticmethod
     def getBookAvailable(userID):
+        from storageSystem import storageSystem
         return storageSystem.getAvailableBooks(userID)
 
     @staticmethod
     def getBorrowList(userID):
+        from storageSystem import storageSystem
         return storageSystem.getBorrowedBooks(userID)
 
     @staticmethod
     def getBookListFromDB(userID):
+        from storageSystem import storageSystem
         return storageSystem.getAllBooks(userID)
 
     @staticmethod
     def getEBookListFromLocal():
+        from storageSystem import storageSystem
         return storageSystem.getEBooksFromLocal()
 
     @staticmethod
     def getBookListFromLocal():
+        from storageSystem import storageSystem
         return storageSystem.getBooksFromLocal()
 
     @staticmethod
@@ -175,10 +187,12 @@ class librarySystem:
 
     @staticmethod
     def checkStatus(bookID, userID, status):
+        from storageSystem import storageSystem
         return storageSystem.checkStatusWithLocal(bookID, userID, status)
 
     @staticmethod
     def editBook(b: Book, bookID, name, author, description, category, price):
+        from storageSystem import storageSystem
         storageSystem.editBookName(bookID, name)
         b.setName(name)
         b.setauthor(author)
@@ -189,6 +203,7 @@ class librarySystem:
 
     @staticmethod
     def removeBook(b: Book, bookID, userID):
+        from storageSystem import storageSystem
         storageSystem.removeBookStatus(bookID, userID)
         b.deleteBook()
         return True
@@ -208,12 +223,14 @@ class librarySystem:
         e.eBook.set_price(price)
         return True
 
-    def finishAndSave(self):
-        book = self.getBookListFromDB(self.userID)
-        bookLocal = self.getBookListFromLocal()
-        if book == bookLocal:
-            return storageSystem.saveToLocal(self.book)
-        return False
+    @staticmethod
+    def finishAndSave():
+        from storageSystem import storageSystem
+        for i in librarySystem.book_list:
+            storageSystem.saveToLocal(i)
+        for j in librarySystem.ebook_list:
+            storageSystem.saveToLocal(j)
+        return True
 
     @staticmethod
     def save_images(pixmap, title_name):

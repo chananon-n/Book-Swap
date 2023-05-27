@@ -622,103 +622,63 @@ class Add_book(QMainWindow):
         if self.e_book_button.isChecked():
             self.checkURL()
 
-    def save_and_go_main(self):
+    def url_holder(self):
+        dialog = QDialog()
+        dialog.setWindowTitle("URL link:")
+        dialog.setWindowModality(Qt.ApplicationModal)
+        dialog.resize(300, 100)
+        label = QLabel("URL link:")
+        label.setFont(QFont("Vesper Libre", 15))
+        label.setStyleSheet('''QLabel {
+                                 color: rgb(132, 113, 77);
+                                 }
+                                 ''')
+        self.Url = QLineEdit()
+        self.Url.setFont(QFont("Vesper Libre", 15))
+        self.Url.setStyleSheet('''QLineEdit {
+                                 border: 3px solid rgb(132, 113, 77);
+                                 color: rgb(249, 246, 236);
+                                 background-color: rgb(182, 170, 145);
+                                 }
+                                 ''')
+        h_layout = QHBoxLayout()
+        h_layout.addWidget(label)
+        h_layout.addWidget(self.Url)
+        ok_button = QPushButton("OK")
+        ok_button.setFont(QFont("Vesper Libre", 15))
+        ok_button.setStyleSheet('''
+                                 QPushButton {
+                                 border: 3px solid rgb(132, 113, 77);
+                                 color: rgb(249, 246, 236);
+                                  background-color: rgb(182, 170, 145);
+                                 }
+                                 ''')
+        ok_button.clicked.connect(dialog.close)  # Connect the clicked signal to the process_url function
+        ok_button.clicked.connect(self.process_url)  # Connect the clicked signal to the process_url function
+
+        cancel_button = QPushButton("Cancel")
+        cancel_button.setFont(QFont("Vesper Libre", 15))
+        cancel_button.setStyleSheet('''
+                                        QPushButton {
+                                        border: 3px solid rgb(132, 113, 77);
+                                        color: rgb(249, 246, 236);
+                                        background-color: rgb(182, 170, 145);
+                                        }
+                                        ''')
+        cancel_button.clicked.connect(dialog.close)
+        h_layout2 = QHBoxLayout()
+        h_layout2.addWidget(cancel_button)
+        h_layout2.addWidget(ok_button)
+        v_layout = QVBoxLayout()
+        v_layout.addLayout(h_layout)
+        v_layout.addLayout(h_layout2)
+        dialog.setLayout(v_layout)
+        dialog.exec()
+
+    def save_and_go_main(self): # check error and save
         countError = 0
         self.check_category()
-        # title = self.title_name.text()
-        # from storageSystem import storageSystem
-        # temp = storageSystem.checkName(title)
-        # if temp:
-        #     self.error()
 
-        # if self.book_button.isChecked():
-        #     title_name = self.title_name.text()
-        #     self.pixmap = self.book_image.pixmap()
-        #     from librarySystem import librarySystem
-        #     if librarySystem.save_images(self.pixmap, title_name):
-        #         self.check_category()
-        #         self.close()  # main menu
-        #
-        # if self.e_book_button.isChecked():
-        #     dialog = QDialog()
-        #     dialog.setWindowTitle("URL link:")
-        #     dialog.setWindowModality(Qt.ApplicationModal)
-        #     dialog.resize(300, 100)
-        #     label = QLabel("URL link:")
-        #     label.setFont(QFont("Vesper Libre", 15))
-        #     label.setStyleSheet('''QLabel {
-        #                              color: rgb(132, 113, 77);
-        #                              }
-        #                              ''')
-        #     self.Url = QLineEdit()
-        #     self.Url.setFont(QFont("Vesper Libre", 15))
-        #     self.Url.setStyleSheet('''QLineEdit {
-        #                              border: 3px solid rgb(132, 113, 77);
-        #                              color: rgb(249, 246, 236);
-        #                              background-color: rgb(182, 170, 145);
-        #                              }
-        #                              ''')
-        #     h_layout = QHBoxLayout()
-        #     h_layout.addWidget(label)
-        #     h_layout.addWidget(self.Url)
-        #     ok_button = QPushButton("OK")
-        #     ok_button.setFont(QFont("Vesper Libre", 15))
-        #     ok_button.setStyleSheet('''
-        #                              QPushButton {
-        #                              border: 3px solid rgb(132, 113, 77);
-        #                              color: rgb(249, 246, 236);
-        #                               background-color: rgb(182, 170, 145);
-        #                              }
-        #                              ''')
-        #     ok_button.clicked.connect(dialog.close)  # Connect the clicked signal to the process_url function
-        #     ok_button.clicked.connect(self.process_url)  # Connect the clicked signal to the process_url function
-        #
-        #     cancel_button = QPushButton("Cancel")
-        #     cancel_button.setFont(QFont("Vesper Libre", 15))
-        #     cancel_button.setStyleSheet('''
-        #                                     QPushButton {
-        #                                     border: 3px solid rgb(132, 113, 77);
-        #                                     color: rgb(249, 246, 236);
-        #                                     background-color: rgb(182, 170, 145);
-        #                                     }
-        #                                     ''')
-        #     cancel_button.clicked.connect(dialog.close)
-        #     h_layout2 = QHBoxLayout()
-        #     h_layout2.addWidget(cancel_button)
-        #     h_layout2.addWidget(ok_button)
-        #     v_layout = QVBoxLayout()
-        #     v_layout.addLayout(h_layout)
-        #     v_layout.addLayout(h_layout2)
-        #     dialog.setLayout(v_layout)
-        #     dialog.exec()
-        #
-        # else:
-        #     # Case user doesn't choose any type of book
-        #     dialog = QDialog()
-        #     dialog.setWindowTitle("Error")
-        #     dialog.setWindowModality(Qt.ApplicationModal)
-        #     dialog.resize(300, 100)
-        #     label = QLabel("Please choose the type of book")
-        #     label.setFont(QFont("Vesper Libre", 15))
-        #     label.setStyleSheet('''QLabel {
-        #                 color: rgb(132, 113, 77);
-        #                 }
-        #                 ''')
-        #     button = QPushButton("OK")
-        #     button.setFont(QFont("Vesper Libre", 15))
-        #     button.setStyleSheet('''
-        #                 QPushButton {
-        #                 border: 3px solid rgb(132, 113, 77);
-        #                 color: rgb(249, 246, 236);
-        #                 background-color: rgb(182, 170, 145);
-        #                 }
-        #                 ''')
-        #     button.clicked.connect(dialog.close)
-        #     v_layout = QVBoxLayout()
-        #     v_layout.addWidget(label)
-        #     v_layout.addWidget(button)
-        #     dialog.setLayout(v_layout)
-        #     dialog.exec()
         authorInput = self.author_name.text()
         # If user don't input author name
         if self.checkInputError(authorInput, "Enter the author"):
@@ -789,11 +749,14 @@ class Add_book(QMainWindow):
             dialog.exec()
 
         else:
-            self.save_image()
-            title_name = self.title_name.text()
-            from librarySystem import librarySystem
-            if librarySystem.save_images(self.pixmap, title_name):
-                self.suscessAddBook()
+            if self.book_button.isChecked():
+                self.save_image()
+                title_name = self.title_name.text()
+                from librarySystem import librarySystem
+                if title_name and self.pixmap:
+                    self.suscessAddBook()
+            elif self.e_book_button.isChecked():
+                self.url_holder()
 
     def error(self):
         dialog = QDialog()
@@ -885,18 +848,13 @@ class Add_book(QMainWindow):
                         ''')
             button.clicked.connect(dialog.close)
             button.clicked.connect(self.back_to_main)
+            button.clicked.connect(self.createObject)
+            button.clicked.connect(self.save_image)
             v_layout = QVBoxLayout()
             v_layout.addWidget(label)
             v_layout.addWidget(button)
             dialog.setLayout(v_layout)
             dialog.exec()
-            if self.e_book_button.isChecked():
-                title_name = self.title_name.text()
-                self.pixmap = self.book_image.pixmap()
-                from librarySystem import librarySystem
-                if librarySystem.save_images(self.pixmap, title_name):
-                    self.check_category()
-                    self.close()  # menu
         else:
             dialog = QDialog()
             dialog.setWindowTitle("Error")

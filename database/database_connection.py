@@ -13,6 +13,4 @@ async def init():
 
     await Tortoise.generate_schemas()
 
-run_async(init())
-
 

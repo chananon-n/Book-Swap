@@ -1,6 +1,5 @@
 from PySide6.QtGui import *
 from PySide6.QtWidgets import *
-import librarySystem
 
 
 class Main_menu(QMainWindow):
@@ -702,8 +701,9 @@ class Main_menu(QMainWindow):
         # Add the scroll area to the tab_widget
         tab_widget.insertTab(1, scroll_area, "E-Book")
 
+        from librarySystem import librarySystem
         # set the history can scroll after this line
-        history = librarySystem.librarySystem.getHistory()
+        history = librarySystem.getHistory()
 
         v_layout_history = QVBoxLayout(history_tab)
 

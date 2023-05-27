@@ -76,24 +76,18 @@ class librarySystem:
     def addNewBook(picture, name, author, description, category, price):
         book = Book.Book(picture, name, author, description, category, price)
         from storageSystem import storageSystem
-        print("1")
         try:
             bookId = storageSystem.createNewBook(name)
         except RuntimeError:
             bookId = storageSystem.createNewBook(name)
-        print("2")
         book.setBookID(bookId)
-        print("3")
         librarySystem.book_list.append(book)
-        print("4")
         history = AddBook.AddBook(1, name, author)
-        print("5")
         librarySystem.history_list.append(history)
         return book
 
     @staticmethod
     def getHistory():
-        print("6")
         return librarySystem.history_list
 
     @staticmethod

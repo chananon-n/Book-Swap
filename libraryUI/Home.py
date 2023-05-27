@@ -4,6 +4,8 @@ from PySide6.QtCore import Signal
 import os
 
 
+
+
 class Home(QWidget):
     buttonClicked = Signal(str)  # Custom signal for button clicks
 
@@ -31,7 +33,8 @@ class Home(QWidget):
         }
         ''')
         signin_button.setFont(QFont("Vesper Libre", 25))
-        signin_button.clicked.connect(lambda: self.handleButtonClicked("Sign_in"))  # Emit signal for Sign_in button
+        from librarySystem import librarySystem
+        signin_button.clicked.connect(self.signin)
 
         h_layout3 = QHBoxLayout()
         h_layout3.addSpacing(200)
@@ -47,7 +50,9 @@ class Home(QWidget):
                 background-color: rgb(182, 170, 145);
                 }
                 ''')
-        signup_button.clicked.connect(lambda: self.handleButtonClicked("Sign_up"))  # Emit signal for Sign_up button
+        from librarySystem import librarySystem
+        signup_button.clicked.connect(self.signup)
+
 
         h_layout4 = QHBoxLayout()
         h_layout4.addSpacing(200)
@@ -69,6 +74,16 @@ class Home(QWidget):
 
     def handleButtonClicked(self, button_name):
         self.buttonClicked.emit(button_name)  # Emit the buttonClicked signal with the button name
+
+    def signup(self):
+        from librarySystem import librarySystem
+        librarySystem.setState("Sign_up")
+        self.close()
+
+    def signin(self):
+        from librarySystem import librarySystem
+        librarySystem.setState("Sign_in")
+        self.close()
 
 
 if __name__ == "__main__":

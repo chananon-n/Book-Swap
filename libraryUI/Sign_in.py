@@ -152,7 +152,7 @@ class Sign_in(QWidget):
                 }
                 ''')
                 button.clicked.connect(dialog.close)
-                button.clicked.connect(librarySystem.setState("Main_menu"))
+                button.clicked.connect(self.mainMenu)
             else:
                 dialog.setWindowTitle("Error")
                 dialog.setWindowModality(Qt.ApplicationModal)
@@ -183,6 +183,10 @@ class Sign_in(QWidget):
     def back_main_menu(self):
         self.close()
 
+    def mainMenu(self):
+        from librarySystem import librarySystem
+        librarySystem.setState("Main_menu")
+        self.close()
 
 if __name__ == "__main__":
     app = QApplication()

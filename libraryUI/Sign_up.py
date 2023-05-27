@@ -6,7 +6,7 @@ from PySide6.QtCore import Qt, Signal
 
 
 class Sign_up(QWidget):
-    signedUp = Signal()  # Custom signal to indicate successful sign-up
+
 
     def __init__(self):
         super().__init__()
@@ -142,7 +142,7 @@ class Sign_up(QWidget):
             }
             ''')
             button.clicked.connect(dialog.close)
-            button.clicked.connect(self.signedUp.emit)  # Emit the signedUp signal upon successful sign-up
+            button.clicked.connect(self.home)
             v_layout = QVBoxLayout()
             v_layout.addWidget(label)
             v_layout.addWidget(user)
@@ -150,3 +150,8 @@ class Sign_up(QWidget):
             v_layout.addWidget(button)
             dialog.setLayout(v_layout)
         dialog.exec()
+
+    def home(self):
+        from librarySystem import librarySystem
+        librarySystem.setState("Home")
+        self.close()

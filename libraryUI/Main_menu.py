@@ -1,5 +1,6 @@
 from PySide6.QtGui import *
 from PySide6.QtWidgets import *
+import librarySystem
 
 
 class Main_menu(QMainWindow):
@@ -702,14 +703,38 @@ class Main_menu(QMainWindow):
         tab_widget.insertTab(1, scroll_area, "E-Book")
 
         # set the history can scroll after this line
-        # history = librarySystem.getHistory(12345678)
-        # history_count = len(history)
-        # v_layout_history = QVBoxLayout(history_tab)
-        # for i in range(history_count):
-        #     v_layout_history.addSpacing(10)
-        #     v_layout_history.addWidget(QLabel(history[i]))
-        #     v_layout_history.addSpacing(10)
-        # history_tab.setLayout(v_layout_history)
+        history = librarySystem.librarySystem.getHistory()
+
+        v_layout_history = QVBoxLayout(history_tab)
+
+        for item in history:
+            if item.type == 1:
+                item.type = "Book"
+            elif item.type == 2:
+                item.type = "E-Book"
+            k = str(item.type) + " " + str(item.name) + " " + str(item.author) + " " + str(item.date)
+            label = QLabel()
+            label.setText(k)
+            label.setFont(QFont("Vesper Libre", 18))
+            label.setStyleSheet('''
+                                        QLabel {
+                                            color: black;
+                                        }
+                                    ''')
+            v_layout_history.addWidget(label)
+        v_layout_history.addSpacing(400)
+
+        history_tab.setLayout(v_layout_history)
+
+        scroll_area = QScrollArea()
+        scroll_area.setWidgetResizable(True)
+
+        # Set e_book_tab as the widget for the scroll area
+        scroll_area.setWidget(history_tab)
+        scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+
+        # Add the scroll area to the tab_widget
+        tab_widget.insertTab(2, scroll_area, "History")
 
         tab_widget.setCurrentIndex(0)
 

@@ -55,7 +55,9 @@ class librarySystem:
         if librarySystem.state == "Add_book":
             librarySystem.__current = Add_book.Add_book()
 
-
+    @staticmethod
+    def getHistory():
+        return librarySystem.history_list
     @staticmethod
     def get_instance():
         if librarySystem.__instance is None:
@@ -75,17 +77,14 @@ class librarySystem:
 
     @staticmethod
     def addNewBook(picture, name, author, description, category, price):
-        temp = storageSystem.getBookID(name)
-        if not temp:
-            book = Book.Book(picture, name, author, description, category, price)
-            storageSystem.createNewBook(name)
-            book.setBookID(storageSystem.getBookID(name))
-            librarySystem.book_list.append(book)
-            history = AddBook.AddBook(1, name, author)
-            librarySystem.history_list.append(history)
-            return book
-        else:
-            return False
+        book = Book.Book(picture, name, author, description, category, price)
+        storageSystem.createNewBook(name)
+        book.setBookID(storageSystem.getBookID(name))
+        librarySystem.book_list.append(book)
+        history = AddBook.AddBook(1, name, author)
+        librarySystem.history_list.append(history)
+        return book
+
 
     @staticmethod
     def addNewEbook(picture, name, author, description, category, price):

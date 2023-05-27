@@ -4,6 +4,8 @@ from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton, Q
                                QDialog)
 from PySide6.QtCore import Qt
 
+import librarySystem
+
 
 class Add_book(QMainWindow):
     def __init__(self):
@@ -552,39 +554,9 @@ class Add_book(QMainWindow):
     def check_booktype(self):
         from librarySystem import librarySystem
         if self.book_button.isChecked():
-            temp = librarySystem.addNewBook(self.pixmap, self.title_name.text(), self.author_name.text(),
-                                     self.description_name.toPlainText(), self.get_category(),
-                                     self.price_cost)
-            if not temp:
-                dialog = QDialog()
-                dialog.setWindowTitle("Error")
-                dialog.setFixedSize(300, 100)
-                dialog.setStyleSheet("background-color: #F9F6EC;")
-                dialog_label = QLabel("Book already exists")
-                dialog_label.setFont(QFont("Vesper Libre", 20))
-                dialog_label.setStyleSheet("color: rgb(148, 132, 99);")
-                dialog_button = QPushButton("OK")
-                dialog_button.setFont(QFont("Vesper Libre", 20))
-                dialog_button.setStyleSheet('''
-                QPushButton {
-                border: 3px solid rgb(132, 113, 77);
-                color: rgb(148, 132, 99);
-                }
-                ''')
-                dialog_button.clicked.connect(dialog.close)
-                dialog_layout = QVBoxLayout()
-                dialog_layout.addWidget(dialog_label)
-                dialog_layout.addWidget(dialog_button)
-                dialog.setLayout(dialog_layout)
-                dialog.exec_()
-            else:
-                return temp
-            return self.book_type
+            return "Book"
         if self.e_book_button.isChecked():
-            librarySystem.addNewEbook(self.pixmap, self.title_name.text(), self.author_name.text(),
-                                      self.description_name.toPlainText(), self.get_category(),
-                                      self.price_cost)
-            return self.book_type
+            return "EBook"
         if not self.book_button.isChecked() and not self.e_book_button.isChecked():
             return "None"
 
@@ -649,6 +621,12 @@ class Add_book(QMainWindow):
     def save_and_go_main(self):
         countError = 0
         self.check_category()
+        title = self.title_name.text()
+        from storageSystem import storageSystem
+        temp = storageSystem.getBookID(title)
+        if temp:
+            self.displayError()
+
         # if self.book_button.isChecked():
         #     title_name = self.title_name.text()
         #     self.pixmap = self.book_image.pixmap()
@@ -765,11 +743,14 @@ class Add_book(QMainWindow):
 
         # receive price from user
         priceInput = self.price_cost.text()
-        if priceInput.isdigit():
-            # If user don't input price
+        # If user don't input price
+        if not priceInput.isdigit():
             if self.checkInputError(priceInput, "Enter the price"):
                 countError = 3
                 print("price error")
+            else:
+                countError = 3
+                print("price error digit")
 
         if not priceInput.isdigit():
             countError = 3
@@ -810,7 +791,41 @@ class Add_book(QMainWindow):
         else:
             self.suscessAddBook()
 
+    def displayError(self):
+        dialog = QDialog()
+        dialog.setWindowTitle("Error")
+        dialog.setWindowModality(Qt.ApplicationModal)
+        dialog.resize(300, 100)
+        label = QLabel("This book has already existed")
+        label.setFont(QFont("Vesper Libre", 15))
+        label.setStyleSheet('''QLabel {
+                    color: rgb(132, 113, 77);
+                    }
+                    ''')
+        button = QPushButton("OK")
+        button.setFont(QFont("Vesper Libre", 15))
+        button.setStyleSheet('''
+                    QPushButton {
+                    border: 3px solid rgb(132, 113, 77);
+                    color: rgb(249, 246, 236);
+                    background-color: rgb(182, 170, 145);
+                    }
+                    ''')
+        button.clicked.connect(dialog.close)
+        v_layout = QVBoxLayout()
+        v_layout.addWidget(label)
+        v_layout.addWidget(button)
+        dialog.setLayout(v_layout)
+        dialog.exec()
+
+
     def suscessAddBook(self):
+        #create object
+        from librarySystem import librarySystem
+        if self.check_booktype() == "Book":
+            librarySystem.addNewBook(self.book_image,self.title_name.text(), self.author_name.text(), self.description_name.toPlainText(), self.genre, self.price_cost.text())
+        # if self.check_booktype() == "EBook":
+        #     librarySystem.addNewEBook()
         dialog = QDialog()
         dialog.setWindowTitle("Success")
         dialog.setWindowModality(Qt.ApplicationModal)

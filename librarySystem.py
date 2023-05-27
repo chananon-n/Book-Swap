@@ -33,10 +33,8 @@ class librarySystem:
 
     def start(self):
         self.__current = Home()
-        self.__state = "Home"
-        self.__current.show()
-        # Connect to the buttonClicked signal from the Home panel
         self.__current.buttonClicked.connect(self.handleButtonClicked)
+
 
     @staticmethod
     def setState(state):
@@ -53,8 +51,8 @@ class librarySystem:
             librarySystem.__current = Sign_up.Sign_up()
         if librarySystem.state == "Main_menu":
             librarySystem.__current = Main_menu.Main_menu()
-        if librarySystem.state == "Add_book":
-            librarySystem.__current = Add_Book.Add_Book()
+        # if librarySystem.state == "Add_book":
+        #     librarySystem.__current = Add_Book.Add_Book()
 
     def handleButtonClicked(self, button_name):
         if button_name == "Sign_in":

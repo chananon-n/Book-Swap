@@ -37,6 +37,7 @@ async def create_book_id_name(name):
 
     book_id_name = BookID_BName(bookId=rand_id, bookName=name)
     await book_id_name.save()
+    return rand_id
 
 
 # edit book name by id
@@ -58,16 +59,6 @@ async def get_book_name(input_id):
         # return name
         book_id_name = await BookID_BName.get(bookId=input_id)
         return book_id_name.bookName
-    return False
-
-
-# getbook id by name
-async def get_book_id(input_name):
-    # check if name is in database, return None if it is not
-    if await BookID_BName.exists(bookName=input_name):
-        # return id
-        book_id_name = await BookID_BName.get(bookName=input_name)
-        return book_id_name.bookId
     return False
 
 

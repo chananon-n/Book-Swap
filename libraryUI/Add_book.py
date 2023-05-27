@@ -538,7 +538,6 @@ class Add_book(QMainWindow):
         self.show()
 
     def cancel__goback(self):  # wait for main menu done then just import main menu page na
-        self.sign_in = Sign_in()
         self.close()
 
     def check_category(self):

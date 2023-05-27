@@ -180,8 +180,7 @@ class Sign_in(QWidget):
         dialog.setLayout(v_layout)
         dialog.exec()
 
-    def back_main_menu(self):
-        self.close()
+
 
     def mainMenu(self):
         from librarySystem import librarySystem

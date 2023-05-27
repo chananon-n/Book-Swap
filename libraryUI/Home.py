@@ -72,8 +72,7 @@ class Home(QWidget):
         self.setGeometry(400, 200, 800, 500)
         self.show()
 
-    def handleButtonClicked(self, button_name):
-        self.buttonClicked.emit(button_name)  # Emit the buttonClicked signal with the button name
+
 
     def signup(self):
         from librarySystem import librarySystem

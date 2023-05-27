@@ -552,9 +552,33 @@ class Add_book(QMainWindow):
     def check_booktype(self):
         from librarySystem import librarySystem
         if self.book_button.isChecked():
-            librarySystem.addNewBook(self.pixmap, self.title_name.text(), self.author_name.text(),
+            temp = librarySystem.addNewBook(self.pixmap, self.title_name.text(), self.author_name.text(),
                                      self.description_name.toPlainText(), self.get_category(),
                                      self.price_cost)
+            if not temp:
+                dialog = QDialog()
+                dialog.setWindowTitle("Error")
+                dialog.setFixedSize(300, 100)
+                dialog.setStyleSheet("background-color: #F9F6EC;")
+                dialog_label = QLabel("Book already exists")
+                dialog_label.setFont(QFont("Vesper Libre", 20))
+                dialog_label.setStyleSheet("color: rgb(148, 132, 99);")
+                dialog_button = QPushButton("OK")
+                dialog_button.setFont(QFont("Vesper Libre", 20))
+                dialog_button.setStyleSheet('''
+                QPushButton {
+                border: 3px solid rgb(132, 113, 77);
+                color: rgb(148, 132, 99);
+                }
+                ''')
+                dialog_button.clicked.connect(dialog.close)
+                dialog_layout = QVBoxLayout()
+                dialog_layout.addWidget(dialog_label)
+                dialog_layout.addWidget(dialog_button)
+                dialog.setLayout(dialog_layout)
+                dialog.exec_()
+            else:
+                return temp
             return self.book_type
         if self.e_book_button.isChecked():
             librarySystem.addNewEbook(self.pixmap, self.title_name.text(), self.author_name.text(),
@@ -720,35 +744,13 @@ class Add_book(QMainWindow):
             print("author error")
 
         # receive description from user
-        # descriptionInput = self.description_name.toPlainText()
-        # If user don't input description
-        # elif descriptionInput.isEmpty():
-        #     dialog = QDialog()
-        #     dialog.setWindowTitle("Error")
-        #     dialog.setWindowModality(Qt.ApplicationModal)
-        #     dialog.resize(300, 100)
-        #     label = QLabel("Please enter the description")
-        #     label.setFont(QFont("Vesper Libre", 15))
-        #     label.setStyleSheet('''QLabel {
-        #                 color: rgb(132, 113, 77);
-        #                 }
-        #                 ''')
-        #     button = QPushButton("OK")
-        #     button.setFont(QFont("Vesper Libre", 15))
-        #     button.setStyleSheet('''
-        #                 QPushButton {
-        #                 border: 3px solid rgb(132, 113, 77);
-        #                 color: rgb(249, 246, 236);
-        #                 background-color: rgb(182, 170, 145);
-        #                 }
-        #                 ''')
-        #     button.clicked.connect(dialog.close)
-        #     v_layout = QVBoxLayout()
-        #     v_layout.addWidget(label)
-        #     v_layout.addWidget(button)
-        #     dialog.setLayout(v_layout)
-        #     dialog.exec()
-        # receive category from user
+        descriptionInput = self.description_name.toPlainText()
+
+        # If user don't input description or description  = Please enter the description
+        if self.checkInputError(descriptionInput, "Enter the description") or descriptionInput == "Please enter the description":
+            countError = 1
+            print("description error")
+
         categoryInput = self.genre
         count_category = 0
         # If user don't choose any category

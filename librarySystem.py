@@ -86,8 +86,8 @@ class librarySystem:
         return book
 
     @staticmethod
-    def addNewEbook(picture, name, author, description, category, price):
-        ebook = eBook.eBook(picture, name, author, description, category, price)
+    def addNewEbook(picture, name, author, description, category, price,pdf):
+        ebook = eBook.eBook(picture, name, author, description, category, price,pdf)
         librarySystem.ebook_list.append(ebook)
         history = AddBook.AddBook(2, name, author)
         librarySystem.history_list.append(history)

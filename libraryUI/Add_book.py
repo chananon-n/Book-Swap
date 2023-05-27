@@ -550,17 +550,10 @@ class Add_book(QMainWindow):
         return self.category
 
     def check_booktype(self):
-        from librarySystem import librarySystem
         if self.book_button.isChecked():
-            librarySystem.addNewBook(self.pixmap, self.title_name.text(), self.author_name.text(),
-                                     self.description_name.toPlainText(), self.get_category(),
-                                     self.price_cost)
-            return self.book_type
+            return "Book"
         if self.e_book_button.isChecked():
-            librarySystem.addNewEbook(self.pixmap, self.title_name.text(), self.author_name.text(),
-                                      self.description_name.toPlainText(), self.get_category(),
-                                      self.price_cost)
-            return self.book_type
+            return "E-Book"
         if not self.book_button.isChecked() and not self.e_book_button.isChecked():
             return "None"
 
@@ -619,6 +612,15 @@ class Add_book(QMainWindow):
             v_layout.addWidget(button)
             dialog.setLayout(v_layout)
             dialog.exec()
+
+    def createObject(self):
+        from librarySystem import librarySystem
+        if self.book_button.isChecked():
+            librarySystem.addNewBook(self.pixmap, self.title_name.text(), self.author_name.text(),
+                                     self.description_name.toPlainText(), self.get_category(),
+                                     self.price_cost)
+        if self.e_book_button.isChecked():
+            self.checkURL()
 
     def save_and_go_main(self):
         countError = 0
@@ -754,8 +756,6 @@ class Add_book(QMainWindow):
                 countError = 3
                 print("price error digit")
 
-
-
         if self.check_booktype() == "None":
             countError = 4
             print("booktype error")
@@ -789,8 +789,11 @@ class Add_book(QMainWindow):
             dialog.exec()
 
         else:
-            self.suscessAddBook()
             self.save_image()
+            title_name = self.title_name.text()
+            from librarySystem import librarySystem
+            if librarySystem.save_images(self.pixmap, title_name):
+                self.suscessAddBook()
 
     def error(self):
         dialog = QDialog()
@@ -842,11 +845,20 @@ class Add_book(QMainWindow):
                     ''')
         button.clicked.connect(dialog.close)
         button.clicked.connect(self.back_to_main)
+        button.clicked.connect(self.createObject)
         v_layout = QVBoxLayout()
         v_layout.addWidget(label)
         v_layout.addWidget(button)
         dialog.setLayout(v_layout)
         dialog.exec()
+
+    def checkURL(self):
+        #Generate For keep URL
+
+        from librarySystem import librarySystem
+        librarySystem.addNewEbook(self.pixmap, self.title_name.text(), self.author_name.text(),
+                                  self.description_name.toPlainText(), self.get_category(),
+                                  self.price_cost, self.Url.text())
 
     def process_url(self):
         if self.Url.text():

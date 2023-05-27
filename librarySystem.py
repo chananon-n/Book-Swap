@@ -6,11 +6,12 @@ import database.Tolocal
 from library import Book
 from library import eBook
 import storageSystem
+from library.AddBook import AddBook
 from libraryUI.Home import Home
+import libraryUI.Add_book as Add_book
 import libraryUI.Sign_in as Sign_in
 import libraryUI.Main_menu as Main_menu
 import libraryUI.Sign_up as Sign_up
-from library import AddBook
 class librarySystem:
     # singleton
     book_list = []
@@ -53,6 +54,15 @@ class librarySystem:
             sign_up.signedUp.connect(self.handleSignUp)  # Connect to the signedUp signal
             self.__current = sign_up
 
+    def handle_addBookClicked(self, button_name):
+        print("vinvtntvhnvutnvutnvtuinvt")
+        if button_name == "Add_book":
+            addBook = Add_book.Add_book()
+            addBook.addBooK.connect(self.gobackmainmenu)
+            self.__current.close()
+            self.__current = addBook
+            self.__current.show()
+
     def handleSignIn(self):
         pass
 
@@ -65,6 +75,13 @@ class librarySystem:
     def goToMainMenu(self):
         self.__current.close()
         main_menu = Main_menu.Main_menu()
+        self.__current = main_menu
+        self.__current.show()
+
+    def gobackmainmenu(self):
+        self.__current.close()
+        main_menu = Main_menu.Main_menu()
+        main_menu.addBookClicked.connect(self.handle_addBookClicked)
         self.__current = main_menu
         self.__current.show()
 
@@ -95,6 +112,38 @@ class librarySystem:
         return book
 
     @staticmethod
+    def setState(state):
+        # Start with Home page
+        # set state for librarySystem
+        librarySystem.state = state
+
+    @staticmethod
+    def checkState():
+        if librarySystem.state == "Sign_In":
+            # Go to Sign In UI Page
+            pass
+        elif librarySystem.state == "Sign_Up":
+            # Go to Sign Up UI Page
+            pass
+        elif librarySystem.state == "Main_Menu":
+            # Go to Main Menu UI Page
+            pass
+        elif librarySystem.state == "Add_Book":
+            # Go to Add Book UI Page
+            pass
+        elif librarySystem.state == "Edit_Book":
+            # Go to Edit Book UI Page
+            pass
+        elif librarySystem.state == "Edit_EBook":
+            # Go to Edit EBook UI Page
+            pass
+        elif librarySystem.state == "Home":
+            # Go to Home page
+            pass
+        else:
+            return "Error for check State"
+
+    @staticmethod
     def addNewEbook(picture, name, author, description, category, price):
         ebook = eBook.eBook(picture, name, author, description, category, price)
         librarySystem.__instance.ebook_list.append(ebook)
@@ -104,7 +153,7 @@ class librarySystem:
 
     @staticmethod
     def getHistoryList():
-        return librarySystem.__instance.history_list
+        return librarySystem.history_list
     @staticmethod
     def getBookID(name):
         return storageSystem.storageSystem.getBookID(name)

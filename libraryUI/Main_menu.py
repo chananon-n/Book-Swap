@@ -1,8 +1,11 @@
+from PySide6.QtCore import Signal
 from PySide6.QtGui import *
 from PySide6.QtWidgets import *
+import librarySystem
 from librarySystem import *
 
 class Main_menu(QMainWindow):
+    addBookClicked = Signal(str)
     def __init__(self):
         super().__init__()
 
@@ -836,16 +839,17 @@ class Main_menu(QMainWindow):
         # Add the scroll area to the tab_widget
         tab_widget.insertTab(1, scroll_area, "E-Book")
 
-        #set the history can scroll after this line
-        # history = librarySystem.librarySystem.getHistoryList()
-        # history_count = len(history)
-        # print(history_count)
-        # v_layout_history = QVBoxLayout(history_tab)
-        # for i in range(history_count):
-        #     v_layout_history.addSpacing(10)
-        #     v_layout_history.addWidget(QLabel(history[i]))
-        #     v_layout_history.addSpacing(10)
-        # history_tab.setLayout(v_layout_history)
+        #set the history can scroll after this line (seems to be done)
+        history = librarySystem.librarySystem.getHistoryList()
+        # i=0
+        # for j in
+        history_count = len(history)
+        v_layout_history = QVBoxLayout(history_tab)
+        for i in range(history_count):
+            v_layout_history.addSpacing(10)
+            v_layout_history.addWidget(QLabel(history[i]))
+            v_layout_history.addSpacing(10)
+        history_tab.setLayout(v_layout_history)
 
         tab_widget.setCurrentIndex(0)
 
@@ -859,6 +863,8 @@ class Main_menu(QMainWindow):
                 background-color: rgb(182, 170, 145);
             }
         ''')
+        self.add_button.clicked.connect(lambda: self.handle_addBookClicked("Add_book"))
+
         h_layout_add = QHBoxLayout()
         h_layout_add.addSpacing(700)
         h_layout_add.addWidget(self.add_button)
@@ -882,6 +888,10 @@ class Main_menu(QMainWindow):
             self.add_button.hide()
         else:
             self.add_button.show()
+
+    def handle_addBookClicked(self, button_name):
+        print(button_name)
+        self.addBookClicked.emit(button_name)
 
 
 if __name__ == "__main__":

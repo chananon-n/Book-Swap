@@ -5,8 +5,8 @@ from PySide6.QtWidgets import *
 from PySide6.QtCore import *
 
 import libraryUI.Sign_in
-from libraryUI.Sign_in import Sign_in  # change to main menu by your self na non , left only import sign in and from and import
-import BookCategory
+from libraryUI.Sign_in import \
+    Sign_in  # change to main menu by your self na non , left only import sign in and from and import
 from librarySystem import *
 
 
@@ -14,6 +14,8 @@ from librarySystem import *
 
 
 class Add_book(QMainWindow):
+    addBooK = Signal()
+
     def __init__(self):
         super().__init__()
         self.sign_in = None
@@ -619,7 +621,7 @@ class Add_book(QMainWindow):
             self.pixmap = self.book_image.pixmap()
             if librarySystem.save_images(self.pixmap, title_name):
                 self.check_category()
-                self.close()      #main menu
+                self.close()  # main menu
 
         if self.e_book_button.isChecked():
             dialog = QDialog()
@@ -674,7 +676,6 @@ class Add_book(QMainWindow):
             dialog.setLayout(v_layout)
             dialog.exec()
 
-
     def process_url(self):
         if self.Url.text():
             dialog = QDialog()
@@ -699,6 +700,7 @@ class Add_book(QMainWindow):
                         }
                         ''')
             button.clicked.connect(dialog.close)
+            button.clicked.connect(self.addBooK.emit)
             v_layout = QVBoxLayout()
             v_layout.addWidget(label)
             v_layout.addWidget(button)
@@ -709,7 +711,7 @@ class Add_book(QMainWindow):
                 self.pixmap = self.book_image.pixmap()
                 if librarySystem.save_images(self.pixmap, title_name):
                     self.check_category()
-                    self.close()        #menu
+                    self.close()  # menu
         else:
             dialog = QDialog()
             dialog.setWindowTitle("Error")

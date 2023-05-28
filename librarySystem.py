@@ -46,6 +46,7 @@ class librarySystem:
 
     @staticmethod
     def checkState():
+        print(librarySystem.state)
         if librarySystem.state == "Home":
             librarySystem.__current = Home()
         if librarySystem.state == "Sign_in":
@@ -58,7 +59,7 @@ class librarySystem:
             librarySystem.__current = Add_book.Add_book()
         if librarySystem.state == "Edit_book":
             librarySystem.__current = remove_book.Remove_Book()
-        if librarySystem.state == "Edit_EBook":
+        if librarySystem.state == "Edit_Ebook":
             librarySystem.__current = editBook.EditEbook()
 
     @staticmethod
@@ -129,7 +130,7 @@ class librarySystem:
     @staticmethod
     def searchBook(name):
         search_result = []
-        for book in librarySystem.__instance.book_list:
+        for book in librarySystem.book_list:
             if name in book.get_name():
                 search_result.append(book)
         return search_result
@@ -137,8 +138,8 @@ class librarySystem:
     @staticmethod
     def searchEbook(name):
         search_result = []
-        for ebook in librarySystem.__instance.ebook_list:
-            if name in ebook.get_name():
+        for ebook in librarySystem.ebook_list:
+            if name in ebook.get_title():
                 search_result.append(ebook)
         return search_result
 
@@ -151,7 +152,7 @@ class librarySystem:
     def filterCategory(category):
         bookList = []
         from storageSystem import storageSystem
-        allBook = storageSystem.getAllBooks(librarySystem.__instance.userID)
+        allBook = storageSystem.getAllBooks(librarySystem.userID)
         for book in allBook:
             if (book.get_category() == category) and (book not in bookList):
                 bookList.append(book)
@@ -277,9 +278,9 @@ class librarySystem:
 # print(storageSystem.getBookID("test"))
 # storageSystem.createNewBook("test2")
 
-# if __name__ == "__main__":
-#     app = QApplication([])
-#     library_system = librarySystem.get_instance()
-#     library_system.start()
-#     sys.exit(app.exec())
+if __name__ == "__main__":
+    app = QApplication([])
+    library_system = librarySystem.get_instance()
+    library_system.start()
+    sys.exit(app.exec())
 

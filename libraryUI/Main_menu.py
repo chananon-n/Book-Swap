@@ -1,12 +1,12 @@
 from PySide6.QtGui import *
 from PySide6.QtWidgets import *
+from PySide6.QtCore import *
 
 
 class Main_menu(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.checkList = None
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
 
@@ -41,10 +41,10 @@ class Main_menu(QMainWindow):
         tab_widget.addTab(e_book_tab, "E-book")
         tab_widget.addTab(history_tab, "History")
 
-        search_place_book = QLineEdit()
-        search_place_book.setPlaceholderText("Search book name")
-        search_place_book.setFont(QFont("Vesper Libre", 20))
-        search_place_book.setStyleSheet('''
+        self.search_place_book = QLineEdit()
+        self.search_place_book.setPlaceholderText("Search book name")
+        self.search_place_book.setFont(QFont("Vesper Libre", 20))
+        self.search_place_book.setStyleSheet('''
             QLineEdit {
                 border: 3px solid rgb(132, 113, 77);
                 color: rgb(249, 246, 236);
@@ -352,7 +352,7 @@ class Main_menu(QMainWindow):
         # my book here is to put the image after the user add their book
 
         h_layout1_book = QHBoxLayout()
-        h_layout1_book.addWidget(search_place_book)
+        h_layout1_book.addWidget(self.search_place_book)
         h_layout1_book.addSpacing(20)
         h_layout1_book.addWidget(self.filter_button_book)
 
@@ -371,10 +371,10 @@ class Main_menu(QMainWindow):
         tab_widget.insertTab(0, scroll_area, "Book")
         self.filter_button_book.setMenu(self.filter_menu_book)
 
-        search_place_e_book = QLineEdit()
-        search_place_e_book.setPlaceholderText("Search e-book name")
-        search_place_e_book.setFont(QFont("Vesper Libre", 20))
-        search_place_e_book.setStyleSheet('''
+        self.search_place_e_book = QLineEdit()
+        self.search_place_e_book.setPlaceholderText("Search e-book name")
+        self.search_place_e_book.setFont(QFont("Vesper Libre", 20))
+        self.search_place_e_book.setStyleSheet('''
             QLineEdit {
                 border: 3px solid rgb(132, 113, 77);
                 color: rgb(249, 246, 236);
@@ -659,26 +659,6 @@ class Main_menu(QMainWindow):
         self.e_bookFilterLayout10.addSpacing(10)
         self.e_bookFilterLayout10.addWidget(self.trueCrimeCheck_e_book)
 
-        #create search button
-        self.searchButton = QPushButton("Search")
-        self.searchButton.setFont(QFont("Vesper Libre", 16))
-        self.searchButton.setStyleSheet('''
-            QPushButton {
-                background-color: rgb(132, 113, 77);
-                color: white;
-                border-radius: 10px;
-                padding: 10px;
-            }
-            QPushButton:hover {
-                background-color: rgb(163, 140, 97);
-            }
-        ''')
-        self.e_bookFilterLayout10.addSpacing(30)
-        self.e_bookFilterLayout10.addWidget(self.searchButton)
-        self.searchButton.clicked.connect(self.getFilter)
-
-
-
         filter_menu_e_book_layout = QVBoxLayout()
         self.filter_menu_e_book.setLayout(filter_menu_e_book_layout)
 
@@ -693,24 +673,13 @@ class Main_menu(QMainWindow):
             self.e_bookFilterLayout8,
             self.e_bookFilterLayout9,
             self.e_bookFilterLayout10
-
         ]
 
         for layout in filter_layouts_e_book:
             filter_menu_e_book_layout.addLayout(layout)
         self.filter_button_e_book.setMenu(self.filter_menu_e_book)
 
-        h_layout1_e_book = QHBoxLayout()
-        h_layout1_e_book.addWidget(search_place_e_book)
-        h_layout1_e_book.addSpacing(20)
-        h_layout1_e_book.addWidget(self.filter_button_e_book)
-
-        v_layout_e_book = QVBoxLayout(e_book_tab)
-        v_layout_e_book.addLayout(h_layout1_e_book)
-
-        # scroll of e-book is after this line
-        tab_widget.removeTab(tab_widget.indexOf(e_book_tab))
-        e_book_tab.setLayout(v_layout_e_book)
+        self.refresh_e_book_tab(e_book_tab)
 
         # Create the scroll area
         scroll_area = QScrollArea()
@@ -779,26 +748,6 @@ class Main_menu(QMainWindow):
         self.add_button.clicked.connect(self.add)
         self.exit_button.clicked.connect(self.exit)
 
-    def getFilter(self):
-        self.checkList = []
-        filter= [self.romanceCheck_e_book, self.mysteryCheck_e_book, self.fantasyAndScienceFictionCheck_e_book, self.thrillersHorrorCheck_e_book, self.youngAdultCheck_e_book,
-                 self.childrenFictionCheck_e_book, self.inspirationalReligiousCheck_e_book, self.biographyAndAutobiographyCheck_e_book,
-                 self.actionAndAdventureCheck_e_book, self.classicCheck_e_book, self.comicBookCheck_e_book, self.historicalFictionCheck_e_book, self.literaryCheck_e_book, self.scienceFiction_e_book,
-                 self.shortStoryCheck_e_book, self.suspenseAndThrillerCheck_e_book,
-                 self.womensFictionCheck_e_book, self.cookBookCheck_e_book, self.essayCheck_e_book, self.memoirCheck_e_book, self.poetryCheck_e_book,
-                 self.trueCrimeCheck_e_book]
-        for i in range(len(filter)):
-            if filter[i].isChecked():
-                self.checkList.append(filter[i].text())
-            else:
-                self.checkList.append("None")
-        from librarySystem import librarySystem
-        temp = librarySystem.filterCategoryEbook(self.checkList)
-        return temp #Return the list of books that match the filter
-
-
-
-
     def on_tab_changed(self, index):
         if index == 2:  # History tab index is 2
             history_tab = self.centralWidget().layout().itemAt(0).widget().widget(2)
@@ -806,9 +755,181 @@ class Main_menu(QMainWindow):
             self.refresh_history_tab(history_tab)
             self.add_button.hide()
             self.exit_button.hide()
+        elif index == 1:  # E-Book tab index is 1
+            e_book_tab = self.centralWidget().layout().itemAt(0).widget().widget(1)
+            self.refresh_e_book_tab(e_book_tab)
+            self.add_button.show()
+            self.exit_button.show()
+        elif index == 0:  # Book tab index is 0
+            book_tab = self.centralWidget().layout().itemAt(0).widget().widget(0)
+            self.refresh_book_tab(book_tab)
+            self.add_button.show()
+            self.exit_button.show()
         else:
             self.add_button.show()
             self.exit_button.show()
+    def refresh_book_tab(self, book_tab):
+        layout = book_tab.layout()
+        if layout:
+            while layout.count():
+                item = layout.takeAt(0)
+                widget = item.widget()
+                if widget:
+                    widget.deleteLater()
+
+        if not layout:
+            layout = QVBoxLayout(book_tab)
+
+        h_layout1_e_book = QHBoxLayout()
+        h_layout1_e_book.addWidget(self.search_place_book)
+        h_layout1_e_book.addSpacing(20)
+        h_layout1_e_book.addWidget(self.filter_button_book)
+        from librarySystem import librarySystem
+        all_e_book = librarySystem.getAllBooks()
+        e_book_count = len(all_e_book)
+
+        columns = 3
+        rows = (e_book_count + columns - 1) // columns
+
+        # Add the first layout to the main layout
+        layout.addLayout(h_layout1_e_book)
+
+        for row in range(rows):
+            h_layout_row = QHBoxLayout()
+
+            for col in range(columns):
+                book_index = row * columns + col
+
+                if book_index < e_book_count:
+                    widget = QWidget()
+                    widget.setFixedSize(100, 200)
+
+                    v_layout_item = QVBoxLayout(widget)
+                    v_layout_item.setContentsMargins(0, 0, 0, 0)
+                    v_layout_item.setSpacing(5)
+
+                    label = QLabel()
+                    pixmap = QPixmap(all_e_book[book_index].get_picture())
+                    scaled_pixmap = pixmap.scaled(100, 150, Qt.AspectRatioMode.KeepAspectRatio)
+                    label.setPixmap(scaled_pixmap)
+                    label.setAlignment(Qt.AlignCenter)
+
+                    button = QPushButton(f"{all_e_book[book_index].getBookID()}")
+                    button.setStyleSheet('''
+                        QPushButton {
+                            border: none;
+                            color: rgb(132, 113, 77);
+                            background-color: #F9F6EC;
+                            text-decoration: underline;
+                        }
+
+                        QPushButton:hover {
+                            background-color: transparent;
+                        }
+                    ''')
+                    self.editt_book = all_e_book[book_index]
+                    button.clicked.connect(self.edit_book)
+
+                    v_layout_item.addWidget(label)
+                    v_layout_item.addWidget(button)
+
+                    h_layout_row.addWidget(widget)
+
+            layout.addLayout(h_layout_row)
+
+        # Set the layout to the e-book tab widget
+        book_tab.setLayout(layout)
+    def refresh_e_book_tab(self, e_book_tab):
+        layout = e_book_tab.layout()
+        if layout:
+            while layout.count():
+                item = layout.takeAt(0)
+                widget = item.widget()
+                if widget:
+                    widget.deleteLater()
+
+        if not layout:
+            layout = QVBoxLayout(e_book_tab)
+
+        h_layout1_e_book = QHBoxLayout()
+        h_layout1_e_book.addWidget(self.search_place_e_book)
+        h_layout1_e_book.addSpacing(20)
+        h_layout1_e_book.addWidget(self.filter_button_e_book)
+        from librarySystem import librarySystem
+        all_e_book = librarySystem.getAllEbook()
+        e_book_count = len(all_e_book)
+
+        columns = 3
+        rows = (e_book_count + columns - 1) // columns
+
+        # Add the first layout to the main layout
+        layout.addLayout(h_layout1_e_book)
+
+        for row in range(rows):
+            h_layout_row = QHBoxLayout()
+
+            for col in range(columns):
+                book_index = row * columns + col
+
+                if book_index < e_book_count:
+                    widget = QWidget()
+                    widget.setFixedSize(100, 200)
+
+                    v_layout_item = QVBoxLayout(widget)
+                    v_layout_item.setContentsMargins(0, 0, 0, 0)
+                    v_layout_item.setSpacing(5)
+
+                    label = QLabel()
+                    pixmap = QPixmap(all_e_book[book_index].get_picture())
+                    scaled_pixmap = pixmap.scaled(100, 150, Qt.AspectRatioMode.KeepAspectRatio)
+                    label.setPixmap(scaled_pixmap)
+                    label.setAlignment(Qt.AlignCenter)
+
+                    button = QPushButton(f"{all_e_book[book_index].getBookID()}")
+                    button.setStyleSheet('''
+                        QPushButton {
+                            border: none;
+                            color: rgb(132, 113, 77);
+                            background-color: #F9F6EC;
+                            text-decoration: underline;
+                        }
+
+                        QPushButton:hover {
+                            background-color: transparent;
+                        }
+                    ''')
+                    self.editt_book = all_e_book[book_index]
+                    button.clicked.connect(self.edit_book)
+
+                    v_layout_item.addWidget(label)
+                    v_layout_item.addWidget(button)
+
+                    h_layout_row.addWidget(widget)
+
+            layout.addLayout(h_layout_row)
+
+        # Set the layout to the e-book tab widget
+        e_book_tab.setLayout(layout)
+
+    # recieve enter key press event from user
+    def keyPressEvent(self, event):
+        # if the user presses enter, search for the book
+        if event.key() == Qt.Key_Return:
+            print("enter pressed")
+            self.search_book()
+
+    def search_book(self):
+        # get the search term from the user
+        search_term = self.search_place_e_book.text()
+        # search for the book
+        from librarySystem import librarySystem
+        book = librarySystem.searchEbook(search_term)
+        # if the book is found, show the book
+        if book is not None:
+            return book
+        # if the book is not found, show a message
+        else:
+            return "book not found"
 
     def add(self):
         from librarySystem import librarySystem
@@ -857,7 +978,10 @@ class Main_menu(QMainWindow):
         layout.addSpacing(400)
         history_tab.setLayout(layout)
 
-
+    def edit_book(self):
+        from librarySystem import librarySystem
+        librarySystem.setUserSelect(self.editt_book)
+        librarySystem.setState("Edit_Ebook")
 
 
 if __name__ == "__main__":

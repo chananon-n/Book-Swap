@@ -11,6 +11,8 @@ import libraryUI.Sign_in as Sign_in
 import libraryUI.Main_menu as Main_menu
 import libraryUI.Sign_up as Sign_up
 import libraryUI.Add_book as Add_book
+import libraryUI.remove_book as remove_book
+import libraryUI.editBook as editBook
 
 
 class librarySystem:
@@ -21,6 +23,7 @@ class librarySystem:
     __instance = None
     state = None
     userID = None
+    select = None
 
     # constructor
     def __init__(self):
@@ -43,6 +46,7 @@ class librarySystem:
 
     @staticmethod
     def checkState():
+        print(librarySystem.state)
         if librarySystem.state == "Home":
             librarySystem.__current = Home()
         if librarySystem.state == "Sign_in":
@@ -53,11 +57,24 @@ class librarySystem:
             librarySystem.__current = Main_menu.Main_menu()
         if librarySystem.state == "Add_book":
             librarySystem.__current = Add_book.Add_book()
+        if librarySystem.state == "Edit_book":
+            librarySystem.__current = remove_book.Remove_Book()
+        if librarySystem.state == "Edit_Ebook":
+            librarySystem.__current = editBook.EditEbook()
+
     @staticmethod
     def get_instance():
         if librarySystem.__instance is None:
             librarySystem()
         return librarySystem.__instance
+
+    @staticmethod
+    def setUserSelect(select):
+        librarySystem.select = select
+
+    @staticmethod
+    def getUserSelect():
+        return librarySystem.select
 
     @staticmethod
     def CheckUserID(userID):
@@ -103,22 +120,17 @@ class librarySystem:
         return librarySystem.history_list
 
     @staticmethod
-    def addNewEbook(picture, name, author, description, category, price,pdf):
-        ebook = eBook.eBook(picture, name, author, description, category, price,pdf)
+    def addNewEbook(picture, name, author, description, category, price, pdf):
+        ebook = eBook.eBook(picture, name, author, description, category, price, pdf)
         librarySystem.ebook_list.append(ebook)
         history = AddBook.AddBook(2, name, author)
         librarySystem.history_list.append(history)
         return ebook
 
     @staticmethod
-    def checkDuplicate(name):
-        from storageSystem import storageSystem
-        return storageSystem.getBookID(name)
-
-    @staticmethod
     def searchBook(name):
         search_result = []
-        for book in librarySystem.__instance.book_list:
+        for book in librarySystem.book_list:
             if name in book.get_name():
                 search_result.append(book)
         return search_result
@@ -126,8 +138,8 @@ class librarySystem:
     @staticmethod
     def searchEbook(name):
         search_result = []
-        for ebook in librarySystem.__instance.ebook_list:
-            if name in ebook.get_name():
+        for ebook in librarySystem.ebook_list:
+            if name in ebook.get_title():
                 search_result.append(ebook)
         return search_result
 
@@ -139,20 +151,12 @@ class librarySystem:
     @staticmethod
     def filterCategory(category):
         bookList = []
-        allBook = librarySystem.book_list
+        from storageSystem import storageSystem
+        allBook = storageSystem.getAllBooks(librarySystem.userID)
         for book in allBook:
             if (book.get_category() == category) and (book not in bookList):
                 bookList.append(book)
         return bookList
-
-    @staticmethod
-    def filterCategoryEbook(category):
-        ebookList = []
-        allEbook = librarySystem.ebook_list
-        for ebook in allEbook:
-            if (ebook.get_category() == category) and (ebook not in ebookList):
-                ebookList.append(ebook)
-        return ebookList
 
     @staticmethod
     def createBookStatus(bookID, userID, status):
@@ -198,11 +202,11 @@ class librarySystem:
 
     @staticmethod
     def getAllBooks():
-        return librarySystem.__instance.book_list
+        return librarySystem.book_list
 
     @staticmethod
     def getAllEbook():
-        return librarySystem.__instance.ebook_list
+        return librarySystem.ebook_list
 
     @staticmethod
     def checkStatus(bookID, userID, status):
@@ -232,7 +236,10 @@ class librarySystem:
         # delete ebook from local
         e.deleteEBook()
         return True
-
+    @staticmethod
+    def checkDuplicate(name):
+        from storageSystem import storageSystem
+        return storageSystem.getBookID(name)
     @staticmethod
     def editEbook(e: eBook, name, author, description, category, price, pdf):
         e.setName(name)
@@ -271,23 +278,12 @@ class librarySystem:
 # librarySystem.ebook_list = librarySystem.getEBookListFromLocal()
 # print(librarySystem.book_list)
 # print(librarySystem.ebook_list)
-
-# book1 = Book.Book("w.png", "book1", "author1", "description1", "category1", 1)
-# book2 = Book.Book("w.png", "book2", "author2", "description2", "category2", 2)
-# librarySystem.book_list.append(book1)
-# librarySystem.book_list.append(book2)
-# print(librarySystem.book_list)
-#
-# ebook1 = eBook.eBook("w.png", "ebook1", "author1", "description1", "category1", 1, "pdf1")
-# ebook2 = eBook.eBook("w.png", "ebook2", "author2", "description2", "category2", 2, "pdf2")
-# librarySystem.ebook_list.append(ebook1)
-# librarySystem.ebook_list.append(ebook2)
-#
-# librarySystem.finishAndSave()
-
+# print(storageSystem.getBookID("test"))
+# storageSystem.createNewBook("test2")
 
 if __name__ == "__main__":
     app = QApplication([])
     library_system = librarySystem.get_instance()
     library_system.start()
     sys.exit(app.exec())
+

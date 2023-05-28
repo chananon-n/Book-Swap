@@ -180,9 +180,9 @@ class Sign_in(QWidget):
                 background-color: rgb(182, 170, 145);
                 }
                 ''')
-                librarySystem.setUserID(int(text))
-                librarySystem.book_list = librarySystem.getBookListFromLocal()
-                librarySystem.ebook_list = librarySystem.getEBookListFromLocal()
+                librarySystem.userID = int(text)
+                # librarySystem.book_list = librarySystem.getBookListFromLocal()
+                # librarySystem.ebook_list = librarySystem.getEBookListFromLocal()
                 button.clicked.connect(dialog.close)
                 button.clicked.connect(self.mainMenu)
             else:

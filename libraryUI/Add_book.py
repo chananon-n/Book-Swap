@@ -732,6 +732,9 @@ class Add_book(QMainWindow):
         if countError == 5:
             self.error()
 
+        if countError == 5:
+            self.error()
+
         elif 0 < countError < 5:
             print(countError)
             dialog = QDialog()

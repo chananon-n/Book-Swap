@@ -675,10 +675,10 @@ class Add_book(QMainWindow):
         dialog.setLayout(v_layout)
         dialog.exec()
 
-    def save_and_go_main(self): # check error and save
+    def save_and_go_main(self):  # check error and save
         countError = 0
         self.check_category()
-
+        title = self.title_name.text()
         authorInput = self.author_name.text()
         # If user don't input author name
         if self.checkInputError(authorInput, "Enter the author"):
@@ -689,7 +689,8 @@ class Add_book(QMainWindow):
         descriptionInput = self.description_name.toPlainText()
 
         # If user don't input description or description  = Please enter the description
-        if self.checkInputError(descriptionInput, "Enter the description") or descriptionInput == "Please enter the description":
+        if self.checkInputError(descriptionInput,
+                                "Enter the description") or descriptionInput == "Please enter the description":
             countError = 1
             print("description error")
 
@@ -720,7 +721,18 @@ class Add_book(QMainWindow):
             countError = 4
             print("booktype error")
 
-        if countError > 0:
+        from librarySystem import librarySystem
+        try:
+            temp = librarySystem.checkDuplicate(title)
+        except RuntimeError:
+            temp = librarySystem.checkDuplicate(title)
+        if temp:
+            countError = 5
+
+        if countError == 5:
+            self.error()
+
+        elif 0 < countError < 5:
             print(countError)
             dialog = QDialog()
             dialog.setWindowTitle("Error")
@@ -785,7 +797,6 @@ class Add_book(QMainWindow):
         dialog.setLayout(v_layout)
         dialog.exec()
 
-
     def suscessAddBook(self):
         dialog = QDialog()
         dialog.setWindowTitle("Success")
@@ -816,7 +827,7 @@ class Add_book(QMainWindow):
         dialog.exec()
 
     def checkURL(self):
-        #Generate For keep URL
+        # Generate For keep URL
 
         from librarySystem import librarySystem
         librarySystem.addNewEbook(self.pixmap, self.title_name.text(), self.author_name.text(),

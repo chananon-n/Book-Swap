@@ -5,7 +5,7 @@ from library.abstractBook import abstractBook
 
 
 class eBook(abstractBook):
-    def __init__(self, picture, name, author, description, category, price,pdf):
+    def __init__(self, picture, name, author, description, category, price, pdf):
         super(eBook, self).__init__(picture, name, author, description, category, price)
         self.pdf = pdf
         self.ID = random.randint(10000, 100000)

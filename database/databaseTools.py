@@ -52,6 +52,15 @@ async def edit_book_name(input_id, input_name):
     return False
 
 
+async def get_book_id(input_name):
+    # check if id is in database, return None if it is not
+    if await BookID_BName.exists(bookName=input_name):
+        # return name
+        book_id_name = await BookID_BName.get(bookName=input_name)
+        return book_id_name.bookId
+    return False
+
+
 # get book name by id
 async def get_book_name(input_id):
     # check if id is in database, return None if it is not

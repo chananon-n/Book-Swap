@@ -111,6 +111,11 @@ class librarySystem:
         return ebook
 
     @staticmethod
+    def checkDuplicate(name):
+        from storageSystem import storageSystem
+        return storageSystem.getBookID(name)
+
+    @staticmethod
     def searchBook(name):
         search_result = []
         for book in librarySystem.__instance.book_list:
@@ -258,11 +263,23 @@ class librarySystem:
 # librarySystem.ebook_list = librarySystem.getEBookListFromLocal()
 # print(librarySystem.book_list)
 # print(librarySystem.ebook_list)
-# print(storageSystem.getBookID("test"))
-# storageSystem.createNewBook("test2")
 
-if __name__ == "__main__":
-    app = QApplication([])
-    library_system = librarySystem.get_instance()
-    library_system.start()
-    sys.exit(app.exec())
+# book1 = Book.Book("w.png", "book1", "author1", "description1", "category1", 1)
+# book2 = Book.Book("w.png", "book2", "author2", "description2", "category2", 2)
+# librarySystem.book_list.append(book1)
+# librarySystem.book_list.append(book2)
+# print(librarySystem.book_list)
+#
+# ebook1 = eBook.eBook("w.png", "ebook1", "author1", "description1", "category1", 1, "pdf1")
+# ebook2 = eBook.eBook("w.png", "ebook2", "author2", "description2", "category2", 2, "pdf2")
+# librarySystem.ebook_list.append(ebook1)
+# librarySystem.ebook_list.append(ebook2)
+#
+# librarySystem.finishAndSave()
+
+
+# if __name__ == "__main__":
+#     app = QApplication([])
+#     library_system = librarySystem.get_instance()
+#     library_system.start()
+#     sys.exit(app.exec())

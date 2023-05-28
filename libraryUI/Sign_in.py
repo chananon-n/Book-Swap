@@ -181,6 +181,8 @@ class Sign_in(QWidget):
                 }
                 ''')
                 librarySystem.setUserID(int(text))
+                librarySystem.book_list = librarySystem.getBookListFromLocal()
+                librarySystem.ebook_list = librarySystem.getEBookListFromLocal()
                 button.clicked.connect(dialog.close)
                 button.clicked.connect(self.mainMenu)
             else:

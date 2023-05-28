@@ -1,4 +1,4 @@
-from PySide6.QtGui import QPixmap, QFont, QDragEnterEvent
+from PySide6.QtGui import QDragEnterEvent
 
 import sys
 

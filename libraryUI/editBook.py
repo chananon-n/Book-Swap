@@ -11,29 +11,34 @@ from PySide6.QtCore import *
 
 from libraryUI.Sign_in import Sign_in
 
-
 class EditEbook(QMainWindow):
-    def __init__(self, e):
+    def __init__(self):
         super().__init__()
-        self.ebook = e
-        self.URL = "Test.pdf"
-        self.pixmap = None
-        self.price = 0
+        self.oldGenre = []
+        from librarySystem import librarySystem
+        self.ebook = librarySystem.select
+        self.URL = self.ebook.get_pdf()
+        self.pixmapLocal = self.ebook.get_picture()
+        # self.price = self.ebook.get_price()
         self.type = "ebook"
-        self.title = "title"
-        self.author = "author"
-        self.description = "description"
-        self.category = ["Romance"]
+        self.title = self.ebook.get_title()
+        self.author = self.ebook.get_author()
+        self.description = self.ebook.get_description()
+        self.category = self.ebook.get_category()
         self.image = QLabel()
         # replace path of your image at placeholder.png
+        # self.image = self.ebook.get_picture()
+        # print(self.image)
         self.placeholder_image = QPixmap("placeholder.png")
 
-        self.image.setPixmap(self.placeholder_image)
+        self.image.setPixmap(self.pixmapLocal)
         self.image.setScaledContents(True)
         self.image.setMinimumSize(250, 250)
         self.image.setAlignment(Qt.AlignCenter)
-        self.image.setStyleSheet("border: 2px dashed gray; color: gray;")
-        self.image.setText("Please drag and drop a book image here")
+        # self.image.setStyleSheet("border: 2px dashed gray; color: gray;")
+        # self.image.setText("Please drag and drop a book image here")
+
+
 
         layout = QHBoxLayout()
         layout.addWidget(self.image)
@@ -58,7 +63,7 @@ class EditEbook(QMainWindow):
         ''')
 
         self.titleName = QLineEdit(self)
-        self.titleName.setPlaceholderText(self.title)
+        self.titleName.setText(self.title)
         self.titleName.setFont(QFont("Vesper Libre", 20))
         self.titleName.setStyleSheet('''
         QLineEdit {
@@ -83,7 +88,7 @@ class EditEbook(QMainWindow):
         ''')
 
         self.authorName = QLineEdit(self)
-        self.authorName.setPlaceholderText(self.author)
+        self.authorName.setText(self.author)
         self.authorName.setFont(QFont("Vesper Libre", 20))
         self.authorName.setStyleSheet('''
         QLineEdit {
@@ -112,7 +117,7 @@ class EditEbook(QMainWindow):
         hLayout4.addWidget(description)
 
         self.descriptionName = QTextEdit(self)
-        self.descriptionName.setPlaceholderText(self.description)
+        self.descriptionName.setText(self.description)
         self.descriptionName.setFont(QFont("Vesper Libre", 20))
         self.descriptionName.setStyleSheet('''
         QTextEdit {
@@ -411,14 +416,14 @@ class EditEbook(QMainWindow):
         ''')
 
         self.priceCost = QLineEdit(self)
-        self.priceCost.setPlaceholderText(str(self.price))
-        self.priceCost.setFont(QFont("Vesper Libre", 20))
-        self.priceCost.setStyleSheet('''
-        QLineEdit {
-        border: 3px solid rgb(132, 113, 77);
-        color: rgb(132, 113, 77);
-        }
-        ''')
+        # self.priceCost.setText(self.price)
+        # self.priceCost.setFont(QFont("Vesper Libre", 20))
+        # self.priceCost.setStyleSheet('''
+        # QLineEdit {
+        # border: 3px solid rgb(132, 113, 77);
+        # color: rgb(132, 113, 77);
+        # }
+        # ''')
 
         hLayout18 = QHBoxLayout()
         hLayout18.addSpacing(160)
@@ -436,7 +441,7 @@ class EditEbook(QMainWindow):
         ''')
 
         self.urlTextEdit = QTextEdit(self)
-        self.urlTextEdit.setPlaceholderText(self.URL)
+        self.urlTextEdit.setText(self.URL)
         self.urlTextEdit.setFont(QFont("Vesper Libre", 20))
         self.urlTextEdit.setStyleSheet('''
         QTextEdit {
@@ -505,6 +510,7 @@ class EditEbook(QMainWindow):
         vLayout.addLayout(hLayout21)
         self.setLayout(vLayout)
         self.cancelButton.clicked.connect(self.remove)
+        self.cancelButton.clicked.connect(self.back_to_main)
 
         scroll_area = QScrollArea()
         scroll_area.setWidgetResizable(True)
@@ -530,7 +536,7 @@ class EditEbook(QMainWindow):
         self.close()
 
     def check_category(self):
-        oldGenre = [self.romanceButton, self.mysteryButton, self.fantasyAndScienceFictionButton,
+        self.oldGenre = [self.romanceButton, self.mysteryButton, self.fantasyAndScienceFictionButton,
                     self.thrillersAndHorrorButton, self.youngAndAdultButton, self.childrenFictionButton,
                     self.inspirationalAndReligiousButton, self.biographyAndAutobiographyButton,
                     self.actionAndAdventureButton, self.classicButton, self.comicButton,
@@ -538,9 +544,9 @@ class EditEbook(QMainWindow):
                     self.shortStoriesButton, self.suspenseAndThrillersButton, self.womenFictionButton,
                     self.cookBookButton, self.essayButton, self.memoirButton, self.poetryButton,
                     self.trueCrimeButton]
-        for i in range(0, len(self.category)):
-            if self.category[i] == oldGenre[i].text():
-                oldGenre[i].setChecked(True)
+        for i in range(len(self.oldGenre)):
+            if self.category[i] == self.oldGenre[i].text():
+                self.oldGenre[i].setChecked(True)
 
     def save_category(self):
         newGenre = [self.romanceButton, self.mysteryButton, self.fantasyAndScienceFictionButton,
@@ -557,50 +563,6 @@ class EditEbook(QMainWindow):
                 self.category.append(newGenre[i].text())
             else:
                 self.category.append("None")
-
-    def submit(self):
-        # Save the dropped image to the project's images folder and create the folder if it doesn't exist
-        title_name = self.title
-        self.pixmap = self.image.pixmap()
-        from librarySystem import librarySystem
-        if not librarySystem.save_images(self.pixmap, title_name):
-            dialog = QDialog()
-            dialog.setWindowTitle("Error")
-            dialog.setWindowModality(Qt.ApplicationModal)
-            dialog.resize(300, 100)
-            label = QLabel("Please check whether you enter a title for the book and image or not")
-            label.setFont(QFont("Vesper Libre", 15))
-            label.setStyleSheet('''QLabel {                                                                             
-                        color: rgb(132, 113, 77);                                                                       
-                        }                                                                                               
-                        ''')
-            button = QPushButton("OK")
-            button.setFont(QFont("Vesper Libre", 15))
-            button.setStyleSheet('''                                                                                    
-                        QPushButton {                                                                                   
-                        border: 3px solid rgb(132, 113, 77);                                                            
-                        color: rgb(249, 246, 236);                                                                      
-                        background-color: rgb(182, 170, 145);                                                           
-                        }                                                                                               
-                        ''')
-            button.clicked.connect(dialog.close)
-            v_layout = QVBoxLayout()
-            v_layout.addWidget(label)
-            v_layout.addWidget(button)
-            dialog.setLayout(v_layout)
-            dialog.exec()
-        else:
-            # Go back to home page
-            self.save_category()
-            pass
-
-    def getCategory(self):
-        return self.category
-
-    def dragEnterEvent(self, event: QDragEnterEvent):
-        if event.mimeData().hasUrls() and event.mimeData().urls()[0].toString().endswith(".png"):
-            event.acceptProposedAction()
-
     def dropEvent(self, event):
         url = event.mimeData().urls()[0]
         file_path = url.toLocalFile()
@@ -610,8 +572,176 @@ class EditEbook(QMainWindow):
             self.image.setScaledContents(True)
             self.image.setStyleSheet("border: #F9F6EC;")
 
-    # I don't understand about save URL or save and go next page
+    def save_image(self):
+        # Save the dropped image to the project's images folder and create the folder if it doesn't exist
+        title_name = self.title
+        self.pixmap2 = self.image.pixmap()
+        from librarySystem import librarySystem
+        if not librarySystem.save_images(self.pixmap2, title_name):
+            dialog = QDialog()
+            dialog.setWindowTitle("Error")
+            dialog.setWindowModality(Qt.ApplicationModal)
+            dialog.resize(300, 100)
+            label = QLabel("Please check whether you enter a title for the book and image or not")
+            label.setFont(QFont("Vesper Libre", 15))
+            label.setStyleSheet('''QLabel {
+                        color: rgb(132, 113, 77);
+                        }
+                        ''')
+            button = QPushButton("OK")
+            button.setFont(QFont("Vesper Libre", 15))
+            button.setStyleSheet('''
+                        QPushButton {
+                        border: 3px solid rgb(132, 113, 77);
+                        color: rgb(249, 246, 236);
+                        background-color: rgb(182, 170, 145);
+                        }
+                        ''')
+            button.clicked.connect(dialog.close)
+            v_layout = QVBoxLayout()
+            v_layout.addWidget(label)
+            v_layout.addWidget(button)
+            dialog.setLayout(v_layout)
+            dialog.exec()
 
+    def submit(self):
+        # Save the dropped image to the project's images folder and create the folder if it doesn't exist
+        countError = 0
+        self.save_category()
+
+        authorInput = self.author
+        # If user don't input author name
+        if self.checkInputError(authorInput, "Enter the author"):
+            countError = 1
+            print("author error")
+
+        # receive description from user
+        descriptionInput = self.description
+
+        # If user don't input description or description  = Please enter the description
+        if self.checkInputError(descriptionInput,
+                                "Enter the description") or descriptionInput == "Please enter the description":
+            countError = 1
+            print("description error")
+
+        categoryInput = self.category
+        countCategory = 0
+        # If user don't choose any category
+        for i in range(len(self.oldGenre)):
+            if self.oldGenre[i].isChecked():
+                break
+            else:
+                countCategory += 1
+        if countCategory == len(self.oldGenre):
+            countError = 2
+            print("category error")
+
+        # # receive price from user
+        # priceInput = self.price.text()
+        # # If user don't input price
+        # if not priceInput.isdigit():
+        #     if self.checkInputError(priceInput, "Enter the price"):
+        #         countError = 3
+        #         print("price error")
+        #     else:
+        #         countError = 3
+        #         print("price error digit")
+
+        if self.URL == "":
+            countError = 4
+            print("url error")
+
+
+        if countError > 0:
+            print(countError)
+            dialog = QDialog()
+            dialog.setWindowTitle("Error")
+            dialog.setWindowModality(Qt.ApplicationModal)
+            dialog.resize(300, 100)
+            label = QLabel("Please enter all the information or check your price")
+            label.setFont(QFont("Vesper Libre", 15))
+            label.setStyleSheet('''QLabel {
+                                color: rgb(132, 113, 77);
+                                }
+                                ''')
+            button = QPushButton("OK")
+            button.setFont(QFont("Vesper Libre", 15))
+            button.setStyleSheet('''
+                                QPushButton {
+                                border: 3px solid rgb(132, 113, 77);
+                                color: rgb(249, 246, 236);
+                                background-color: rgb(182, 170, 145);
+                                }
+                                ''')
+            button.clicked.connect(dialog.close)
+            v_layout = QVBoxLayout()
+            v_layout.addWidget(label)
+            v_layout.addWidget(button)
+            dialog.setLayout(v_layout)
+            dialog.exec()
+        else:
+            self.save_image()
+            title_name = self.title
+            from librarySystem import librarySystem
+            if title_name and self.pixmap2:
+                self.ebook.set_picture(self.pixmap2)
+                self.ebook.set_title(self.titleName.text())
+                self.ebook.set_author(self.authorName.text())
+                self.ebook.set_description(self.descriptionName.toPlainText())
+                self.save_category()
+                self.ebook.set_category(self.category)
+                self.ebook.set_price(self.priceCost.text())
+                self.ebook.set_pdf(self.urlTextEdit.toPlainText())
+                self.success()
+
+    def success(self):
+        dialog = QDialog()
+        dialog.setWindowTitle("Success")
+        dialog.setWindowModality(Qt.ApplicationModal)
+        dialog.resize(300, 100)
+        label = QLabel("Your ebook has been added")
+        label.setFont(QFont("Vesper Libre", 15))
+        label.setStyleSheet('''QLabel {
+                            color: rgb(132, 113, 77);
+                            }
+                            ''')
+        button = QPushButton("OK")
+        button.setFont(QFont("Vesper Libre", 15))
+        button.setStyleSheet('''
+                            QPushButton {
+                            border: 3px solid rgb(132, 113, 77);
+                            color: rgb(249, 246, 236);
+                            background-color: rgb(182, 170, 145);
+                            }
+                            ''')
+        button.clicked.connect(dialog.close)
+        button.clicked.connect(self.back_to_main)
+        v_layout = QVBoxLayout()
+        v_layout.addWidget(label)
+        v_layout.addWidget(button)
+        dialog.setLayout(v_layout)
+        dialog.exec()
+        self.close()
+
+    def checkInputError(self, i, message):
+        self.c = True
+        if i == "" or i == message:
+            return self.c
+        else:
+            self.c = False
+            return self.c
+    def getCategory(self):
+        return self.category
+
+    def dragEnterEvent(self, event: QDragEnterEvent):
+        if event.mimeData().hasUrls() and event.mimeData().urls()[0].toString().endswith(".png"):
+            event.acceptProposedAction()
+
+
+
+    def back_to_main(self):
+        from librarySystem import librarySystem
+        librarySystem.setState("Main_menu")
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

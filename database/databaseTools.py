@@ -13,7 +13,13 @@ async def create_id_name(name):
     id_name = ID_NAME(id=rand_id, name=name)
     await id_name.save()
     return rand_id
-
+async def get_book_id(input_name):
+    # check if id is in database, return None if it is not
+    if await BookID_BName.exists(bookName=input_name):
+        # return name
+        book_id_name = await BookID_BName.get(bookName=input_name)
+        return book_id_name.bookId
+    return False
 
 # check id
 async def check_id(input_id):

@@ -84,6 +84,10 @@ class librarySystem:
         return False
 
     @staticmethod
+    def checkDuplicate(name):
+        from storageSystem import storageSystem
+        return storageSystem.getBookID(name)
+    @staticmethod
     def setUserID(userID):
         librarySystem.userID = userID
 

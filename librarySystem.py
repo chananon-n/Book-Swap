@@ -46,7 +46,6 @@ class librarySystem:
 
     @staticmethod
     def checkState():
-        print(librarySystem.state)
         if librarySystem.state == "Home":
             librarySystem.__current = Home()
         if librarySystem.state == "Sign_in":

@@ -604,9 +604,6 @@ class EditEbook(QMainWindow):
             dialog.setLayout(v_layout)
             dialog.exec()
 
-
-
-
     def submit(self):
         # Save the dropped image to the project's images folder and create the folder if it doesn't exist
         countError = 0
@@ -686,7 +683,8 @@ class EditEbook(QMainWindow):
             self.save_image()
             title_name = self.title
             from librarySystem import librarySystem
-            if title_name and self.pixmap:
+            if title_name and self.pixmap2:
+                self.ebook.set_picture(self.pixmap2)
                 self.ebook.set_title(self.titleName.text())
                 self.ebook.set_author(self.authorName.text())
                 self.ebook.set_description(self.descriptionName.toPlainText())

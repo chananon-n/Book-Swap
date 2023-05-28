@@ -678,7 +678,7 @@ class Add_book(QMainWindow):
     def save_and_go_main(self): # check error and save
         countError = 0
         self.check_category()
-
+        title = self.title_name.text()
         authorInput = self.author_name.text()
         # If user don't input author name
         if self.checkInputError(authorInput, "Enter the author"):
@@ -719,8 +719,19 @@ class Add_book(QMainWindow):
         if self.check_booktype() == "None":
             countError = 4
             print("booktype error")
+        from librarySystem import librarySystem
+        from librarySystem import librarySystem
+        try:
+            temp = librarySystem.checkDuplicate(title)
+        except RuntimeError:
+            temp = librarySystem.checkDuplicate(title)
+        if temp:
+            countError = 5
 
-        if countError > 0:
+        if countError == 5:
+            self.error()
+
+        elif 0 < countError < 5:
             print(countError)
             dialog = QDialog()
             dialog.setWindowTitle("Error")

@@ -147,28 +147,21 @@ class librarySystem:
         from storageSystem import storageSystem
         return storageSystem.createNewUser(name)
 
-    @staticmethod
-    def filterCategoryBook(category):
+    def filterCategory(category):
         bookList = []
-        from storageSystem import storageSystem
-        allBook = storageSystem.getAllBooks(librarySystem.userID)
+        allBook = librarySystem.book_list
         for book in allBook:
-            for cat in book.get_category():
-                if cat == category:
-                    bookList.append(book)
-        bookList = list(dict.fromkeys(bookList))
+            if (book.get_category() == category) and (book not in bookList):
+                bookList.append(book)
         return bookList
 
     @staticmethod
     def filterCategoryEbook(category):
         ebookList = []
-        from storageSystem import storageSystem
-        allEbook = storageSystem.getEBooksFromLocal()
+        allEbook = librarySystem.ebook_list
         for ebook in allEbook:
-            for cat in ebook.get_category():
-                if cat == category:
-                    ebookList.append(ebook)
-        ebookList = list(dict.fromkeys(ebookList))
+            if (ebook.get_category() == category) and (ebook not in ebookList):
+                ebookList.append(ebook)
         return ebookList
 
     @staticmethod
@@ -259,6 +252,11 @@ class librarySystem:
         e.eBook.set_price(price)
         e.eBook.set_pdf(pdf)
         return True
+
+    @staticmethod
+    def checkDuplicate(name):
+        from storageSystem import storageSystem
+        return storageSystem.getBookID(name)
 
     @staticmethod
     def finishAndSave():

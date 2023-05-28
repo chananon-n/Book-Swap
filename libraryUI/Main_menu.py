@@ -1,14 +1,12 @@
 from PySide6.QtGui import *
 from PySide6.QtWidgets import *
 from PySide6.QtCore import *
-from PySide6.QtCore import Qt
 
 
 class Main_menu(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.checkList_book = None
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
 
@@ -89,7 +87,7 @@ class Main_menu(QMainWindow):
                 }
             ''')
 
-        self.fantasyAndScienceFictionCheck_book = QCheckBox("Fantasy and science fiction")
+        self.fantasyAndScienceFictionCheck_book = QCheckBox("Fantasy and Science Fiction")
         self.fantasyAndScienceFictionCheck_book.setChecked(False)
         self.fantasyAndScienceFictionCheck_book.setFont(QFont("Vesper Libre", 16))
         self.fantasyAndScienceFictionCheck_book.setStyleSheet('''
@@ -98,7 +96,7 @@ class Main_menu(QMainWindow):
                 }
             ''')
 
-        self.thrillersHorrorCheck_book = QCheckBox("Thrillers and horror")
+        self.thrillersHorrorCheck_book = QCheckBox("Thrillers and Horror")
         self.thrillersHorrorCheck_book.setChecked(False)
         self.thrillersHorrorCheck_book.setFont(QFont("Vesper Libre", 16))
         self.thrillersHorrorCheck_book.setStyleSheet('''
@@ -107,7 +105,7 @@ class Main_menu(QMainWindow):
                 }
             ''')
 
-        self.youngAdultCheck_book = QCheckBox("Young adult")
+        self.youngAdultCheck_book = QCheckBox("Young Adult")
         self.youngAdultCheck_book.setChecked(False)
         self.youngAdultCheck_book.setFont(QFont("Vesper Libre", 16))
         self.youngAdultCheck_book.setStyleSheet('''
@@ -116,7 +114,7 @@ class Main_menu(QMainWindow):
                 }
             ''')
 
-        self.childrenFictionCheck_book = QCheckBox("Children's fiction")
+        self.childrenFictionCheck_book = QCheckBox("Children Fiction")
         self.childrenFictionCheck_book.setChecked(False)
         self.childrenFictionCheck_book.setFont(QFont("Vesper Libre", 16))
         self.childrenFictionCheck_book.setStyleSheet('''
@@ -125,7 +123,7 @@ class Main_menu(QMainWindow):
                 }
             ''')
 
-        self.inspirationalReligiousCheck_book = QCheckBox("Inspiraltional and religious")
+        self.inspirationalReligiousCheck_book = QCheckBox("Inspirational and Religious")
         self.inspirationalReligiousCheck_book.setChecked(False)
         self.inspirationalReligiousCheck_book.setFont(QFont("Vesper Libre", 16))
         self.inspirationalReligiousCheck_book.setStyleSheet('''
@@ -134,7 +132,7 @@ class Main_menu(QMainWindow):
                     }
                 ''')
 
-        self.biographyAndAutobiographyCheck_book = QCheckBox("Biography and autobiography")
+        self.biographyAndAutobiographyCheck_book = QCheckBox("Biography and Autobiography")
         self.biographyAndAutobiographyCheck_book.setChecked(False)
         self.biographyAndAutobiographyCheck_book.setFont(QFont("Vesper Libre", 16))
         self.biographyAndAutobiographyCheck_book.setStyleSheet('''
@@ -151,7 +149,7 @@ class Main_menu(QMainWindow):
                     }
                 ''')
 
-        self.classicCheck_book = QCheckBox("Classics")
+        self.classicCheck_book = QCheckBox("Classic")
         self.classicCheck_book.setChecked(False)
         self.classicCheck_book.setFont(QFont("Vesper Libre", 16))
         self.classicCheck_book.setStyleSheet('''
@@ -160,7 +158,7 @@ class Main_menu(QMainWindow):
                     }
                 ''')
 
-        self.comicBookCheck_book = QCheckBox("Comic book")
+        self.comicBookCheck_book = QCheckBox("Comic Book")
         self.comicBookCheck_book.setChecked(False)
         self.comicBookCheck_book.setFont(QFont("Vesper Libre", 16))
         self.comicBookCheck_book.setStyleSheet('''
@@ -169,7 +167,7 @@ class Main_menu(QMainWindow):
                     }
                 ''')
 
-        self.historicalFictionCheck_book = QCheckBox("Historical fiction")
+        self.historicalFictionCheck_book = QCheckBox("Historical Fiction")
         self.historicalFictionCheck_book.setChecked(False)
         self.historicalFictionCheck_book.setFont(QFont("Vesper Libre", 16))
         self.historicalFictionCheck_book.setStyleSheet('''
@@ -178,7 +176,7 @@ class Main_menu(QMainWindow):
                     }
                 ''')
 
-        self.literaryCheck_book = QCheckBox("Literary fiction")
+        self.literaryCheck_book = QCheckBox("Literary")
         self.literaryCheck_book.setChecked(False)
         self.literaryCheck_book.setFont(QFont("Vesper Libre", 16))
         self.literaryCheck_book.setStyleSheet('''
@@ -187,7 +185,7 @@ class Main_menu(QMainWindow):
                     }
                 ''')
 
-        self.scienceFiction_book = QCheckBox("Science fiction")
+        self.scienceFiction_book = QCheckBox("Science Fiction")
         self.scienceFiction_book.setChecked(False)
         self.scienceFiction_book.setFont(QFont("Vesper Libre", 16))
         self.scienceFiction_book.setStyleSheet('''
@@ -196,7 +194,7 @@ class Main_menu(QMainWindow):
                     }
                 ''')
 
-        self.shortStoryCheck_book = QCheckBox("Short Stories")
+        self.shortStoryCheck_book = QCheckBox("Short Story")
         self.shortStoryCheck_book.setChecked(False)
         self.shortStoryCheck_book.setFont(QFont("Vesper Libre", 16))
         self.shortStoryCheck_book.setStyleSheet('''
@@ -205,7 +203,7 @@ class Main_menu(QMainWindow):
                     }
                 ''')
 
-        self.suspenseAndThrillerCheck_book = QCheckBox("Suspense and Thrillers")
+        self.suspenseAndThrillerCheck_book = QCheckBox("Suspense and Thriller")
         self.suspenseAndThrillerCheck_book.setChecked(False)
         self.suspenseAndThrillerCheck_book.setFont(QFont("Vesper Libre", 16))
         self.suspenseAndThrillerCheck_book.setStyleSheet('''
@@ -222,7 +220,7 @@ class Main_menu(QMainWindow):
                         color: rgb(132, 113, 77);
                     }
                 ''')
-        self.cookBookCheck_book = QCheckBox("Cookbooks")
+        self.cookBookCheck_book = QCheckBox("Cook Book")
         self.cookBookCheck_book.setChecked(False)
         self.cookBookCheck_book.setFont(QFont("Vesper Libre", 16))
         self.cookBookCheck_book.setStyleSheet('''
@@ -231,7 +229,7 @@ class Main_menu(QMainWindow):
                     }
                 ''')
 
-        self.essayCheck_book = QCheckBox("Essays")
+        self.essayCheck_book = QCheckBox("Essay")
         self.essayCheck_book.setChecked(False)
         self.essayCheck_book.setFont(QFont("Vesper Libre", 16))
         self.essayCheck_book.setStyleSheet('''
@@ -258,7 +256,7 @@ class Main_menu(QMainWindow):
                     }
                 ''')
 
-        self.trueCrimeCheck_book = QCheckBox("TrueCrime")
+        self.trueCrimeCheck_book = QCheckBox("True Crime")
         self.trueCrimeCheck_book.setChecked(False)
         self.trueCrimeCheck_book.setFont(QFont("Vesper Libre", 16))
         self.trueCrimeCheck_book.setStyleSheet('''
@@ -330,26 +328,6 @@ class Main_menu(QMainWindow):
         self.bookFilterLayout10 = QHBoxLayout()
         self.bookFilterLayout10.addSpacing(10)
         self.bookFilterLayout10.addWidget(self.trueCrimeCheck_book)
-
-        self.searchButton_book = QPushButton("Search")
-        self.searchButton_book.setFont(QFont("Vesper Libre", 16))
-        self.searchButton_book.setStyleSheet('''
-                    QPushButton {
-                        color: rgb(132, 113, 77);
-                        border: 2px solid rgb(132, 113, 77);
-                        border-radius: 10px;
-                        padding: 0 8px;
-                    }
-                    QPushButton:hover {
-                        background-color: rgb(132, 113, 77);
-                        color: white;
-                    }
-                ''')
-
-        self.bookFilterLayout10.addSpacing(30)
-        self.bookFilterLayout10.addWidget(self.searchButton_book)
-        self.searchButton_book.clicked.connect(self.getFilter_book)
-
 
         filter_menu_book_layout = QVBoxLayout()
         self.filter_menu_book.setLayout(filter_menu_book_layout)
@@ -476,6 +454,7 @@ class Main_menu(QMainWindow):
         self.filter_button_e_book.setPopupMode(QToolButton.InstantPopup)
 
         self.filter_menu_e_book = QMenu(self.filter_button_e_book)
+
         self.romanceCheck_e_book = QCheckBox("Romance")
         self.romanceCheck_e_book.setChecked(False)
         self.romanceCheck_e_book.setFont(QFont("Vesper Libre", 16))
@@ -494,7 +473,7 @@ class Main_menu(QMainWindow):
                         }
                     ''')
 
-        self.fantasyAndScienceFictionCheck_e_book = QCheckBox("Fantasy and science fiction")
+        self.fantasyAndScienceFictionCheck_e_book = QCheckBox("Fantasy and Science Fiction")
         self.fantasyAndScienceFictionCheck_e_book.setChecked(False)
         self.fantasyAndScienceFictionCheck_e_book.setFont(QFont("Vesper Libre", 16))
         self.fantasyAndScienceFictionCheck_e_book.setStyleSheet('''
@@ -503,7 +482,7 @@ class Main_menu(QMainWindow):
                         }
                     ''')
 
-        self.thrillersHorrorCheck_e_book = QCheckBox("Thrillers and horror")
+        self.thrillersHorrorCheck_e_book = QCheckBox("Thrillers and Horror")
         self.thrillersHorrorCheck_e_book.setChecked(False)
         self.thrillersHorrorCheck_e_book.setFont(QFont("Vesper Libre", 16))
         self.thrillersHorrorCheck_e_book.setStyleSheet('''
@@ -512,7 +491,7 @@ class Main_menu(QMainWindow):
                         }
                     ''')
 
-        self.youngAdultCheck_e_book = QCheckBox("Young adult")
+        self.youngAdultCheck_e_book = QCheckBox("Young Adult")
         self.youngAdultCheck_e_book.setChecked(False)
         self.youngAdultCheck_e_book.setFont(QFont("Vesper Libre", 16))
         self.youngAdultCheck_e_book.setStyleSheet('''
@@ -521,7 +500,7 @@ class Main_menu(QMainWindow):
                         }
                     ''')
 
-        self.childrenFictionCheck_e_book = QCheckBox("Children's fiction")
+        self.childrenFictionCheck_e_book = QCheckBox("Children Fiction")
         self.childrenFictionCheck_e_book.setChecked(False)
         self.childrenFictionCheck_e_book.setFont(QFont("Vesper Libre", 16))
         self.childrenFictionCheck_e_book.setStyleSheet('''
@@ -530,7 +509,7 @@ class Main_menu(QMainWindow):
                         }
                     ''')
 
-        self.inspirationalReligiousCheck_e_book = QCheckBox("Inspiraltional and religious")
+        self.inspirationalReligiousCheck_e_book = QCheckBox("Inspirational and Religious")
         self.inspirationalReligiousCheck_e_book.setChecked(False)
         self.inspirationalReligiousCheck_e_book.setFont(QFont("Vesper Libre", 16))
         self.inspirationalReligiousCheck_e_book.setStyleSheet('''
@@ -539,7 +518,7 @@ class Main_menu(QMainWindow):
                             }
                         ''')
 
-        self.biographyAndAutobiographyCheck_e_book = QCheckBox("Biography and autobiography")
+        self.biographyAndAutobiographyCheck_e_book = QCheckBox("Biography and Autobiography")
         self.biographyAndAutobiographyCheck_e_book.setChecked(False)
         self.biographyAndAutobiographyCheck_e_book.setFont(QFont("Vesper Libre", 16))
         self.biographyAndAutobiographyCheck_e_book.setStyleSheet('''
@@ -556,7 +535,7 @@ class Main_menu(QMainWindow):
                             }
                         ''')
 
-        self.classicCheck_e_book = QCheckBox("Classics")
+        self.classicCheck_e_book = QCheckBox("Classic")
         self.classicCheck_e_book.setChecked(False)
         self.classicCheck_e_book.setFont(QFont("Vesper Libre", 16))
         self.classicCheck_e_book.setStyleSheet('''
@@ -565,7 +544,7 @@ class Main_menu(QMainWindow):
                             }
                         ''')
 
-        self.comicBookCheck_e_book = QCheckBox("Comic book")
+        self.comicBookCheck_e_book = QCheckBox("Comic Book")
         self.comicBookCheck_e_book.setChecked(False)
         self.comicBookCheck_e_book.setFont(QFont("Vesper Libre", 16))
         self.comicBookCheck_e_book.setStyleSheet('''
@@ -574,7 +553,7 @@ class Main_menu(QMainWindow):
                             }
                         ''')
 
-        self.historicalFictionCheck_e_book = QCheckBox("Historical fiction")
+        self.historicalFictionCheck_e_book = QCheckBox("Historical Fiction")
         self.historicalFictionCheck_e_book.setChecked(False)
         self.historicalFictionCheck_e_book.setFont(QFont("Vesper Libre", 16))
         self.historicalFictionCheck_e_book.setStyleSheet('''
@@ -583,7 +562,7 @@ class Main_menu(QMainWindow):
                             }
                         ''')
 
-        self.literaryCheck_e_book = QCheckBox("Literary fiction")
+        self.literaryCheck_e_book = QCheckBox("Literary")
         self.literaryCheck_e_book.setChecked(False)
         self.literaryCheck_e_book.setFont(QFont("Vesper Libre", 16))
         self.literaryCheck_e_book.setStyleSheet('''
@@ -592,7 +571,7 @@ class Main_menu(QMainWindow):
                             }
                         ''')
 
-        self.scienceFiction_e_book = QCheckBox("Science fiction")
+        self.scienceFiction_e_book = QCheckBox("Science Fiction")
         self.scienceFiction_e_book.setChecked(False)
         self.scienceFiction_e_book.setFont(QFont("Vesper Libre", 16))
         self.scienceFiction_e_book.setStyleSheet('''
@@ -601,7 +580,7 @@ class Main_menu(QMainWindow):
                             }
                         ''')
 
-        self.shortStoryCheck_e_book = QCheckBox("Short Stories")
+        self.shortStoryCheck_e_book = QCheckBox("Short Story")
         self.shortStoryCheck_e_book.setChecked(False)
         self.shortStoryCheck_e_book.setFont(QFont("Vesper Libre", 16))
         self.shortStoryCheck_e_book.setStyleSheet('''
@@ -610,7 +589,7 @@ class Main_menu(QMainWindow):
                             }
                         ''')
 
-        self.suspenseAndThrillerCheck_e_book = QCheckBox("Suspense and Thrillers")
+        self.suspenseAndThrillerCheck_e_book = QCheckBox("Suspense and Thriller")
         self.suspenseAndThrillerCheck_e_book.setChecked(False)
         self.suspenseAndThrillerCheck_e_book.setFont(QFont("Vesper Libre", 16))
         self.suspenseAndThrillerCheck_e_book.setStyleSheet('''
@@ -627,7 +606,7 @@ class Main_menu(QMainWindow):
                                 color: rgb(132, 113, 77);
                             }
                         ''')
-        self.cookBookCheck_e_book = QCheckBox("Cookbooks")
+        self.cookBookCheck_e_book = QCheckBox("Cook Book")
         self.cookBookCheck_e_book.setChecked(False)
         self.cookBookCheck_e_book.setFont(QFont("Vesper Libre", 16))
         self.cookBookCheck_e_book.setStyleSheet('''
@@ -636,7 +615,7 @@ class Main_menu(QMainWindow):
                             }
                         ''')
 
-        self.essayCheck_e_book = QCheckBox("Essays")
+        self.essayCheck_e_book = QCheckBox("Essay")
         self.essayCheck_e_book.setChecked(False)
         self.essayCheck_e_book.setFont(QFont("Vesper Libre", 16))
         self.essayCheck_e_book.setStyleSheet('''
@@ -663,7 +642,7 @@ class Main_menu(QMainWindow):
                             }
                         ''')
 
-        self.trueCrimeCheck_e_book = QCheckBox("TrueCrime")
+        self.trueCrimeCheck_e_book = QCheckBox("True Crime")
         self.trueCrimeCheck_e_book.setChecked(False)
         self.trueCrimeCheck_e_book.setFont(QFont("Vesper Libre", 16))
         self.trueCrimeCheck_e_book.setStyleSheet('''
@@ -1005,8 +984,9 @@ class Main_menu(QMainWindow):
     def keyPressEvent(self, event):
         # if the user presses enter, search for the book
         if event.key() == Qt.Key_Return:
-            self.search_Ebook()
-    def search_Ebook(self):
+            self.search_book()
+
+    def search_book(self):
         # get the search term from the user
         search_term = self.search_place_e_book.text()
         # search for the book
@@ -1015,23 +995,6 @@ class Main_menu(QMainWindow):
         librarySystem.ebook_list = book
         # refresh the e-book tab
         self.refresh_e_book_tab(self.centralWidget().layout().itemAt(0).widget().widget(1))
-
-    def BookKeyPressEvent(self, event):
-        # if the user presses enter, search for the book
-        if event.key() == Qt.Key_Return:
-            self.search_book()
-
-    def search_book(self):
-        # get the search term from the user
-        search_term = self.search_place_book.text()
-        # search for the book
-        from librarySystem import librarySystem
-        book = librarySystem.searchBook(search_term)
-        librarySystem.book_list = book
-        # refresh the book tab
-        self.refresh_book_tab(self.centralWidget().layout().itemAt(0).widget().widget(0))
-
-
 
     def add(self):
         from librarySystem import librarySystem
@@ -1083,33 +1046,9 @@ class Main_menu(QMainWindow):
         layout.addSpacing(400)
         history_tab.setLayout(layout)
 
-    def getFilter_book(self):
-        self.checkList_book = []
-        filter_book = [self.romanceCheck_book, self.mysteryCheck_book, self.fantasyAndScienceFictionCheck_book,
-                    self.thrillersHorrorCheck_book, self.youngAdultCheck_book,
-                    self.childrenFictionCheck_book, self.inspirationalReligiousCheck_book,
-                    self.biographyAndAutobiographyCheck_book,
-                    self.actionAndAdventureCheck_book, self.classicCheck_book, self.comicBookCheck_book,
-                    self.historicalFictionCheck_book, self.literaryCheck_book, self.scienceFiction_book,
-                    self.shortStoryCheck_book, self.suspenseAndThrillerCheck_book,
-                    self.womensFictionCheck_book, self.cookBookCheck_book, self.essayCheck_book,
-                    self.memoirCheck_book, self.poetryCheck_book, self.trueCrimeCheck_book]
-        for i in range(len(filter_book)):
-            if filter_book[i].isChecked():
-                self.checkList_book.append(filter_book[i].text())
-            else:
-                self.checkList_book.append("None")
-        from librarySystem import librarySystem
-        temp = librarySystem.filterCategoryBook(self.checkList_book)
-        return temp
-
-
-
-
-
     def getFilter(self):
         self.checkList = []
-        filter_ebook = [self.romanceCheck_e_book, self.mysteryCheck_e_book, self.fantasyAndScienceFictionCheck_e_book,
+        filter = [self.romanceCheck_e_book, self.mysteryCheck_e_book, self.fantasyAndScienceFictionCheck_e_book,
                   self.thrillersHorrorCheck_e_book, self.youngAdultCheck_e_book,
                   self.childrenFictionCheck_e_book, self.inspirationalReligiousCheck_e_book,
                   self.biographyAndAutobiographyCheck_e_book,
@@ -1119,9 +1058,9 @@ class Main_menu(QMainWindow):
                   self.womensFictionCheck_e_book, self.cookBookCheck_e_book, self.essayCheck_e_book,
                   self.memoirCheck_e_book, self.poetryCheck_e_book,
                   self.trueCrimeCheck_e_book]
-        for i in range(len(filter_ebook)):
-            if filter_ebook[i].isChecked():
-                self.checkList.append(filter_ebook[i].text())
+        for i in range(len(filter)):
+            if filter[i].isChecked():
+                self.checkList.append(filter[i].text())
             else:
                 self.checkList.append("None")
         from librarySystem import librarySystem
@@ -1136,8 +1075,6 @@ class Main_menu(QMainWindow):
     #     from librarySystem import librarySystem
     #     librarySystem.setUserSelect(self.editt_for_book)
     #     librarySystem.setState("Edit_book")
-
-
 
 
 if __name__ == "__main__":

@@ -739,7 +739,6 @@ class EditEbook(QMainWindow):
 
 
 
-
     def back_to_main(self):
         from librarySystem import librarySystem
         librarySystem.setState("Main_menu")

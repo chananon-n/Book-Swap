@@ -56,6 +56,13 @@ class storageSystem:
             return e.message + "Error in createNewBook"
 
     @staticmethod
+    def getBookID(name):
+        run_async(init())
+        try:
+            return asyncio.run(get_book_id(name))
+        except CEH.databaseException as e:
+            return e.message + "Error in getBookID"
+    @staticmethod
     def getBookName(id):
         run_async(init())
         try:

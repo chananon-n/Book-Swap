@@ -6,6 +6,7 @@ class Main_menu(QMainWindow):
     def __init__(self):
         super().__init__()
 
+        self.checkList = None
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
 
@@ -658,6 +659,26 @@ class Main_menu(QMainWindow):
         self.e_bookFilterLayout10.addSpacing(10)
         self.e_bookFilterLayout10.addWidget(self.trueCrimeCheck_e_book)
 
+        #create search button
+        self.searchButton = QPushButton("Search")
+        self.searchButton.setFont(QFont("Vesper Libre", 16))
+        self.searchButton.setStyleSheet('''
+            QPushButton {
+                background-color: rgb(132, 113, 77);
+                color: white;
+                border-radius: 10px;
+                padding: 10px;
+            }
+            QPushButton:hover {
+                background-color: rgb(163, 140, 97);
+            }
+        ''')
+        self.e_bookFilterLayout10.addSpacing(30)
+        self.e_bookFilterLayout10.addWidget(self.searchButton)
+        self.searchButton.clicked.connect(self.getFilter)
+
+
+
         filter_menu_e_book_layout = QVBoxLayout()
         self.filter_menu_e_book.setLayout(filter_menu_e_book_layout)
 
@@ -672,6 +693,7 @@ class Main_menu(QMainWindow):
             self.e_bookFilterLayout8,
             self.e_bookFilterLayout9,
             self.e_bookFilterLayout10
+
         ]
 
         for layout in filter_layouts_e_book:
@@ -757,6 +779,26 @@ class Main_menu(QMainWindow):
         self.add_button.clicked.connect(self.add)
         self.exit_button.clicked.connect(self.exit)
 
+    def getFilter(self):
+        self.checkList = []
+        filter= [self.romanceCheck_e_book, self.mysteryCheck_e_book, self.fantasyAndScienceFictionCheck_e_book, self.thrillersHorrorCheck_e_book, self.youngAdultCheck_e_book,
+                 self.childrenFictionCheck_e_book, self.inspirationalReligiousCheck_e_book, self.biographyAndAutobiographyCheck_e_book,
+                 self.actionAndAdventureCheck_e_book, self.classicCheck_e_book, self.comicBookCheck_e_book, self.historicalFictionCheck_e_book, self.literaryCheck_e_book, self.scienceFiction_e_book,
+                 self.shortStoryCheck_e_book, self.suspenseAndThrillerCheck_e_book,
+                 self.womensFictionCheck_e_book, self.cookBookCheck_e_book, self.essayCheck_e_book, self.memoirCheck_e_book, self.poetryCheck_e_book,
+                 self.trueCrimeCheck_e_book]
+        for i in range(len(filter)):
+            if filter[i].isChecked():
+                self.checkList.append(filter[i].text())
+            else:
+                self.checkList.append("None")
+        from librarySystem import librarySystem
+        temp = librarySystem.filterCategoryEbook(self.checkList)
+        return temp #Return the list of books that match the filter
+
+
+
+
     def on_tab_changed(self, index):
         if index == 2:  # History tab index is 2
             history_tab = self.centralWidget().layout().itemAt(0).widget().widget(2)
@@ -814,6 +856,8 @@ class Main_menu(QMainWindow):
 
         layout.addSpacing(400)
         history_tab.setLayout(layout)
+
+
 
 
 if __name__ == "__main__":

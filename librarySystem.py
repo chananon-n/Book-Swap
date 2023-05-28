@@ -139,12 +139,20 @@ class librarySystem:
     @staticmethod
     def filterCategory(category):
         bookList = []
-        from storageSystem import storageSystem
-        allBook = storageSystem.getAllBooks(librarySystem.__instance.userID)
+        allBook = librarySystem.book_list
         for book in allBook:
             if (book.get_category() == category) and (book not in bookList):
                 bookList.append(book)
         return bookList
+
+    @staticmethod
+    def filterCategoryEbook(category):
+        ebookList = []
+        allEbook = librarySystem.ebook_list
+        for ebook in allEbook:
+            if (ebook.get_category() == category) and (ebook not in ebookList):
+                ebookList.append(ebook)
+        return ebookList
 
     @staticmethod
     def createBookStatus(bookID, userID, status):
@@ -278,8 +286,8 @@ class librarySystem:
 # librarySystem.finishAndSave()
 
 
-# if __name__ == "__main__":
-#     app = QApplication([])
-#     library_system = librarySystem.get_instance()
-#     library_system.start()
-#     sys.exit(app.exec())
+if __name__ == "__main__":
+    app = QApplication([])
+    library_system = librarySystem.get_instance()
+    library_system.start()
+    sys.exit(app.exec())

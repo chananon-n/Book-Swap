@@ -1,17 +1,20 @@
 from PySide6.QtGui import *
 from PySide6.QtWidgets import *
+from PySide6.QtCore import *
+from PySide6.QtCore import Qt
 
 
 class Main_menu(QMainWindow):
     def __init__(self):
         super().__init__()
 
+        self.checkList_book = None
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
 
-        tab_widget = QTabWidget()
-        tab_widget.setFont(QFont("Vesper Libre", 20))
-        tab_widget.setStyleSheet('''
+        self.tab_widget = QTabWidget()
+        self.tab_widget.setFont(QFont("Vesper Libre", 20))
+        self.tab_widget.setStyleSheet('''
             QTabWidget::pane {
                 border: 3px solid rgb(132, 113, 77);
                 background-color: rgb(182, 170, 145);
@@ -36,14 +39,14 @@ class Main_menu(QMainWindow):
         e_book_tab = QWidget()
         history_tab = QWidget()
 
-        tab_widget.addTab(book_tab, "Book")
-        tab_widget.addTab(e_book_tab, "E-book")
-        tab_widget.addTab(history_tab, "History")
+        self.tab_widget.addTab(book_tab, "Book")
+        self.tab_widget.addTab(e_book_tab, "E-book")
+        self.tab_widget.addTab(history_tab, "History")
 
-        search_place_book = QLineEdit()
-        search_place_book.setPlaceholderText("Search book name")
-        search_place_book.setFont(QFont("Vesper Libre", 20))
-        search_place_book.setStyleSheet('''
+        self.search_place_book = QLineEdit()
+        self.search_place_book.setPlaceholderText("Search book name")
+        self.search_place_book.setFont(QFont("Vesper Libre", 20))
+        self.search_place_book.setStyleSheet('''
             QLineEdit {
                 border: 3px solid rgb(132, 113, 77);
                 color: rgb(249, 246, 236);
@@ -86,7 +89,7 @@ class Main_menu(QMainWindow):
                 }
             ''')
 
-        self.fantasyAndScienceFictionCheck_book = QCheckBox("Fantasy and Science Fiction")
+        self.fantasyAndScienceFictionCheck_book = QCheckBox("Fantasy and science fiction")
         self.fantasyAndScienceFictionCheck_book.setChecked(False)
         self.fantasyAndScienceFictionCheck_book.setFont(QFont("Vesper Libre", 16))
         self.fantasyAndScienceFictionCheck_book.setStyleSheet('''
@@ -95,7 +98,7 @@ class Main_menu(QMainWindow):
                 }
             ''')
 
-        self.thrillersHorrorCheck_book = QCheckBox("Thrillers and Horror")
+        self.thrillersHorrorCheck_book = QCheckBox("Thrillers and horror")
         self.thrillersHorrorCheck_book.setChecked(False)
         self.thrillersHorrorCheck_book.setFont(QFont("Vesper Libre", 16))
         self.thrillersHorrorCheck_book.setStyleSheet('''
@@ -104,7 +107,7 @@ class Main_menu(QMainWindow):
                 }
             ''')
 
-        self.youngAdultCheck_book = QCheckBox("Young Adult")
+        self.youngAdultCheck_book = QCheckBox("Young adult")
         self.youngAdultCheck_book.setChecked(False)
         self.youngAdultCheck_book.setFont(QFont("Vesper Libre", 16))
         self.youngAdultCheck_book.setStyleSheet('''
@@ -113,7 +116,7 @@ class Main_menu(QMainWindow):
                 }
             ''')
 
-        self.childrenFictionCheck_book = QCheckBox("Children Fiction")
+        self.childrenFictionCheck_book = QCheckBox("Children's fiction")
         self.childrenFictionCheck_book.setChecked(False)
         self.childrenFictionCheck_book.setFont(QFont("Vesper Libre", 16))
         self.childrenFictionCheck_book.setStyleSheet('''
@@ -122,7 +125,7 @@ class Main_menu(QMainWindow):
                 }
             ''')
 
-        self.inspirationalReligiousCheck_book = QCheckBox("Inspirational and Religious")
+        self.inspirationalReligiousCheck_book = QCheckBox("Inspiraltional and religious")
         self.inspirationalReligiousCheck_book.setChecked(False)
         self.inspirationalReligiousCheck_book.setFont(QFont("Vesper Libre", 16))
         self.inspirationalReligiousCheck_book.setStyleSheet('''
@@ -131,7 +134,7 @@ class Main_menu(QMainWindow):
                     }
                 ''')
 
-        self.biographyAndAutobiographyCheck_book = QCheckBox("Biography and Autobiography")
+        self.biographyAndAutobiographyCheck_book = QCheckBox("Biography and autobiography")
         self.biographyAndAutobiographyCheck_book.setChecked(False)
         self.biographyAndAutobiographyCheck_book.setFont(QFont("Vesper Libre", 16))
         self.biographyAndAutobiographyCheck_book.setStyleSheet('''
@@ -148,7 +151,7 @@ class Main_menu(QMainWindow):
                     }
                 ''')
 
-        self.classicCheck_book = QCheckBox("Classic")
+        self.classicCheck_book = QCheckBox("Classics")
         self.classicCheck_book.setChecked(False)
         self.classicCheck_book.setFont(QFont("Vesper Libre", 16))
         self.classicCheck_book.setStyleSheet('''
@@ -157,7 +160,7 @@ class Main_menu(QMainWindow):
                     }
                 ''')
 
-        self.comicBookCheck_book = QCheckBox("Comic Book")
+        self.comicBookCheck_book = QCheckBox("Comic book")
         self.comicBookCheck_book.setChecked(False)
         self.comicBookCheck_book.setFont(QFont("Vesper Libre", 16))
         self.comicBookCheck_book.setStyleSheet('''
@@ -166,7 +169,7 @@ class Main_menu(QMainWindow):
                     }
                 ''')
 
-        self.historicalFictionCheck_book = QCheckBox("Historical Fiction")
+        self.historicalFictionCheck_book = QCheckBox("Historical fiction")
         self.historicalFictionCheck_book.setChecked(False)
         self.historicalFictionCheck_book.setFont(QFont("Vesper Libre", 16))
         self.historicalFictionCheck_book.setStyleSheet('''
@@ -175,7 +178,7 @@ class Main_menu(QMainWindow):
                     }
                 ''')
 
-        self.literaryCheck_book = QCheckBox("Literary")
+        self.literaryCheck_book = QCheckBox("Literary fiction")
         self.literaryCheck_book.setChecked(False)
         self.literaryCheck_book.setFont(QFont("Vesper Libre", 16))
         self.literaryCheck_book.setStyleSheet('''
@@ -184,7 +187,7 @@ class Main_menu(QMainWindow):
                     }
                 ''')
 
-        self.scienceFiction_book = QCheckBox("Science Fiction")
+        self.scienceFiction_book = QCheckBox("Science fiction")
         self.scienceFiction_book.setChecked(False)
         self.scienceFiction_book.setFont(QFont("Vesper Libre", 16))
         self.scienceFiction_book.setStyleSheet('''
@@ -193,7 +196,7 @@ class Main_menu(QMainWindow):
                     }
                 ''')
 
-        self.shortStoryCheck_book = QCheckBox("Short Story")
+        self.shortStoryCheck_book = QCheckBox("Short Stories")
         self.shortStoryCheck_book.setChecked(False)
         self.shortStoryCheck_book.setFont(QFont("Vesper Libre", 16))
         self.shortStoryCheck_book.setStyleSheet('''
@@ -202,7 +205,7 @@ class Main_menu(QMainWindow):
                     }
                 ''')
 
-        self.suspenseAndThrillerCheck_book = QCheckBox("Suspense and Thriller")
+        self.suspenseAndThrillerCheck_book = QCheckBox("Suspense and Thrillers")
         self.suspenseAndThrillerCheck_book.setChecked(False)
         self.suspenseAndThrillerCheck_book.setFont(QFont("Vesper Libre", 16))
         self.suspenseAndThrillerCheck_book.setStyleSheet('''
@@ -219,7 +222,7 @@ class Main_menu(QMainWindow):
                         color: rgb(132, 113, 77);
                     }
                 ''')
-        self.cookBookCheck_book = QCheckBox("Cook Book")
+        self.cookBookCheck_book = QCheckBox("Cookbooks")
         self.cookBookCheck_book.setChecked(False)
         self.cookBookCheck_book.setFont(QFont("Vesper Libre", 16))
         self.cookBookCheck_book.setStyleSheet('''
@@ -228,7 +231,7 @@ class Main_menu(QMainWindow):
                     }
                 ''')
 
-        self.essayCheck_book = QCheckBox("Essay")
+        self.essayCheck_book = QCheckBox("Essays")
         self.essayCheck_book.setChecked(False)
         self.essayCheck_book.setFont(QFont("Vesper Libre", 16))
         self.essayCheck_book.setStyleSheet('''
@@ -255,7 +258,7 @@ class Main_menu(QMainWindow):
                     }
                 ''')
 
-        self.trueCrimeCheck_book = QCheckBox("True Crime")
+        self.trueCrimeCheck_book = QCheckBox("TrueCrime")
         self.trueCrimeCheck_book.setChecked(False)
         self.trueCrimeCheck_book.setFont(QFont("Vesper Libre", 16))
         self.trueCrimeCheck_book.setStyleSheet('''
@@ -328,6 +331,26 @@ class Main_menu(QMainWindow):
         self.bookFilterLayout10.addSpacing(10)
         self.bookFilterLayout10.addWidget(self.trueCrimeCheck_book)
 
+        self.searchButton_book = QPushButton("Search")
+        self.searchButton_book.setFont(QFont("Vesper Libre", 16))
+        self.searchButton_book.setStyleSheet('''
+                    QPushButton {
+                        color: rgb(132, 113, 77);
+                        border: 2px solid rgb(132, 113, 77);
+                        border-radius: 10px;
+                        padding: 0 8px;
+                    }
+                    QPushButton:hover {
+                        background-color: rgb(132, 113, 77);
+                        color: white;
+                    }
+                ''')
+
+        self.bookFilterLayout10.addSpacing(30)
+        self.bookFilterLayout10.addWidget(self.searchButton_book)
+        self.searchButton_book.clicked.connect(self.getFilter_book)
+
+
         filter_menu_book_layout = QVBoxLayout()
         self.filter_menu_book.setLayout(filter_menu_book_layout)
 
@@ -351,14 +374,70 @@ class Main_menu(QMainWindow):
         # my book here is to put the image after the user add their book
 
         h_layout1_book = QHBoxLayout()
-        h_layout1_book.addWidget(search_place_book)
+        h_layout1_book.addWidget(self.search_place_book)
         h_layout1_book.addSpacing(20)
         h_layout1_book.addWidget(self.filter_button_book)
 
+        # from librarySystem import librarySystem
+        # all_book = librarySystem.getAllBooks()
+        # e_book_count = len(all_book)
+        #
+        # columns = 3
+        # rows = (e_book_count + columns - 1) // columns
+        #
+        # # Add the first layout to the main layout
+        # layout.addLayout(h_layout1_book)
+        #
+        # for row in range(rows):
+        #     h_layout_row = QHBoxLayout()
+        #
+        #     for col in range(columns):
+        #         book_index = row * columns + col
+        #
+        #         if book_index < e_book_count:
+        #             widget = QWidget()
+        #             widget.setFixedSize(100, 200)
+        #
+        #             v_layout_item = QVBoxLayout(widget)
+        #             v_layout_item.setContentsMargins(0, 0, 0, 0)
+        #             v_layout_item.setSpacing(5)
+        #
+        #             label = QLabel()
+        #             pixmap = QPixmap(all_book[book_index].get_picture())
+        #             scaled_pixmap = pixmap.scaled(100, 150, Qt.AspectRatioMode.KeepAspectRatio)
+        #             label.setPixmap(scaled_pixmap)
+        #             label.setAlignment(Qt.AlignCenter)
+        #
+        #             self.editt_for_book = all_book[book_index]
+        #             button = QPushButton(f"{self.editt_for_book.getBookID()}")
+        #             button.setStyleSheet('''
+        #                         QPushButton {
+        #                             border: none;
+        #                             color: rgb(132, 113, 77);
+        #                             background-color: #F9F6EC;
+        #                             text-decoration: underline;
+        #                         }
+        #
+        #                         QPushButton:hover {
+        #                             background-color: transparent;
+        #                         }
+        #                     ''')
+        #             button.clicked.connect(self.edit_book)      #edit book
+        #
+        #             v_layout_item.addWidget(label)
+        #             v_layout_item.addWidget(button)
+        #
+        #             h_layout_row.addWidget(widget)
+        #
+        #     layout.addLayout(h_layout_row)
+        #
+        # # Set the layout to the e-book tab widget
+        # book_tab.setLayout(layout)
+        #remove
         v_layout_book = QVBoxLayout(book_tab)
         v_layout_book.addLayout(h_layout1_book)
 
-        tab_widget.removeTab(tab_widget.indexOf(book_tab))
+        self.tab_widget.removeTab(self.tab_widget.indexOf(book_tab))
         book_tab.setLayout(v_layout_book)
 
         scroll_area = QScrollArea()
@@ -367,13 +446,13 @@ class Main_menu(QMainWindow):
         scroll_area.setWidget(book_tab)
         scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
 
-        tab_widget.insertTab(0, scroll_area, "Book")
+        self.tab_widget.insertTab(0, scroll_area, "Book")
         self.filter_button_book.setMenu(self.filter_menu_book)
 
-        search_place_e_book = QLineEdit()
-        search_place_e_book.setPlaceholderText("Search e-book name")
-        search_place_e_book.setFont(QFont("Vesper Libre", 20))
-        search_place_e_book.setStyleSheet('''
+        self.search_place_e_book = QLineEdit()
+        self.search_place_e_book.setPlaceholderText("Search e-book name")
+        self.search_place_e_book.setFont(QFont("Vesper Libre", 20))
+        self.search_place_e_book.setStyleSheet('''
             QLineEdit {
                 border: 3px solid rgb(132, 113, 77);
                 color: rgb(249, 246, 236);
@@ -397,7 +476,6 @@ class Main_menu(QMainWindow):
         self.filter_button_e_book.setPopupMode(QToolButton.InstantPopup)
 
         self.filter_menu_e_book = QMenu(self.filter_button_e_book)
-
         self.romanceCheck_e_book = QCheckBox("Romance")
         self.romanceCheck_e_book.setChecked(False)
         self.romanceCheck_e_book.setFont(QFont("Vesper Libre", 16))
@@ -416,7 +494,7 @@ class Main_menu(QMainWindow):
                         }
                     ''')
 
-        self.fantasyAndScienceFictionCheck_e_book = QCheckBox("Fantasy and Science Fiction")
+        self.fantasyAndScienceFictionCheck_e_book = QCheckBox("Fantasy and science fiction")
         self.fantasyAndScienceFictionCheck_e_book.setChecked(False)
         self.fantasyAndScienceFictionCheck_e_book.setFont(QFont("Vesper Libre", 16))
         self.fantasyAndScienceFictionCheck_e_book.setStyleSheet('''
@@ -425,7 +503,7 @@ class Main_menu(QMainWindow):
                         }
                     ''')
 
-        self.thrillersHorrorCheck_e_book = QCheckBox("Thrillers and Horror")
+        self.thrillersHorrorCheck_e_book = QCheckBox("Thrillers and horror")
         self.thrillersHorrorCheck_e_book.setChecked(False)
         self.thrillersHorrorCheck_e_book.setFont(QFont("Vesper Libre", 16))
         self.thrillersHorrorCheck_e_book.setStyleSheet('''
@@ -434,7 +512,7 @@ class Main_menu(QMainWindow):
                         }
                     ''')
 
-        self.youngAdultCheck_e_book = QCheckBox("Young Adult")
+        self.youngAdultCheck_e_book = QCheckBox("Young adult")
         self.youngAdultCheck_e_book.setChecked(False)
         self.youngAdultCheck_e_book.setFont(QFont("Vesper Libre", 16))
         self.youngAdultCheck_e_book.setStyleSheet('''
@@ -443,7 +521,7 @@ class Main_menu(QMainWindow):
                         }
                     ''')
 
-        self.childrenFictionCheck_e_book = QCheckBox("Children Fiction")
+        self.childrenFictionCheck_e_book = QCheckBox("Children's fiction")
         self.childrenFictionCheck_e_book.setChecked(False)
         self.childrenFictionCheck_e_book.setFont(QFont("Vesper Libre", 16))
         self.childrenFictionCheck_e_book.setStyleSheet('''
@@ -452,7 +530,7 @@ class Main_menu(QMainWindow):
                         }
                     ''')
 
-        self.inspirationalReligiousCheck_e_book = QCheckBox("Inspirational and Religious")
+        self.inspirationalReligiousCheck_e_book = QCheckBox("Inspiraltional and religious")
         self.inspirationalReligiousCheck_e_book.setChecked(False)
         self.inspirationalReligiousCheck_e_book.setFont(QFont("Vesper Libre", 16))
         self.inspirationalReligiousCheck_e_book.setStyleSheet('''
@@ -461,7 +539,7 @@ class Main_menu(QMainWindow):
                             }
                         ''')
 
-        self.biographyAndAutobiographyCheck_e_book = QCheckBox("Biography and Autobiography")
+        self.biographyAndAutobiographyCheck_e_book = QCheckBox("Biography and autobiography")
         self.biographyAndAutobiographyCheck_e_book.setChecked(False)
         self.biographyAndAutobiographyCheck_e_book.setFont(QFont("Vesper Libre", 16))
         self.biographyAndAutobiographyCheck_e_book.setStyleSheet('''
@@ -478,7 +556,7 @@ class Main_menu(QMainWindow):
                             }
                         ''')
 
-        self.classicCheck_e_book = QCheckBox("Classic")
+        self.classicCheck_e_book = QCheckBox("Classics")
         self.classicCheck_e_book.setChecked(False)
         self.classicCheck_e_book.setFont(QFont("Vesper Libre", 16))
         self.classicCheck_e_book.setStyleSheet('''
@@ -487,7 +565,7 @@ class Main_menu(QMainWindow):
                             }
                         ''')
 
-        self.comicBookCheck_e_book = QCheckBox("Comic Book")
+        self.comicBookCheck_e_book = QCheckBox("Comic book")
         self.comicBookCheck_e_book.setChecked(False)
         self.comicBookCheck_e_book.setFont(QFont("Vesper Libre", 16))
         self.comicBookCheck_e_book.setStyleSheet('''
@@ -496,7 +574,7 @@ class Main_menu(QMainWindow):
                             }
                         ''')
 
-        self.historicalFictionCheck_e_book = QCheckBox("Historical Fiction")
+        self.historicalFictionCheck_e_book = QCheckBox("Historical fiction")
         self.historicalFictionCheck_e_book.setChecked(False)
         self.historicalFictionCheck_e_book.setFont(QFont("Vesper Libre", 16))
         self.historicalFictionCheck_e_book.setStyleSheet('''
@@ -505,7 +583,7 @@ class Main_menu(QMainWindow):
                             }
                         ''')
 
-        self.literaryCheck_e_book = QCheckBox("Literary")
+        self.literaryCheck_e_book = QCheckBox("Literary fiction")
         self.literaryCheck_e_book.setChecked(False)
         self.literaryCheck_e_book.setFont(QFont("Vesper Libre", 16))
         self.literaryCheck_e_book.setStyleSheet('''
@@ -514,7 +592,7 @@ class Main_menu(QMainWindow):
                             }
                         ''')
 
-        self.scienceFiction_e_book = QCheckBox("Science Fiction")
+        self.scienceFiction_e_book = QCheckBox("Science fiction")
         self.scienceFiction_e_book.setChecked(False)
         self.scienceFiction_e_book.setFont(QFont("Vesper Libre", 16))
         self.scienceFiction_e_book.setStyleSheet('''
@@ -523,7 +601,7 @@ class Main_menu(QMainWindow):
                             }
                         ''')
 
-        self.shortStoryCheck_e_book = QCheckBox("Short Story")
+        self.shortStoryCheck_e_book = QCheckBox("Short Stories")
         self.shortStoryCheck_e_book.setChecked(False)
         self.shortStoryCheck_e_book.setFont(QFont("Vesper Libre", 16))
         self.shortStoryCheck_e_book.setStyleSheet('''
@@ -532,7 +610,7 @@ class Main_menu(QMainWindow):
                             }
                         ''')
 
-        self.suspenseAndThrillerCheck_e_book = QCheckBox("Suspense and Thriller")
+        self.suspenseAndThrillerCheck_e_book = QCheckBox("Suspense and Thrillers")
         self.suspenseAndThrillerCheck_e_book.setChecked(False)
         self.suspenseAndThrillerCheck_e_book.setFont(QFont("Vesper Libre", 16))
         self.suspenseAndThrillerCheck_e_book.setStyleSheet('''
@@ -549,7 +627,7 @@ class Main_menu(QMainWindow):
                                 color: rgb(132, 113, 77);
                             }
                         ''')
-        self.cookBookCheck_e_book = QCheckBox("Cook Book")
+        self.cookBookCheck_e_book = QCheckBox("Cookbooks")
         self.cookBookCheck_e_book.setChecked(False)
         self.cookBookCheck_e_book.setFont(QFont("Vesper Libre", 16))
         self.cookBookCheck_e_book.setStyleSheet('''
@@ -558,7 +636,7 @@ class Main_menu(QMainWindow):
                             }
                         ''')
 
-        self.essayCheck_e_book = QCheckBox("Essay")
+        self.essayCheck_e_book = QCheckBox("Essays")
         self.essayCheck_e_book.setChecked(False)
         self.essayCheck_e_book.setFont(QFont("Vesper Libre", 16))
         self.essayCheck_e_book.setStyleSheet('''
@@ -585,7 +663,7 @@ class Main_menu(QMainWindow):
                             }
                         ''')
 
-        self.trueCrimeCheck_e_book = QCheckBox("True Crime")
+        self.trueCrimeCheck_e_book = QCheckBox("TrueCrime")
         self.trueCrimeCheck_e_book.setChecked(False)
         self.trueCrimeCheck_e_book.setFont(QFont("Vesper Libre", 16))
         self.trueCrimeCheck_e_book.setStyleSheet('''
@@ -657,6 +735,22 @@ class Main_menu(QMainWindow):
         self.e_bookFilterLayout10 = QHBoxLayout()
         self.e_bookFilterLayout10.addSpacing(10)
         self.e_bookFilterLayout10.addWidget(self.trueCrimeCheck_e_book)
+        self.searchButton = QPushButton("Search")
+        self.searchButton.setFont(QFont("Vesper Libre", 16))
+        self.searchButton.setStyleSheet('''
+                    QPushButton {
+                        background-color: rgb(132, 113, 77);
+                        color: white;
+                        border-radius: 10px;
+                        padding: 10px;
+                    }
+                    QPushButton:hover {
+                        background-color: rgb(163, 140, 97);
+                    }
+                ''')
+        self.e_bookFilterLayout10.addSpacing(30)
+        self.e_bookFilterLayout10.addWidget(self.searchButton)
+        self.searchButton.clicked.connect(self.getFilter)
 
         filter_menu_e_book_layout = QVBoxLayout()
         self.filter_menu_e_book.setLayout(filter_menu_e_book_layout)
@@ -678,74 +772,6 @@ class Main_menu(QMainWindow):
             filter_menu_e_book_layout.addLayout(layout)
         self.filter_button_e_book.setMenu(self.filter_menu_e_book)
 
-        h_layout1_e_book = QHBoxLayout()
-        h_layout1_e_book.addWidget(search_place_e_book)
-        h_layout1_e_book.addSpacing(20)
-        h_layout1_e_book.addWidget(self.filter_button_e_book)
-        tab_widget.removeTab(tab_widget.indexOf(e_book_tab))
-
-        from librarySystem import librarySystem
-        all_e_book = librarySystem.getAllEbook()
-        e_book_count = len(all_e_book)
-
-        columns = 3
-        rows = (e_book_count + columns - 1) // columns
-
-        v_layout_e_book = QVBoxLayout(e_book_tab)
-        v_layout_e_book.addLayout(h_layout1_e_book)
-
-        for row in range(rows):
-            h_layout_row = QHBoxLayout()  # Create a horizontal layout for each row
-
-            for col in range(columns):
-                book_index = row * columns + col
-
-                if book_index < e_book_count:
-                    # Create a widget to hold the pixmap and button
-                    widget = QWidget()
-                    widget.setFixedSize(100, 200)  # Adjust the size as needed
-
-                    # Create a vertical layout for the widget
-                    v_layout_item = QVBoxLayout(widget)
-                    v_layout_item.setContentsMargins(0, 0, 0, 0)
-                    v_layout_item.setSpacing(5)
-
-                    # Create a label for the pixmap
-                    label = QLabel()
-                    pixmap = QPixmap(
-                        all_e_book[book_index].get_picture())  # Call the get_picture method to retrieve the image path
-                    scaled_pixmap = pixmap.scaled(100, 150,
-                                                  Qt.AspectRatioMode.KeepAspectRatio)  # Scale the pixmap while maintaining aspect ratio # Scale the pixmap while maintaining aspect ratio
-                    label.setPixmap(scaled_pixmap)
-                    label.setAlignment(Qt.AlignCenter)
-
-                    # Create a button
-                    button = QPushButton(f"{all_e_book[book_index].getBookID()}")
-                    button.setStyleSheet('''
-                QPushButton {
-                        border: none;
-                        color: rgb(132, 113, 77);
-                        background-color: #F9F6EC;
-                        text-decoration: underline;
-                    }
-
-                    QPushButton:hover {
-                        background-color: transparent;
-                    }
-                ''')
-                    book = all_e_book[book_index]
-                    button.clicked.connect(self.edit_book(book))
-                    # Add the label and button to the vertical layout
-                    v_layout_item.addWidget(label)
-                    v_layout_item.addWidget(button)
-
-                    # Add the widget to the horizontal layout
-                    h_layout_row.addWidget(widget)
-
-            v_layout_e_book.addLayout(h_layout_row)
-
-        e_book_tab.setLayout(v_layout_e_book)
-
         # Create the scroll area
         scroll_area = QScrollArea()
         scroll_area.setWidgetResizable(True)
@@ -755,11 +781,10 @@ class Main_menu(QMainWindow):
         scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
 
         # Add the scroll area to the tab_widget
-        tab_widget.insertTab(1, scroll_area, "E-Book")
+        self.tab_widget.insertTab(1, scroll_area, "E-Book")
 
         from librarySystem import librarySystem
         # set the history can scroll after this line
-        self.refresh_history_tab(history_tab)
 
         scroll_area = QScrollArea()
         scroll_area.setWidgetResizable(True)
@@ -769,9 +794,9 @@ class Main_menu(QMainWindow):
         scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
 
         # Add the scroll area to the tab_widget
-        tab_widget.insertTab(2, scroll_area, "History")
+        self.tab_widget.insertTab(2, scroll_area, "History")
 
-        tab_widget.setCurrentIndex(0)
+        self.tab_widget.setCurrentIndex(0)
 
         self.add_button = QPushButton("Add")
         self.add_button.setFont(QFont("Vesper Libre", 20))
@@ -801,7 +826,7 @@ class Main_menu(QMainWindow):
         v_layout_add.addLayout(h_layout_add)
 
         main_layout = QVBoxLayout(central_widget)
-        main_layout.addWidget(tab_widget)
+        main_layout.addWidget(self.tab_widget)
         main_layout.addLayout(v_layout_add)
 
         self.setStyleSheet("background-color: #F9F6EC;")
@@ -809,7 +834,7 @@ class Main_menu(QMainWindow):
         self.setGeometry(400, 200, 800, 500)
         self.show()
 
-        tab_widget.currentChanged.connect(self.on_tab_changed)
+        self.tab_widget.currentChanged.connect(self.on_tab_changed)
         self.add_button.clicked.connect(self.add)
         self.exit_button.clicked.connect(self.exit)
 
@@ -820,9 +845,193 @@ class Main_menu(QMainWindow):
             self.refresh_history_tab(history_tab)
             self.add_button.hide()
             self.exit_button.hide()
+        elif index == 1:  # E-Book tab index is 1
+            e_book_tab = self.centralWidget().layout().itemAt(0).widget().widget(1)
+            self.refresh_e_book_tab(e_book_tab)
+            self.add_button.show()
+            self.exit_button.show()
+        elif index == 0:  # Book tab index is 0
+            book_tab = self.centralWidget().layout().itemAt(0).widget().widget(0)
+            self.refresh_book_tab(book_tab)
+            self.add_button.show()
+            self.exit_button.show()
         else:
             self.add_button.show()
             self.exit_button.show()
+
+    def refresh_book_tab(self, book_tab):
+        layout = book_tab.layout()
+        if layout:
+            while layout.count():
+                item = layout.takeAt(0)
+                widget = item.widget()
+                if widget:
+                    widget.deleteLater()
+
+        if not layout:
+            layout = QVBoxLayout(book_tab)
+
+        h_layout1_e_book = QHBoxLayout()
+        h_layout1_e_book.addWidget(self.search_place_book)
+        h_layout1_e_book.addSpacing(20)
+        h_layout1_e_book.addWidget(self.filter_button_book)
+        from librarySystem import librarySystem
+        all_e_book = librarySystem.getAllBooks()
+        e_book_count = len(all_e_book)
+
+        columns = 3
+        rows = (e_book_count + columns - 1) // columns
+
+        # Add the first layout to the main layout
+        layout.addLayout(h_layout1_e_book)
+
+        for row in range(rows):
+            h_layout_row = QHBoxLayout()
+
+            for col in range(columns):
+                book_index = row * columns + col
+
+                if book_index < e_book_count:
+                    widget = QWidget()
+                    widget.setFixedSize(100, 200)
+
+                    v_layout_item = QVBoxLayout(widget)
+                    v_layout_item.setContentsMargins(0, 0, 0, 0)
+                    v_layout_item.setSpacing(5)
+
+                    label = QLabel()
+                    pixmap = QPixmap(all_e_book[book_index].get_picture())
+                    scaled_pixmap = pixmap.scaled(100, 150, Qt.AspectRatioMode.KeepAspectRatio)
+                    label.setPixmap(scaled_pixmap)
+                    label.setAlignment(Qt.AlignCenter)
+
+                    button = QPushButton(f"{all_e_book[book_index].getBookID()}")
+                    button.setStyleSheet('''
+                        QPushButton {
+                            border: none;
+                            color: rgb(132, 113, 77);
+                            background-color: #F9F6EC;
+                            text-decoration: underline;
+                        }
+
+                        QPushButton:hover {
+                            background-color: transparent;
+                        }
+                    ''')
+                    self.editt_book = all_e_book[book_index]
+                    button.clicked.connect(self.edit_book)
+
+                    v_layout_item.addWidget(label)
+                    v_layout_item.addWidget(button)
+
+                    h_layout_row.addWidget(widget)
+
+            layout.addLayout(h_layout_row)
+
+        # Set the layout to the e-book tab widget
+        book_tab.setLayout(layout)
+
+    def refresh_e_book_tab(self, e_book_tab):
+        layout = e_book_tab.layout()
+        if layout:
+            while layout.count():
+                item = layout.takeAt(0)
+                layout.removeItem(item)
+
+        if not layout:
+            layout = QVBoxLayout(e_book_tab)
+
+        h_layout1_e_book = QHBoxLayout()
+        h_layout1_e_book.addWidget(self.search_place_e_book)
+        h_layout1_e_book.addSpacing(20)
+        h_layout1_e_book.addWidget(self.filter_button_e_book)
+        from librarySystem import librarySystem
+        all_e_book = librarySystem.getAllEbook()
+        e_book_count = len(all_e_book)
+
+        columns = 3
+        rows = (e_book_count + columns - 1) // columns
+
+        # Add the first layout to the main layout
+        layout.addLayout(h_layout1_e_book)
+
+        for row in range(rows):
+            h_layout_row = QHBoxLayout()
+
+            for col in range(columns):
+                book_index = row * columns + col
+
+                if book_index < e_book_count:
+                    widget = QWidget()
+                    widget.setFixedSize(100, 200)
+
+                    v_layout_item = QVBoxLayout(widget)
+                    v_layout_item.setContentsMargins(0, 0, 0, 0)
+                    v_layout_item.setSpacing(5)
+
+                    label = QLabel()
+                    pixmap = QPixmap(all_e_book[book_index].get_picture())
+                    scaled_pixmap = pixmap.scaled(100, 150, Qt.AspectRatioMode.KeepAspectRatio)
+                    label.setPixmap(scaled_pixmap)
+                    label.setAlignment(Qt.AlignCenter)
+
+                    self.editt_book = all_e_book[book_index]
+                    button = QPushButton(f"{self.editt_book.getBookID()}")
+                    button.setStyleSheet('''
+                        QPushButton {
+                            border: none;
+                            color: rgb(132, 113, 77);
+                            background-color: #F9F6EC;
+                            text-decoration: underline;
+                        }
+
+                        QPushButton:hover {
+                            background-color: transparent;
+                        }
+                    ''')
+                    button.clicked.connect(self.edit_book)
+
+                    v_layout_item.addWidget(label)
+                    v_layout_item.addWidget(button)
+
+                    h_layout_row.addWidget(widget)
+
+            layout.addLayout(h_layout_row)
+
+        # Set the layout to the e-book tab widget
+        e_book_tab.setLayout(layout)
+
+    # recieve enter key press event from user
+    def keyPressEvent(self, event):
+        # if the user presses enter, search for the book
+        if event.key() == Qt.Key_Return:
+            self.search_Ebook()
+    def search_Ebook(self):
+        # get the search term from the user
+        search_term = self.search_place_e_book.text()
+        # search for the book
+        from librarySystem import librarySystem
+        book = librarySystem.searchEbook(search_term)
+        librarySystem.ebook_list = book
+        # refresh the e-book tab
+        self.refresh_e_book_tab(self.centralWidget().layout().itemAt(0).widget().widget(1))
+
+    def BookKeyPressEvent(self, event):
+        # if the user presses enter, search for the book
+        if event.key() == Qt.Key_Return:
+            self.search_book()
+
+    def search_book(self):
+        # get the search term from the user
+        search_term = self.search_place_book.text()
+        # search for the book
+        from librarySystem import librarySystem
+        book = librarySystem.searchBook(search_term)
+        librarySystem.book_list = book
+        # refresh the book tab
+        self.refresh_book_tab(self.centralWidget().layout().itemAt(0).widget().widget(0))
+
+
 
     def add(self):
         from librarySystem import librarySystem
@@ -835,6 +1044,7 @@ class Main_menu(QMainWindow):
         self.close()
 
     def refresh_history_tab(self, history_tab):
+
         # Clear the existing layout
         layout = history_tab.layout()
         if layout:
@@ -842,6 +1052,8 @@ class Main_menu(QMainWindow):
                 item = layout.takeAt(0)
                 widget = item.widget()
                 if widget:
+                    layout.removeWidget(widget)
+                    widget.setParent(None)
                     widget.deleteLater()
 
         # Create a new layout if it doesn't exist
@@ -871,11 +1083,61 @@ class Main_menu(QMainWindow):
         layout.addSpacing(400)
         history_tab.setLayout(layout)
 
-    def edit_book(self, book):
+    def getFilter_book(self):
+        self.checkList_book = []
+        filter_book = [self.romanceCheck_book, self.mysteryCheck_book, self.fantasyAndScienceFictionCheck_book,
+                    self.thrillersHorrorCheck_book, self.youngAdultCheck_book,
+                    self.childrenFictionCheck_book, self.inspirationalReligiousCheck_book,
+                    self.biographyAndAutobiographyCheck_book,
+                    self.actionAndAdventureCheck_book, self.classicCheck_book, self.comicBookCheck_book,
+                    self.historicalFictionCheck_book, self.literaryCheck_book, self.scienceFiction_book,
+                    self.shortStoryCheck_book, self.suspenseAndThrillerCheck_book,
+                    self.womensFictionCheck_book, self.cookBookCheck_book, self.essayCheck_book,
+                    self.memoirCheck_book, self.poetryCheck_book, self.trueCrimeCheck_book]
+        for i in range(len(filter_book)):
+            if filter_book[i].isChecked():
+                self.checkList_book.append(filter_book[i].text())
+            else:
+                self.checkList_book.append("None")
         from librarySystem import librarySystem
-        librarySystem.setUserSelect(book)
+        temp = librarySystem.filterCategoryBook(self.checkList_book)
+        return temp
+
+
+
+
+
+    def getFilter(self):
+        self.checkList = []
+        filter_ebook = [self.romanceCheck_e_book, self.mysteryCheck_e_book, self.fantasyAndScienceFictionCheck_e_book,
+                  self.thrillersHorrorCheck_e_book, self.youngAdultCheck_e_book,
+                  self.childrenFictionCheck_e_book, self.inspirationalReligiousCheck_e_book,
+                  self.biographyAndAutobiographyCheck_e_book,
+                  self.actionAndAdventureCheck_e_book, self.classicCheck_e_book, self.comicBookCheck_e_book,
+                  self.historicalFictionCheck_e_book, self.literaryCheck_e_book, self.scienceFiction_e_book,
+                  self.shortStoryCheck_e_book, self.suspenseAndThrillerCheck_e_book,
+                  self.womensFictionCheck_e_book, self.cookBookCheck_e_book, self.essayCheck_e_book,
+                  self.memoirCheck_e_book, self.poetryCheck_e_book,
+                  self.trueCrimeCheck_e_book]
+        for i in range(len(filter_ebook)):
+            if filter_ebook[i].isChecked():
+                self.checkList.append(filter_ebook[i].text())
+            else:
+                self.checkList.append("None")
+        from librarySystem import librarySystem
+        temp = librarySystem.filterCategoryEbook(self.checkList)
+        return temp  # Return the list of books that match the filter
+    def edit_book(self):
+        from librarySystem import librarySystem
+        librarySystem.setUserSelect(self.editt_book)
         librarySystem.setState("Edit_Ebook")
-        self.close()
+
+    # def edit_forbook(self):
+    #     from librarySystem import librarySystem
+    #     librarySystem.setUserSelect(self.editt_for_book)
+    #     librarySystem.setState("Edit_book")
+
+
 
 
 if __name__ == "__main__":

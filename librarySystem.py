@@ -58,7 +58,7 @@ class librarySystem:
             librarySystem.__current = Add_book.Add_book()
         if librarySystem.state == "Edit_book":
             librarySystem.__current = remove_book.Remove_Book()
-        if librarySystem.state == "Edit_EBook":
+        if librarySystem.state == "Edit_Ebook":
             librarySystem.__current = editBook.EditEbook()
 
     @staticmethod
@@ -129,7 +129,7 @@ class librarySystem:
     @staticmethod
     def searchBook(name):
         search_result = []
-        for book in librarySystem.__instance.book_list:
+        for book in librarySystem.book_list:
             if name in book.get_name():
                 search_result.append(book)
         return search_result
@@ -137,8 +137,8 @@ class librarySystem:
     @staticmethod
     def searchEbook(name):
         search_result = []
-        for ebook in librarySystem.__instance.ebook_list:
-            if name in ebook.get_name():
+        for ebook in librarySystem.ebook_list:
+            if name in ebook.get_title():
                 search_result.append(ebook)
         return search_result
 
@@ -148,14 +148,28 @@ class librarySystem:
         return storageSystem.createNewUser(name)
 
     @staticmethod
-    def filterCategory(category):
+    def filterCategoryBook(category):
         bookList = []
         from storageSystem import storageSystem
-        allBook = storageSystem.getAllBooks(librarySystem.__instance.userID)
+        allBook = storageSystem.getAllBooks(librarySystem.userID)
         for book in allBook:
-            if (book.get_category() == category) and (book not in bookList):
-                bookList.append(book)
+            for cat in book.get_category():
+                if cat == category:
+                    bookList.append(book)
+        bookList = list(dict.fromkeys(bookList))
         return bookList
+
+    @staticmethod
+    def filterCategoryEbook(category):
+        ebookList = []
+        from storageSystem import storageSystem
+        allEbook = storageSystem.getEBooksFromLocal()
+        for ebook in allEbook:
+            for cat in ebook.get_category():
+                if cat == category:
+                    ebookList.append(ebook)
+        ebookList = list(dict.fromkeys(ebookList))
+        return ebookList
 
     @staticmethod
     def createBookStatus(bookID, userID, status):
@@ -277,9 +291,9 @@ class librarySystem:
 # print(storageSystem.getBookID("test"))
 # storageSystem.createNewBook("test2")
 
-# if __name__ == "__main__":
-#     app = QApplication([])
-#     library_system = librarySystem.get_instance()
-#     library_system.start()
-#     sys.exit(app.exec())
+if __name__ == "__main__":
+    app = QApplication([])
+    library_system = librarySystem.get_instance()
+    library_system.start()
+    sys.exit(app.exec())
 

@@ -682,12 +682,68 @@ class Main_menu(QMainWindow):
         h_layout1_e_book.addWidget(search_place_e_book)
         h_layout1_e_book.addSpacing(20)
         h_layout1_e_book.addWidget(self.filter_button_e_book)
+        tab_widget.removeTab(tab_widget.indexOf(e_book_tab))
+
+        from librarySystem import librarySystem
+        all_e_book = librarySystem.getAllEbook()
+        e_book_count = len(all_e_book)
+
+        columns = 3
+        rows = (e_book_count + columns - 1) // columns
 
         v_layout_e_book = QVBoxLayout(e_book_tab)
         v_layout_e_book.addLayout(h_layout1_e_book)
 
-        # scroll of e-book is after this line
-        tab_widget.removeTab(tab_widget.indexOf(e_book_tab))
+        for row in range(rows):
+            h_layout_row = QHBoxLayout()  # Create a horizontal layout for each row
+
+            for col in range(columns):
+                book_index = row * columns + col
+
+                if book_index < e_book_count:
+                    # Create a widget to hold the pixmap and button
+                    widget = QWidget()
+                    widget.setFixedSize(100, 200)  # Adjust the size as needed
+
+                    # Create a vertical layout for the widget
+                    v_layout_item = QVBoxLayout(widget)
+                    v_layout_item.setContentsMargins(0, 0, 0, 0)
+                    v_layout_item.setSpacing(5)
+
+                    # Create a label for the pixmap
+                    label = QLabel()
+                    pixmap = QPixmap(
+                        all_e_book[book_index].get_picture())  # Call the get_picture method to retrieve the image path
+                    scaled_pixmap = pixmap.scaled(100, 150,
+                                                  Qt.AspectRatioMode.KeepAspectRatio)  # Scale the pixmap while maintaining aspect ratio # Scale the pixmap while maintaining aspect ratio
+                    label.setPixmap(scaled_pixmap)
+                    label.setAlignment(Qt.AlignCenter)
+
+                    # Create a button
+                    button = QPushButton(f"{all_e_book[book_index].getBookID()}")
+                    button.setStyleSheet('''
+                QPushButton {
+                        border: none;
+                        color: rgb(132, 113, 77);
+                        background-color: #F9F6EC;
+                        text-decoration: underline;
+                    }
+
+                    QPushButton:hover {
+                        background-color: transparent;
+                    }
+                ''')
+                    book = all_e_book[book_index]
+                    button.clicked.connect(self.edit_book(book))
+                    # Add the label and button to the vertical layout
+                    v_layout_item.addWidget(label)
+                    v_layout_item.addWidget(button)
+
+                    # Add the widget to the horizontal layout
+                    h_layout_row.addWidget(widget)
+
+            v_layout_e_book.addLayout(h_layout_row)
+
         e_book_tab.setLayout(v_layout_e_book)
 
         # Create the scroll area
@@ -814,6 +870,12 @@ class Main_menu(QMainWindow):
 
         layout.addSpacing(400)
         history_tab.setLayout(layout)
+
+    def edit_book(self, book):
+        from librarySystem import librarySystem
+        librarySystem.setUserSelect(book)
+        librarySystem.setState("Edit_Ebook")
+        self.close()
 
 
 if __name__ == "__main__":

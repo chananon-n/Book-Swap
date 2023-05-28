@@ -11,11 +11,11 @@ from PySide6.QtCore import *
 
 from libraryUI.Sign_in import Sign_in
 
-
 class EditEbook(QMainWindow):
-    def __init__(self, e):
+    def __init__(self):
         super().__init__()
-        self.ebook = e
+        from librarySystem import librarySystem
+        self.ebook = librarySystem.getUserSelect()
         self.URL = "Test.pdf"
         self.pixmap = None
         self.price = 0

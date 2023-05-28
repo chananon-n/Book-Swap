@@ -2,14 +2,14 @@ from PySide6.QtGui import QPixmap, QFont
 from PySide6.QtWidgets import QMainWindow, QLabel, QHBoxLayout, QWidget, QLineEdit, QTextEdit, QCheckBox, QPushButton, \
     QDialog, QVBoxLayout, QScrollArea, QRadioButton
 from PySide6.QtCore import *
-from librarySystem import *
+
 
 
 class Remove_Book(QMainWindow):
-    def __init__(self,b):
+    def __init__(self):
         super().__init__()
-        self.book = b
-        self.URL = "Test.pdf"
+        from librarySystem import librarySystem
+        self.book = librarySystem.getUserSelect()
         self.pixmap = None
         self.price = 0
         self.type = "ebook"
@@ -17,7 +17,10 @@ class Remove_Book(QMainWindow):
         self.author = "author"
         self.description = "description"
         self.category = ["Romance"]
-        self.status = "Available"
+        self.image = QLabel()
+        # replace path of your image at placeholder.png
+        self.placeholder_image = QPixmap("placeholder.png")
+
         self.image = QLabel()
         # replace path of your image at placeholder.png
         self.placeholder_image = QPixmap("placeholder.png")
@@ -563,6 +566,7 @@ class Remove_Book(QMainWindow):
         # Save the dropped image to the project's images folder and create the folder if it doesn't exist
         title_name = self.title
         self.pixmap = self.image.pixmap()
+        from librarySystem import librarySystem
         if not librarySystem.save_images(self.pixmap, title_name):
             dialog = QDialog()
             dialog.setWindowTitle("Error")
@@ -607,7 +611,7 @@ class Remove_Book(QMainWindow):
 
 
 
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ui = Remove_Book()
-    app.exec()
+# if __name__ == '__main__':
+#     app = QApplication(sys.argv)
+#     ui = Remove_Book()
+#     app.exec()

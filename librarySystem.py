@@ -11,6 +11,8 @@ import libraryUI.Sign_in as Sign_in
 import libraryUI.Main_menu as Main_menu
 import libraryUI.Sign_up as Sign_up
 import libraryUI.Add_book as Add_book
+import libraryUI.remove_book as remove_book
+import libraryUI.editBook as editBook
 
 
 class librarySystem:
@@ -21,6 +23,7 @@ class librarySystem:
     __instance = None
     state = None
     userID = None
+    select = None
 
     # constructor
     def __init__(self):
@@ -53,11 +56,24 @@ class librarySystem:
             librarySystem.__current = Main_menu.Main_menu()
         if librarySystem.state == "Add_book":
             librarySystem.__current = Add_book.Add_book()
+        if librarySystem.state == "Edit_book":
+            librarySystem.__current = remove_book.Remove_Book()
+        if librarySystem.state == "Edit_EBook":
+            librarySystem.__current = editBook.EditEbook()
+
     @staticmethod
     def get_instance():
         if librarySystem.__instance is None:
             librarySystem()
         return librarySystem.__instance
+
+    @staticmethod
+    def setUserSelect(select):
+        librarySystem.select = select
+
+    @staticmethod
+    def getUserSelect():
+        return librarySystem.select
 
     @staticmethod
     def CheckUserID(userID):
@@ -103,8 +119,8 @@ class librarySystem:
         return librarySystem.history_list
 
     @staticmethod
-    def addNewEbook(picture, name, author, description, category, price,pdf):
-        ebook = eBook.eBook(picture, name, author, description, category, price,pdf)
+    def addNewEbook(picture, name, author, description, category, price, pdf):
+        ebook = eBook.eBook(picture, name, author, description, category, price, pdf)
         librarySystem.ebook_list.append(ebook)
         history = AddBook.AddBook(2, name, author)
         librarySystem.history_list.append(history)
@@ -185,11 +201,11 @@ class librarySystem:
 
     @staticmethod
     def getAllBooks():
-        return librarySystem.__instance.book_list
+        return librarySystem.book_list
 
     @staticmethod
     def getAllEbook():
-        return librarySystem.__instance.ebook_list
+        return librarySystem.ebook_list
 
     @staticmethod
     def checkStatus(bookID, userID, status):
@@ -261,8 +277,9 @@ class librarySystem:
 # print(storageSystem.getBookID("test"))
 # storageSystem.createNewBook("test2")
 
-if __name__ == "__main__":
-    app = QApplication([])
-    library_system = librarySystem.get_instance()
-    library_system.start()
-    sys.exit(app.exec())
+# if __name__ == "__main__":
+#     app = QApplication([])
+#     library_system = librarySystem.get_instance()
+#     library_system.start()
+#     sys.exit(app.exec())
+

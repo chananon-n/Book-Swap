@@ -18,7 +18,7 @@ class EditEbook(QMainWindow):
         from librarySystem import librarySystem
         self.ebook = librarySystem.select
         self.URL = self.ebook.get_pdf()
-        self.pixmap = self.ebook.get_picture()
+        self.pixmapLocal = self.ebook.get_picture()
         # self.price = self.ebook.get_price()
         self.type = "ebook"
         self.title = self.ebook.get_title()
@@ -31,12 +31,13 @@ class EditEbook(QMainWindow):
         # print(self.image)
         self.placeholder_image = QPixmap("placeholder.png")
 
-        self.image.setPixmap(self.placeholder_image)
+        self.image.setPixmap(self.pixmapLocal)
         self.image.setScaledContents(True)
         self.image.setMinimumSize(250, 250)
         self.image.setAlignment(Qt.AlignCenter)
-        self.image.setStyleSheet("border: 2px dashed gray; color: gray;")
-        self.image.setText("Please drag and drop a book image here")
+        # self.image.setStyleSheet("border: 2px dashed gray; color: gray;")
+        # self.image.setText("Please drag and drop a book image here")
+
 
 
         layout = QHBoxLayout()
@@ -562,12 +563,21 @@ class EditEbook(QMainWindow):
                 self.category.append(newGenre[i].text())
             else:
                 self.category.append("None")
+    def dropEvent(self, event):
+        url = event.mimeData().urls()[0]
+        file_path = url.toLocalFile()
+        if file_path.endswith('.png'):
+            self.pixmap = QPixmap(file_path)
+            self.image.setPixmap(self.pixmap)
+            self.image.setScaledContents(True)
+            self.image.setStyleSheet("border: #F9F6EC;")
 
     def save_image(self):
         # Save the dropped image to the project's images folder and create the folder if it doesn't exist
         title_name = self.title
+        self.pixmap2 = self.image.pixmap()
         from librarySystem import librarySystem
-        if not librarySystem.save_images(self.pixmap, title_name):
+        if not librarySystem.save_images(self.pixmap2, title_name):
             dialog = QDialog()
             dialog.setWindowTitle("Error")
             dialog.setWindowModality(Qt.ApplicationModal)
@@ -593,6 +603,9 @@ class EditEbook(QMainWindow):
             v_layout.addWidget(button)
             dialog.setLayout(v_layout)
             dialog.exec()
+
+
+
 
     def submit(self):
         # Save the dropped image to the project's images folder and create the folder if it doesn't exist
@@ -726,14 +739,7 @@ class EditEbook(QMainWindow):
         if event.mimeData().hasUrls() and event.mimeData().urls()[0].toString().endswith(".png"):
             event.acceptProposedAction()
 
-    def dropEvent(self, event):
-        url = event.mimeData().urls()[0]
-        file_path = url.toLocalFile()
-        if file_path.endswith('.png'):
-            self.pixmap = QPixmap(file_path)
-            self.image.setPixmap(self.pixmap)
-            self.image.setScaledContents(True)
-            self.image.setStyleSheet("border: #F9F6EC;")
+
 
     def back_to_main(self):
         from librarySystem import librarySystem

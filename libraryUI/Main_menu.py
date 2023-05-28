@@ -841,7 +841,6 @@ class Main_menu(QMainWindow):
     def keyPressEvent(self, event):
         # if the user presses enter, search for the book
         if event.key() == Qt.Key_Return:
-            print("enter pressed")
             self.search_book()
 
     def search_book(self):

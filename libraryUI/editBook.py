@@ -16,7 +16,7 @@ class EditEbook(QMainWindow):
         super().__init__()
         self.oldGenre = []
         from librarySystem import librarySystem
-        self.ebook = librarySystem.select
+        self.ebook = librarySystem.getUserSelect()
         self.URL = self.ebook.get_pdf()
         self.pixmapLocal = self.ebook.get_picture()
         # self.price = self.ebook.get_price()
